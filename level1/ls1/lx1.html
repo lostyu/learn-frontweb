@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>练习1</title>
+	<style>
+		ul,li{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		.box{
+			width: 277px;
+			height: 324px;			
+		}
+		.box-header{
+			height: 206px;
+			background: url(images/lx1.jpg) no-repeat;
+		}
+		.box-list{
+			background-color: #0664d5;
+		}
+		.box-list li{			
+			height: 38px;			
+			border-top: 1px solid #08aaf5;
+			border-bottom: 1px solid #0e2599;
+			background: 227px 7px no-repeat;
+		}
+		.box-list li:first-child{
+			height: 39px;
+			border-top: none;
+		}
+		.box-list li:last-child{
+			height: 39px;
+			border-bottom: none;
+		}
+		.box-list .item1{
+			background-image: url(images/lx1-1.jpg);
+		}
+		.box-list .item2{
+			background-image: url(images/lx1-2.jpg);
+		}
+		.box-list .item3{
+			background-image: url(images/lx1-3.jpg);
+		}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="box-header"></div>
+		<ul class="box-list">
+			<li class="item1"></li>
+			<li class="item2"></li>
+			<li class="item3"></li>
+		</ul>
+	</div>
+</body>
+</html>
