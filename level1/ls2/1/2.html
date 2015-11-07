@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>练习2</title>
+	<style>
+		ul,li{
+			list-style: none;
+			margin: 0;
+			padding: 0;
+		}
+		.box{
+			width: 158px;
+			padding: 14px;
+			border: 6px solid #c0c0c0;
+			background-color: #fff;	
+			font: 12px Arial;		
+		}
+		.box .cnt{
+			padding: 10px 0;
+			border: 1px solid #c0c0c0;
+		}
+		.box .cnt .title{
+			padding-left: 37px;
+			margin-bottom: 5px;
+			font: 14px '宋体';
+			font-weight: bold;
+			background: url(icon-arr.gif) no-repeat 16px;
+		}
+		.box .cnt ul{}
+		.box .cnt ul li{
+			position: relative;
+			padding-left: 37px;
+			line-height: 24px;
+		}
+		.box .cnt ul li.active{
+			background: url(1.png) center no-repeat;
+		}
+		.box .num{
+			position: absolute;
+			left: 14px;
+			top: 5px;
+			width: 16px;
+			height: 15px;
+			background: no-repeat;
+		}
+		.box .num1{background-image: url(icon-num1.gif);}
+		.box .num2{background-image: url(icon-num2.gif);}
+		.box .num3{background-image: url(icon-num3.gif);}
+		.box .num4{background-image: url(icon-num4.gif);}
+		.box .num5{background-image: url(icon-num5.gif);}
+	</style>
+</head>
+<body>
+	<div class="box">
+		<div class="cnt">
+			<div class="title">IT产品</div>
+			<ul>
+				<li><span class="num num1"></span>苹果iPhone 4</li>
+				<li class="active"><span class="num num2"></span>诺基亚 N8</li>
+				<li><span class="num num3"></span>诺基亚 C5-03</li>
+				<li><span class="num num4"></span>HTC Desire HD</li>
+				<li><span class="num num5"></span>诺基亚 C7</li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>
