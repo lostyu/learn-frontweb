@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>inline-block</title>
+	<style>
+		ul{
+			list-style: none;
+			padding: 0;
+			margin: 0;
+		}
+		.pageBox {
+			clear: both;
+			float: left;
+			position: relative;
+			left: 50%;
+		}
+		.pageBox li{
+			float: left;
+			position: relative;
+			left: -50%;
+		}
+		.pageBox a{
+			margin-right: 5px;
+			float: left;
+			width: 20px;
+			height: 20px;
+			line-height: 20px;
+			
+			border: 1px solid #ddd;			
+			font-size: 12px;
+			text-align: center;
+			text-decoration: none;
+			color: blue;
+		}
+		.pageBox .btn{
+			width: 50px;
+		}
+		.pageBox a:hover, .pageBox .active a{
+			background-color: blue;
+			color: #fff;
+		}
+	</style>
+</head>
+<body>
+	<ul class="pageBox">
+		<li><a href="" class="btn">上一页</a></li>
+		<li><a href="">1</a></li>
+		<li><a href="">2</a></li>
+		<li class="active"><a href="">3</a></li>
+		<li><a href="">4</a></li>
+		<li><a href="">5</a></li>
+		<li><a href="">6</a></li>
+		<li><a href="">7</a></li>
+		<li><a href="">8</a></li>
+		<li><a href="">9</a></li>
+		<li><a href="" class="btn">下一页</a></li>
+	</ul>
+</body>
+</html>
