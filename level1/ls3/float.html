@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>float</title>
+	<style>
+		.box{
+			border: 1px solid #000;
+		}
+		.box .item{
+			width: 200px;
+			height: 200px;
+			background-color: red;
+
+			float: left;
+		}
+		
+		.clearfix{ *zoom: 1;}
+		.clearfix:after{
+			content: '';
+			clear: both;
+			display: block;
+		}
+
+		.clear{clear: both;}
+		/*
+			清除浮动
+			1.父级添加浮动
+			2.父级添加inline-block;
+			3.添加额外标签.clear{clear: both;}
+			4.添加<br clear="both" />
+			5.伪类after
+		*/
+	</style>
+</head>
+<body>
+	<div class="box clearfix">
+		<div class="item">111</div>
+	</div>
+</body>
+</html>
