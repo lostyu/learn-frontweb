@@ -111,10 +111,13 @@
         var oTit = getByClass(document, 'imgBox-tit')[0];
         var oPrev = getByClass(document, 'prev')[0];
         var oNext = getByClass(document, 'next')[0];
+        var oBtn1 = document.getElementById('btn1');
+        var oBtn2 = document.getElementById('btn2');
         var arrImg = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg'];
         var arrText = ['第一张', '第2张', '第3张', '第4张'];
         var num = 0;
         var len = arrImg.length;
+        var onOff = false;	// 默认正序
 
         function tab() {
             oNum.innerHTML = num + 1 + ' / ' + len;
@@ -126,7 +129,11 @@
 		oPrev.onclick = function() {
         	num--;
         	if(num < 0){
-    			num = len-1;
+        		if(onOff){
+					num = len-1;
+        		}else{
+					num = 0;
+    			}
         	}
         	tab();
         }
@@ -134,15 +141,30 @@
         oNext.onclick = function() {
         	num++;
         	if(num > len-1){
-    			num = 0;
+        		if(onOff){
+					num = 0;
+        		}else{
+					num = len - 1;
+        		}    			
         	}
         	tab();
         }
+
+        oBtn1.onclick = function() {
+    		onOff = false;
+        };
+        oBtn2.onclick = function() {
+    		onOff = true;
+        };
     };
     </script>
 </head>
 
 <body>
+	<div style="text-align:center;">
+		<button id="btn1">正序</button>
+		<button id="btn2">循环</button>
+	</div>
     <div class="imgBox">
         <div class="imgBox-num">1 / 4</div>
         <div class="imgBox-img">
