@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>1图片移入显示详细</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .listDetail {
+        position: relative;
+        width: 600px;
+        margin: 20px auto;
+        font-size: 12px;
+    }
+    
+    .listDetail li {
+        /*position: relative;*/
+        float: left;
+        margin-right: 10px;
+        margin-bottom: 10px;
+        width: 80px;
+        list-style: none;
+        text-align: center;
+    }
+    
+    .listDetail li img {}
+    
+    .listDetail li h2 {
+        margin-bottom: 3px;
+        font-size: 12px;
+        font-weight: normal;
+    }
+    
+    .listDetail li p {
+        color: #666;
+    }
+    
+    .listDetail .detail {
+        display: none;
+        position: absolute;
+        top: 40px;
+        left: 40px;
+        padding: 10px;
+        width: 200px;
+        height: 100px;
+        background: #fff;
+        border: 1px solid #000;
+        text-align: left;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+        var oList = document.getElementById('listDetail');
+        var oUl = oList.getElementsByTagName('ul')[0];
+        var aLi = oUl.getElementsByTagName('li');
+        var len = aLi.length;
+
+        for (var i = 0; i < len; i++) {
+        	aLi[i].onmouseover = function() {
+        		this.style.position = 'relative';
+        		this.getElementsByTagName('div')[0].style.display = 'block';
+        	};
+        	aLi[i].onmouseout = function() {
+        		this.style.position = 'static';
+        		this.getElementsByTagName('div')[0].style.display = 'none';
+        	};
+        }
+    };
+    </script>
+</head>
+
+<body>
+    <div id="listDetail" class="listDetail">
+        <ul>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/6b6539afjw1dsbx8x6xxbj.jpg" alt="">
+                <h2>德克萨斯扑克</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww1.sinaimg.cn/large/6b6539afjw1dxb5u3u9p4j.jpg" alt="">
+                <h2>博雅斗地主</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/65e42330jw1dozmf267yij.jpg" alt="">
+                <h2>达人麻将</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/6b6539afjw1dsbx8x6xxbj.jpg" alt="">
+                <h2>德克萨斯扑克</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww1.sinaimg.cn/large/6b6539afjw1dxb5u3u9p4j.jpg" alt="">
+                <h2>博雅斗地主</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/65e42330jw1dozmf267yij.jpg" alt="">
+                <h2>达人麻将</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/6b6539afjw1dsbx8x6xxbj.jpg" alt="">
+                <h2>德克萨斯扑克</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww1.sinaimg.cn/large/6b6539afjw1dxb5u3u9p4j.jpg" alt="">
+                <h2>博雅斗地主</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/65e42330jw1dozmf267yij.jpg" alt="">
+                <h2>达人麻将</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/6b6539afjw1dsbx8x6xxbj.jpg" alt="">
+                <h2>德克萨斯扑克</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww1.sinaimg.cn/large/6b6539afjw1dxb5u3u9p4j.jpg" alt="">
+                <h2>博雅斗地主</h2>
+                <p>棋牌游戏</p>
+            </li>
+            <li>
+                <div class="detail">
+                    <h2>德克萨斯扑克</h2>
+                    <p>棋牌游戏</p>
+                </div>
+                <img src="http://ww3.sinaimg.cn/large/65e42330jw1dozmf267yij.jpg" alt="">
+                <h2>达人麻将</h2>
+                <p>棋牌游戏</p>
+            </li>
+        </ul>
+    </div>
+</body>
+
+</html>

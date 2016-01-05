@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>2自动生成10个div</title>
+    <style>
+        div{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            line-height: 50px;     
+            text-align: center;
+            font-size: 30px;   
+            border: 1px solid #000;    
+        }
+        .red{ background-color: red;}
+        .blue{ background-color: blue;}
+        .yellow{ background-color: yellow;}
+        .green{ background-color: green;}
+
+    </style>
+    <script>
+	   window.onload = function() {
+            var oBtn = document.getElementById('btn1');
+            var arrColor = ['red', 'blue', 'yellow', 'green'];
+
+            oBtn.onclick = function() {
+                for(var i=0;i<10;i++){
+                    var _html = '<div class="'+ arrColor[i%arrColor.length] +'" style="left:'+ (i*60+10) +'px;">'+i+'</div>';
+                    
+                    document.body.innerHTML += _html;
+                }
+            };
+       };
+    </script>
+</head>
+<body>
+<button id="btn1">自动生成10个div</button>
+</body>
+</html>
