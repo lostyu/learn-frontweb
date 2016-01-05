@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>带缩略图的图片切换</title>
+    <style>
+    	*{margin: 0; padding: 0; list-style: none;}
+		.imgBox{
+			position: relative;
+			width: 500px;
+			height: 330px;
+			margin: 20px auto 0;
+			border: 1px solid #000;
+		}
+		.imgBox img{
+			width: 500px;
+			height: 330px;
+		}
+		.imgBox .prev, .imgBox .next{ 
+			position: absolute;
+			top: 0;
+			width: 50%;
+			height: 100%;
+			cursor: pointer;
+		}
+		.imgBox .prev{
+			left: 0;
+		}
+		.imgBox .next{ 
+			right: 0;
+		}
+		.imgBox .prev a, .imgBox .next a{
+			position: absolute;
+			top: 50%;
+			margin-top: -25px;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+			border-radius: 50%;
+			text-align: center;
+			background-color: orange;
+			text-decoration: none;
+			color: #fff;
+			font-size: 30px;
+			font-weight: bold;
+			opacity: .5;
+		}
+		.imgBox .prev.hover a, .imgBox .next.hover a{
+			opacity: 1;
+		}
+		.imgBox .prev a{
+			left: 20px;
+		}
+		.imgBox .next a{
+			right: 20px;
+		}
+		.imgBox .nav{
+			position: absolute;
+			bottom: -40px;
+			width: 100%;
+			text-align: center;
+		}
+		.imgBox .nav  li{
+			position: relative;
+			display: inline-block;
+			width: 20px;
+			height: 20px;
+			margin-right: 5px;
+			border-radius: 50%;
+			background-color: #333;
+			cursor: pointer;
+		}
+		.imgBox .nav li img{
+			width: 100px;
+			height: 67px;
+			display: block;
+		}
+		.imgBox .nav .tubImg{
+			display: none;
+			position: absolute;
+			left: 50%;
+			bottom: 24px;
+			margin-left: -50px;
+			border: 1px solid #000;
+		}
+		.imgBox .nav .active{
+			background-color: orange;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oImg = document.getElementById('img1');
+    		var oPrev1 = document.getElementById('prev1');
+    		var oPrev2 = document.getElementById('prev2');
+    		var oNext1 = document.getElementById('next1');
+    		var oNext2 = document.getElementById('next2');
+    		var oNav = document.getElementById('nav');
+    		var aNavLi = oNav.getElementsByTagName('li');
+
+    		var num = 0;
+    		var arrImgs = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg'];    		
+
+    		// 初始化
+    		for(var i=0;i<arrImgs.length;i++){
+    			oNav.innerHTML += '<li><div class="tubImg"><img src="'+ arrImgs[i] +'" alt=""></div></li>';
+    		}
+    		function fnTab() {
+	    		oImg.src = arrImgs[num];	    		
+	    		for(var i=0;i<aNavLi.length;i++){
+					aNavLi[i].className = '';
+				}
+				aNavLi[num].className = 'active';
+			}	
+			fnTab();
+
+    		// 绑定nav点击事件
+    		for(var i=0;i<aNavLi.length;i++){
+    			aNavLi[i].index = i;
+    			aNavLi[i].onclick = function() {
+					num = this.index;
+					fnTab();
+    			};
+    			aNavLi[i].onmouseover = function() {
+    				this.children[0].style.display = 'block';
+    			};
+    			aNavLi[i].onmouseout = function() {
+    				this.children[0].style.display = 'none';
+    			};
+    		}
+
+    		// 绑定上一张，下一张点击事件
+    		oPrev1.onclick = oPrev2.onclick = function() {
+    			prev();
+    		};
+    		oPrev2.onclick = function(ev) {
+    			ev.stopPropagation();
+    			prev();
+    		}
+    		oNext1.onclick = oNext2.onclick = function() {
+    			next();
+    		};
+    		oNext2.onclick = function(ev) {
+    			ev.stopPropagation();
+    			next();
+    		}
+
+    		oPrev1.onmouseover = function() {
+    			this.className = 'prev hover';
+    		};
+    		oPrev1.onmouseout = function() {
+    			this.className = 'prev';
+    		};
+    		oNext1.onmouseover = function() {
+    			this.className = 'next hover';
+    		};
+    		oNext1.onmouseout = function() {
+    			this.className = 'next';
+    		};
+
+    		function prev() {
+    			num--;
+    			if(num < 0){
+    				num = arrImgs.length-1;
+    			}
+    			fnTab();
+    		}
+    		function next() {
+    			num++;
+    			if(num > arrImgs.length-1){
+    				num = 0
+    			}
+    			fnTab();
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+<div class="imgBox">
+	<img id="img1" src="" alt="">
+	<div id="prev1" class="prev"><a id="prev2" href="javascript:;">&lt;</a></div>
+	<div id="next1" class="next"><a id="next2" href="javascript:;">&gt;</a></div>
+	<ul class="nav" id="nav"></ul>
+</div>
+
+</body>
+</html>

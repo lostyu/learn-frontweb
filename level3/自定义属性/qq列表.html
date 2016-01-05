@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>qq列表</title>
+    <style>
+    	*{margin: 0; padding: 0; list-style: none;}
+		#list{
+			width: 200px;
+			margin: 50px auto 0;
+			border: 1px solid #000;
+		}
+		#list .lis{}
+		#list h2{
+			line-height: 35px;
+			text-indent: 1em;
+			font-size: 18px;
+			background: #ddd url(img/ico1.gif) 5px center no-repeat;
+		}
+		#list ul{ display: none;}
+		#list ul li{
+			line-height: 30px;
+			text-indent: 1em;
+			border-bottom: 1px solid #000;
+		}
+
+		#list .active{
+			color: #fff;
+			background: #333 url(img/ico2.gif) 5px center no-repeat;
+		}
+		#list .hover{
+			background-color: blue;
+			color: #fff;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oUl = document.getElementById('list');
+    		var aH2 = oUl.getElementsByTagName('h2');
+    		var aUl = oUl.getElementsByTagName('ul');
+    		var aLi = [];
+
+    		for(var i=0;i<aUl.length;i++){
+    			var _aLi = aUl[i].getElementsByTagName('li');
+    			for(var j=0;j<_aLi.length;j++){
+    				aLi.push(_aLi[j]);
+    			}
+    		}
+
+    		for(var i=0;i<aH2.length;i++){
+    			aH2[i].index = i;
+    			aH2[i].onclick = function() {
+
+    				if(this.className == ''){
+    					for(var i=0;i<aH2.length;i++){
+    						aH2[i].className = '';
+	    				}
+	    				for(var i=0;i<aUl.length;i++){
+							aUl[i].style.display = 'none';
+	    				}
+	    				for(var i=0;i<aLi.length;i++){
+	    					aLi[i].className = '';
+	    				}
+						this.className = 'active';
+    					aUl[this.index].style.display = 'block';
+    				}else{
+    					this.className = '';
+    					aUl[this.index].style.display = 'none';
+    				}
+
+    			};
+    		}
+
+    		for(var i=0;i<aLi.length;i++){
+    			aLi[i].onclick = function() {
+    				if(this.className == ''){
+    					for(var i=0;i<aLi.length;i++){
+    						aLi[i].className = '';    						
+    					}
+    					this.className = 'hover';
+    				}else{
+						this.className = '';
+    				}
+    				
+    			};
+    		}
+    	};
+    </script>
+</head>
+<body>
+<ul id="list">
+	<li class="lis">
+		<h2>我的好友</h2>
+		<ul>
+			<li>哈哈哈</li>
+			<li>jay</li>
+			<li>jam</li>
+		</ul>
+	</li>
+	<li class="lis">
+		<h2>我的同事</h2>
+		<ul>
+			<li>小刚</li>
+			<li>张学友</li>			
+		</ul>
+	</li>
+	<li class="lis">
+		<h2>黑名单</h2>
+		<ul>
+			<li>xxx</li>
+			<li style="border: none;">yyy</li>
+		</ul>
+	</li>
+</ul>
+</body>
+</html>
