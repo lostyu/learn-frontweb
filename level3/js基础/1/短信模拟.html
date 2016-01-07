@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<title>短信模拟</title>
+	<style>
+		.msgBox{
+			position: relative;
+			margin: 0 auto;
+			width: 301px;
+			height: 636px;
+			background: url(img/ip5s.png) no-repeat;
+		}
+		.msgBox .inner{
+			position: absolute;
+			left: 21px;
+			top: 90px;
+			width: 261px;
+			height: 455px;
+			color: #fff;
+			font-family: '微软雅黑';
+		}
+		.msgBox .content{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 44px;
+			height: 391px;
+			padding: 10px;
+			overflow-y: auto;
+		}
+		
+		.msgBox .control{
+			position: absolute;
+			bottom: 0;
+			width: 100%;
+			height: 44px;
+		}
+		.msgBox .control img{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 44px;
+			height: 44px;
+		}
+		.msgBox .control .ipt{
+			height: 44px;
+			padding: 0 44px;
+		}
+		.msgBox .control .ipt input{
+			width: 100%;
+			padding: 0 10px;
+			height: 44px;
+			line-height: 44px;
+			border: 1px solid #ddd;
+			box-sizing: border-box;
+			font-size: 14px;
+		}
+		.msgBox .control .btn{
+			position: absolute;
+			right: 0;
+			top: 0;
+			width: 44px;
+			height: 44px;
+			box-sizing: border-box;			
+		}
+
+		.msgItem {
+			position: relative;
+			overflow: hidden;
+			margin-bottom: 30px;
+		}
+		.msgItem .pic{
+			float: left;
+		}
+		.msgItem .pic img{
+			display: block;
+			width: 50px;
+			height: 50px;
+		}
+		.msgItem .cnt{
+			position: relative;
+			margin-left: 65px;
+			padding: 10px;
+			/*border-radius: 5px;*/
+			font-size: 14px;
+			background-color: #fff;
+			color: #000;
+		}
+		.msgItem .cnt:after{
+			content: '';
+			position: absolute;
+			left: -5px;
+			top: 5px;
+			width: 0;
+			height: 0;
+			border-top: 5px solid transparent;
+			border-right: 5px solid #fff;
+			border-bottom: 5px solid transparent;			
+		}
+		.msgItem-right .pic{
+			float: right;
+		}
+		.msgItem-right .cnt{
+			margin-left: 0;
+			margin-right: 65px;
+		}
+		.msgItem-right .cnt:after{
+			left: 100%;
+			border-right: 0;
+			border-top: 5px solid transparent;
+			border-left: 5px solid #fff;
+			border-bottom: 5px solid transparent;
+		}
+	</style>
+	<script>
+		function gid(id) {
+			return document.getElementById(id);
+		}
+		function trim(str) {
+			return str.replace(/(\s+$)|(^\s+)/g, '');
+		}
+		window.onload = function() {
+			var oCnt = gid('content');
+			var oImg = gid('img1');
+			var oIpt = gid('ipt1');
+			var oBtn = gid('btn1');
+			var cur = 0;
+			var arrImg = ['img/tx1.jpg', 'img/tx2.jpg'];
+
+			function send() {
+				if(trim(oIpt.value).length > 0){
+
+					var _html = '<div class="msgItem">'+
+					'<div class="pic"><img src="'+ arrImg[cur] +'" alt=""></div>'+
+					'<div class="cnt">'+ oIpt.value +'</div>'+
+					'</div>';
+
+					if(cur > 0){
+						_html = _html.replace('msgItem', 'msgItem msgItem-right');
+					}
+
+					oIpt.value = '';
+					oCnt.innerHTML += _html;
+					oCnt.scrollTop = oCnt.offsetHeight;
+				}
+			}
+
+			oBtn.onclick = function() {
+				send();
+			};
+
+			document.onkeydown = function(event) {
+				if(event.ctrlKey && event.keyCode == 13){
+					send();
+				}
+			};
+
+			oImg.onclick = function() {
+				cur++;
+				if(cur > arrImg.length-1){
+					cur = 0;
+				}
+				this.src = arrImg[cur];
+			};
+		};
+	</script>
+</head>
+<body>
+
+	<div class="msgBox">
+		<div class="inner">
+			<div id="content" class="content">
+				
+				<!-- <div class="msgItem">
+					<div class="pic"><img src="img/tx1.jpg" alt=""></div>
+					<div class="cnt">fdsf</div>
+				</div>
+
+				<div class="msgItem msgItem-right">
+					<div class="pic"><img src="img/tx2.jpg" alt=""></div>
+					<div class="cnt">fdsf</div>
+				</div> -->
+				
+			</div>
+			<div class="control">
+				<img id="img1" src="img/tx1.jpg" alt="">
+				<div class="ipt"><input id="ipt1" type="text"></div>
+				<button id="btn1" class="btn">send</button>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
