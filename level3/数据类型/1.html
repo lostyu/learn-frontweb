@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>数据类型转换练习</title>
+    <script>
+    window.onload = function() {
+    	var arr = ['100px', 'abc'-6, [], -98765, 34, -2, 0, '300', function(){alert(1);}, null, document, [], true, '200px'-30, '23.45元', 5, Number('abc'), function(){alert(3);}];
+
+    	var arrNumber = [];
+    	var arrNumber2 = [];
+    	var arrNumber3 = [];
+    	var maxNum = 0;
+
+    	
+    	for(var i=0;i<arr.length;i++){
+    		// 1 找出所有数字	typeof
+			if(typeof arr[i] === 'number' && !isNaN(arr[i])){
+				arrNumber.push(arr[i]);
+			}
+			
+			// 2 找到可以转化成数字的	
+			if(!isNaN(parseInt(arr[i]))){
+				if(arr[i] > maxNum){
+					maxNum = arr[i];
+				}
+				arrNumber2.push(arr[i]);
+			}
+
+			if(typeof arr[i] === 'number' && isNaN(arr[i])){
+				arrNumber3.push(i);
+			}
+    	}
+
+    	console.log('所有数字：'+arrNumber);
+    	console.log('可以转化成数字的：'+arrNumber2);
+    	console.log('最大的数字：'+maxNum);
+    	console.log('所有NaN的位置：'+arrNumber3);
+
+    };
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>

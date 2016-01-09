@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>qq号码</title>
+    <script>
+    window.onload = function() {
+    	var oIpt = document.getElementById('ipt1');
+    	var oBtn = document.getElementById('btn1');
+
+    	oBtn.onclick = function() {
+    		checkNum(oIpt.value);
+    	};
+
+    	function trim(str) {
+    		return str.replace(/(^\s+)|(\s+$)/g,'');
+    	}
+    	function checkNum(val) {
+    		var _num = trim(val);
+    		_num = Number(_num);
+    		if(trim(val).length == 0){
+    			alert('请输入');
+    		}else if(typeof _num != 'number' || isNaN(_num)){
+    			alert('输入的不是数字');
+    		}else if(parseInt(_num) != parseFloat(_num)){
+    			alert('不能是小数');
+    		}else if(trim(val).length < 5 || trim(val).length > 10){
+    			alert('输入的数字必须在5位以上，10位以内');
+    		}
+
+    		console.log('val：'+trim(val));
+    		console.log('_num：'+_num);
+    	}
+
+    	oIpt.onkeydown = oIpt.onkeyup = function() {
+    		if(this.value == '0' && this.value.length == 1){
+    			this.value = ''
+    		}
+    	};
+    };
+    </script>
+</head>
+<body>
+
+请输入qq号码：<input id="ipt1" type="text"><button id="btn1">判断</button>
+</body>
+</html>
