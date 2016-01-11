@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<title>test</title>
+	<style>
+		.red{ color: red;}
+	</style>
+	<script src="global.js"></script>
+	<script>
+		window.onload = function(){
+			var oBtn1 = common.getById('btn1');
+
+			oBtn1.onclick = function() {
+				alert(common.getByClass('red').length);
+			};
+		};
+	</script>
+</head>
+<body>
+	<button id="btn1">getByClass</button>
+	
+	<p class="fsdf red">red</p>
+	<p class="red fsdf">red</p>
+	<p class="red">red</p>
+	<p class="red">red</p>
+	<p class="red">red</p>
+</body>
+</html>
