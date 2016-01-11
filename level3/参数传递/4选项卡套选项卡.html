@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>选项卡套选项卡</title>
+    <style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.banner{
+			width: 600px;
+			height: 300px;
+			border: 1px solid #000;
+			margin: 50px auto 0;
+			background-color: #fff;
+		}
+		.banner-nav{
+			float: left;
+			width: 120px;
+			height: 300px;
+		}
+		.banner-panel{
+			float: left;
+			width: 480px;
+			height: 300px;
+		}
+		.banner-nav li{
+			padding-top: 30px;
+			height: 44px;
+			text-align: center;
+			border-bottom: 1px solid #333;
+			background-color: #ddd;
+		}
+		.banner-nav li:last-child{
+			height: 45px;
+			border-bottom: none;
+		}
+		.banner-nav .active{
+			background-color: #fff;
+		}
+
+		.tabsPanel > div{ display: none;}
+    </style>
+
+    <script>
+	    window.onload = function() {
+
+	    	for(var i=0;i<0;i++){
+
+	    	}
+
+	    	function tabs(tabsNav, tabsPanel) {
+
+	    		for(var i=0;i<tabsNav.length;i++){
+	    			tabsNav[i].index = i;
+	    			tabsNav[i].onmouseover = function() {
+	    				
+	    				for(var i=0;i<tabsNav.length;i++){
+	    					tabsNav[i].className = '';
+	    					tabsPanel[i].style.display = 'none';
+	    				}
+
+	    				this.className = 'active';
+	    				tabsPanel[this.index].style.display = 'block';
+	    			};
+	    		}
+	    		
+	    	}
+
+	    	tabs(document.getElementById('tabsNav1').getElementsByTagName('li'), document.getElementById('tabsPanel1').getElementsByTagName('div'));
+	    };
+    </script>
+</head>
+<body>
+
+<div class="banner">
+	<div class="banner-nav">
+		<ul id="tabsNav1">
+			<li>最热团购</li>
+			<li>商城特惠</li>
+			<li>名品推荐</li>
+			<li>缤纷活动</li>
+		</ul>
+	</div>
+	<div class="banner-panel">
+		<div id="tabsPanel1" class="tabsPanel">
+			<div style="display: block;">11</div>
+			<div>22</div>
+			<div>33</div>
+			<div>44</div>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>

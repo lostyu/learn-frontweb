@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>修改文本框的值</title>
+    <style>
+		#list li{}
+		#list li .div2{
+			display: none;
+		}
+    </style>
+    <script>
+    window.onload = function(){
+    	var oUl = document.getElementById('list');
+    	var aLi = oUl.getElementsByTagName('li');
+
+    	for(var i=0;i<aLi.length;i++){
+    		changeText(aLi[i]);
+    	}
+
+    	function changeText(oLi) {
+    		var oSpan = oLi.getElementsByTagName('span')[0];
+    		var oInput = oLi.getElementsByTagName('input')[0];
+    		var aA = oLi.getElementsByTagName('a');
+    		var aDiv = oLi.getElementsByTagName('div');
+
+    		aA[0].onclick = function() {
+    			aDiv[0].style.display = 'none';
+    			aDiv[1].style.display = 'block';
+    			oInput.value = oSpan.innerHTML;
+    			oInput.select();
+    		};
+
+    		aA[1].onclick = function() {
+    			aDiv[0].style.display = 'block';
+    			aDiv[1].style.display = 'none';
+    			oSpan.innerHTML = oInput.value;
+    		};
+
+    		aA[2].onclick = function() {
+    			aDiv[0].style.display = 'block';
+    			aDiv[1].style.display = 'none';
+    		};
+    	}
+    };
+    </script>
+</head>
+<body>
+
+<ul id="list">
+	<li>
+		<div class="div1"><span>我是文字</span> <a href="javascript:;">修改</a></div>
+		<div class="div2"><input type="text"> <a href="javascript:;">保存</a> <a href="javascript:;">取消</a></div>
+	</li>
+	<li>
+		<div class="div1"><span>我是文字</span> <a href="javascript:;">修改</a></div>
+		<div class="div2"><input type="text"> <a href="javascript:;">保存</a> <a href="javascript:;">取消</a></div>
+	</li>
+	<li>
+		<div class="div1"><span>我是文字</span> <a href="javascript:;">修改</a></div>
+		<div class="div2"><input type="text"> <a href="javascript:;">保存</a> <a href="javascript:;">取消</a></div>
+	</li>
+	<li>
+		<div class="div1"><span>我是文字</span> <a href="javascript:;">修改</a></div>
+		<div class="div2"><input type="text"> <a href="javascript:;">保存</a> <a href="javascript:;">取消</a></div>
+	</li>
+</ul>
+
+</body>
+</html>

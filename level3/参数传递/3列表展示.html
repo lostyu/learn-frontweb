@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>类表展示</title>
+    <style>
+    	ul,li{
+    		margin: 0;
+    		padding: 0;
+    		list-style: none;
+    	}
+    	.list{
+    		width: 300px;
+    	}
+    	.item{
+    		position: relative;
+			padding: 10px 0 10px 34px;
+			border-bottom: 1px solid #ddd;
+    	}
+    	.item .num{
+    		position: absolute;
+    		left: 0;
+    		width: 24px;
+    		height: 24px;
+    		line-height: 24px;
+    		text-align: center;
+    		background-color: #ddd;
+    	}
+		.item .title{
+			line-height: 1.5;
+			font-size: 14px;
+		}
+		.item .pic{ 
+			display: none;
+			position: relative;
+		}
+		.item .pic img{
+			width: 100px;
+			height: 100px;
+		}
+		.item .pic a{
+			position: absolute;
+			top: 0;
+			right: 0;
+		}
+    </style>
+    <script>
+    function getByClass(sClass, oParent) {
+    	oParent = oParent || document;
+    	var elements = oParent.getElementsByTagName('*');
+    	var result = [];
+    	var reg = new RegExp('(^|\\s)'+ sClass + '(\\s|$)');
+
+    	for(var i=0;i<elements.length;i++){
+    		if(reg.test(elements[i].className)){
+    			result.push(elements[i]);
+    		}
+    	}
+
+    	return result;
+    }
+
+    window.onload = function() {
+    	var oUl = document.getElementById('list');
+    	var aLi = oUl.getElementsByTagName('li');
+
+    	for(var i=0;i<aLi.length;i++){
+    		showDetail(aLi[i]);
+    	}
+
+    	function showDetail(oLi) {
+    		var oTitle = getByClass('title', oLi)[0];
+    		var oPic = getByClass('pic', oLi)[0];
+
+    		oLi.onmouseover = function() {    			
+    			for(var i=0;i<aLi.length;i++){
+    				getByClass('pic', aLi[i])[0].style.display = 'none';					
+    			}
+    			oPic.style.display = 'block';
+    		};
+
+    		// oLi.onmouseout = function() {
+    		// 	oPic.style.display = 'none';
+    		// 	oTitle.style.display = 'block';
+    		// };
+    	}
+    };
+
+
+    
+    </script>
+</head>
+<body>
+
+<ul id="list" class="list">
+	<li class="item">
+		<span class="num">1</span>
+		<div class="title">不完美小孩</div>
+		<div class=" pic ">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/W/r/001uMCZE0lJIWr.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">2</span>
+		<div class="title">野生动物</div>
+		<div class="pic haha">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/r/h/000aKO4k2cjZrh.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">3</span>
+		<div class="title">Bad Girl （湖南卫视2015-2016跨年演唱会原曲）</div>
+		<div class="haha pic">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/x/G/0016Cw6n3PXsxG.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">4</span>
+		<div class="title">星星泪</div>
+		<div class="xx pic  xxx">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/E/A/003fng4t4EEZEA.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">5</span>
+		<div class="title">大王叫我来巡山 （湖南卫视2015-2016跨年演唱会原曲|《万万没想到：西游篇》电影片尾曲）</div>
+		<div class="pic">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/1/2/0023ogVJ3PxZ12.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">6</span>
+		<div class="title">请跟我联络 （湖南卫视2015-2016跨年演唱会原曲|《怦然星动》电影主题曲）</div>
+		<div class="pic">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/J/Z/002ojt9Q3QmHJZ.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">7</span>
+		<div class="title">我们不该这样的 （《北上广不相信眼泪》电视剧片尾曲）</div>
+		<div class="pic">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/X/x/0032wsE33S0oXx.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">8</span>
+		<div class="title">可念不可说 （《太子妃升职记》网络电视剧主题曲）</div>
+		<div class="pic">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/a/C/003D0jU40YataC.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">9</span>
+		<div class="title">唐人街 （《唐人街探案》电影主题曲）</div>
+		<div class="pic">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/c/9/000m58mZ3Nroc9.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+	<li class="item">
+		<span class="num">10</span>
+		<div class="title">原动力 （星战版） （《星球大战》电影推广曲）</div>
+		<div class="pic">
+			<img src="http://i.gtimg.cn/music/photo/mid_album_300/L/Y/003vkgQH3I7RLY.jpg" alt="">
+			<a href="javascript:;">播放</a>
+		</div>
+	</li>
+
+</ul>
+</body>
+</html>
