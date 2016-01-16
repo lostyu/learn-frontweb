@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>隔行变色</title>
+    <style>
+		li{
+			line-height: 30px;
+		}
+    </style>
+    <script>
+    window.onload = function() {
+    	var aLi = document.getElementsByTagName('li');
+    	var aColor = ['red', 'green', 'blue'];
+
+    	for(var i=0;i<aLi.length;i++){
+    		aLi[i].index = i;
+    		aLi[i].style.background = aColor[i%aColor.length];
+
+    		aLi[i].onmouseover = function() {
+    			if(!this.active){
+    				this.style.background = 'black';
+    			}
+    		};
+
+    		aLi[i].onmouseout = function() {
+    			if(!this.active){
+    				this.style.background = aColor[this.index%aColor.length];
+    			}
+    		};
+
+    		aLi[i].onclick = function() {
+    			if(this.active){
+    				this.active = false;
+    				this.style.background = aColor[this.index%aColor.length];
+    			}else{
+    				for(var i=0;i<aLi.length;i++){
+    					aLi[i].active = false;
+    					aLi[i].style.background = aColor[i%aColor.length];
+    				}
+    				this.active = true;
+    				this.style.background = 'black';
+    			}    			    		
+    		};
+    	}
+    };
+    </script>
+</head>
+<body>
+
+<ul>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+	<li></li>
+</ul>
+
+</body>
+</html>

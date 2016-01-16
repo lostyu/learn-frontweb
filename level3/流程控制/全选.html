@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>全选</title>
+    <script>
+    window.onload = function() {
+    	var aBtn = document.getElementsByTagName('button');
+    	var aIpt = document.getElementsByTagName('input');
+    	var i = 0;
+    	var len = aIpt.length;
+
+    	aBtn[0].onclick = function() {
+    		for(i=0;i<len;i++){
+    			aIpt[i].checked = true;
+    		}
+    	};
+    	aBtn[1].onclick = function() {
+    		for(i=0;i<len;i++){
+    			aIpt[i].checked = false;
+    		}
+    	};
+    	aBtn[2].onclick = function() {
+    		for(i=0;i<len;i++){
+    			aIpt[i].checked = !aIpt[i].checked;
+    		}
+    	};
+    };
+    </script>
+</head>
+<body>
+<button>全选</button><button>全不选</button><button>反选</button>
+<ul>
+	<li><input type="checkbox"></li>
+	<li><input type="checkbox"></li>
+	<li><input type="checkbox"></li>
+	<li><input type="checkbox"></li>
+	<li><input type="checkbox"></li>
+</ul>
+
+</body>
+</html>
