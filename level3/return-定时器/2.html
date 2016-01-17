@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>参数</title>
+    <script>
+    function fn1 (v) {
+    	var oper = arguments[arguments.length-1];
+    	var len = arguments.length-1;
+    	var result = 0;
+
+    	switch(oper){
+			case '+':
+				for(var i=0;i<len;i++){
+					result += arguments[i];
+				}
+				return result;
+				break;
+			case '-':
+				for(var i=1;i<len;i++){
+					result += arguments[i];
+				}
+				result = arguments[0] - result;
+				return result;
+				break;			
+    	}
+    }
+
+    console.log( fn1(1,2,3,'+') );
+    console.log( fn1(10,2,3,'-') );
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>

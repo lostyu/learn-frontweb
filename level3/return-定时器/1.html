@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>return</title>
+    <script>
+    function fn1 (n1, n2) {
+    	var arr = [];
+    	var temp = 0;
+
+    	if(n1 - n2 > 0){
+    		temp = n1;
+    		n1 = n2;
+    		n2 = temp;
+    	}
+
+		for(var i=n1;i<=n2;i++){
+			arr.push(i);
+		}
+
+		return arr;
+    }
+
+    console.log( fn1(2,5) );	// 2,3,4,5
+    console.log( fn1(6,2) );	// 2,3,4,5,6
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>
