@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>选项卡套选项卡</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .banner {
+        width: 600px;
+        height: 300px;
+        border: 1px solid #000;
+        margin: 50px auto 0;
+        background-color: #fff;
+    }
+    
+    .banner-nav {
+        float: left;
+        width: 120px;
+        height: 300px;
+    }
+    
+    .banner-panel {
+        float: left;
+        width: 480px;
+        height: 300px;
+    }
+    
+    .banner-nav li {
+        padding-top: 30px;
+        height: 44px;
+        text-align: center;
+        border-bottom: 1px solid #333;
+        background-color: #ddd;
+    }
+    
+    .banner-nav li:last-child {
+        height: 45px;
+        border-bottom: none;
+    }
+    
+    .banner-nav .active {
+        background-color: #fff;
+    }
+    
+    .tabsPanel > div {
+        display: none;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+
+        var arr1 = [{
+            title: '标题1',
+            url: 'https://img.alicdn.com/tps/TB1OGstLXXXXXaJXFXXXXXXXXXX-520-280.jpg'
+        }, {
+            title: '标题2',
+            url: 'https://aecpm.alicdn.com/simba/img/TB1PDddLXXXXXcUXVXXSutbFXXX.jpg'
+        }, {
+            title: '标题3',
+            url: 'https://img.alicdn.com/tps/TB1EJMELXXXXXboXpXXXXXXXXXX-520-280.jpg'
+        }, {
+            title: '标题4',
+            url: 'https://aecpm.alicdn.com/simba/img/TB1VZPILXXXXXXiXpXXSutbFXXX.jpg'
+        }];
+        var arr2 = [{
+            title: '标题1',
+            url: 'https://img.alicdn.com/tps/TB18p4jLpXXXXXiXFXXXXXXXXXX-520-280.jpg'
+        }, {
+            title: '标题2',
+            url: 'https://aecpm.alicdn.com/simba/img/TB191a_KVXXXXc7XXXXSutbFXXX.jpg'
+        }, {
+            title: '标题3',
+            url: 'https://aecpm.alicdn.com/simba/img/TB1OCU1LXXXXXbPXXXXSutbFXXX.jpg'
+        }];
+        var arr3 = [{
+            title: '标题1',
+            url: 'https://img.alicdn.com/tps/TB1CS7vLXXXXXcRXFXXXXXXXXXX-520-280.jpg'
+        }, {
+            title: '标题2',
+            url: 'https://aecpm.alicdn.com/simba/img/TB1d9m_JFXXXXb0XpXXSutbFXXX.jpg'
+        }, {
+            title: '标题3',
+            url: 'https://aecpm.alicdn.com/simba/img/TB1._hiLpXXXXXpXFXXSutbFXXX.jpg'
+        }, {
+            title: '标题4',
+            url: 'https://aecpm.alicdn.com/simba/img/TB13VBtLpXXXXcyXXXXSutbFXXX.jpg'
+        }, {
+            title: '标题5',
+            url: 'https://aecpm.alicdn.com/simba/img/TB1wbw1LXXXXXccXXXXSutbFXXX.jpg'
+        }];
+        var arr4 = [{
+            title: '标题1',
+            url: 'http://img10.360buyimg.com/da/jfs/t2359/39/1987783587/101303/8c53e38e/5693529fN5111c921.jpg'
+        }, {
+            title: '标题2',
+            url: 'http://img30.360buyimg.com/da/jfs/t2329/219/1915406278/98753/e6cac1fd/568f20a8Nf8cf34a5.jpg'
+        }, {
+            title: '标题3',
+            url: 'http://img13.360buyimg.com/da/jfs/t1876/45/2013726144/101834/26dbcff0/568f355eNc187b828.jpg'
+        }, {
+            title: '标题4',
+            url: 'http://img13.360buyimg.com/da/jfs/t2344/57/1311261593/111370/13f2d4b0/56936f2bNc3361fad.jpg'
+        }];
+
+        function setTabs(idName, event) {
+        	event = event || 'click';
+        	var _tabsNav = [];
+        	var _tabsCont = [];
+			
+            for (var i = 0; i < 1000; i++) {
+                var tabsNav = document.getElementById(idName+i);
+                var tabsCont = document.getElementById('cont_'+ idName + '_'+i);
+
+                if(!tabsNav){
+	                break;
+                }
+                tabsNav.index = i;
+                tabsCont.index = i;
+                _tabsNav.push(tabsNav);
+                _tabsCont.push(tabsCont);
+
+                tabsNav['on'+event] = function() {
+                	tab(this);
+                };
+            }
+
+            function tab(obj) {
+            	for(var i=0;i<_tabsNav.length;i++){
+            		_tabsNav[i].className = '';            		
+            		_tabsCont[i].style.display = 'none';
+            	}
+            	_tabsNav[obj.index].className = 'active';
+            	_tabsCont[obj.index].style.display = 'block';
+            }
+        }
+
+        setTabs('tabs');
+
+    };
+    </script>
+</head>
+
+<body>
+    <div class="banner">
+        <div class="banner-nav">
+            <ul>
+                <li id="tabs0" class="active">最热团购</li>
+                <li id="tabs1">商城特惠</li>
+                <li id="tabs2">名品推荐</li>
+                <li id="tabs3">缤纷活动</li>
+            </ul>
+        </div>
+        <div class="banner-panel">
+            <div class="tabsPanel">
+                <div id="cont_tabs_0" style="display: block;">
+                    <div class="bannerTabs">
+                        <img src="" alt="">
+                    </div>
+                </div>
+                <div id="cont_tabs_1">22</div>
+                <div id="cont_tabs_2">33</div>
+                <div id="cont_tabs_3">44</div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

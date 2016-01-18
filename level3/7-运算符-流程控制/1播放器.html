@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<title>全选</title>
+	<style>
+		*{
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		.musicList{
+			position: absolute;
+			width: 800px;			
+			top: 35px;
+			bottom: 35px;
+			left: 50%;
+			margin-left: -400px;
+			border: 1px solid #ddd;
+			font-size: 12px;
+			font-family: '微软雅黑';
+			background-color: #fff;			
+		}
+		.musicList ul{
+			position: absolute;
+			left: 0;
+			right: 0;
+			top: 0;
+			bottom: 40px;
+			overflow-y: auto;
+		}
+		.musicList .item{
+			line-height: 35px;
+			overflow: hidden;			
+		}
+		.musicList .item.active, .musicList .item:hover{
+			background-color: #f0f0f0 !important;	
+		}
+		
+		.musicList .item:nth-child(odd){
+			background-color: #f3faff;
+		}
+		
+		.musicList .song{
+			float: left;
+			width: 30%;
+		}
+		.musicList .song input{
+			margin: 0 10px;
+			vertical-align: middle;
+		}
+		.musicList .singer{
+			float: left;
+			width: 30%;
+		}
+		.musicList .album{
+			float: left;
+			width: 40%;
+		}
+
+		.musicList .ft{
+			position: absolute;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			line-height: 40px;
+			border-top: 1px solid #ddd;
+			background-color: #fff;
+		}
+		.musicList .ft input{
+			vertical-align: middle;
+			margin: 0 10px;
+		}
+		.musicList .ft button{
+			margin-left: 10px;			
+		}
+	</style>
+	<script>
+		window.onload = function() {
+			var oList = document.getElementById('musicList');
+			var aInput = oList.getElementsByTagName('input');
+			var aBtn = oList.getElementsByTagName('button');    	
+
+			for(var i=0;i<aInput.length-1;i++){
+				aInput[i].onclick = function() {
+					check();
+				};
+			}		
+
+			aInput[aInput.length-1].onclick = function() {
+				if(this.checked){
+					for(var i=0;i<aInput.length-1;i++){
+						aInput[i].checked = true;						
+					}
+				}else{
+					for(var i=0;i<aInput.length-1;i++){
+						aInput[i].checked = false;						
+					}
+				}    	
+				check();	
+			};
+
+			function check() {
+				var checked = false;
+				var count = 0;
+
+				for(var i=0;i<aInput.length-1;i++){
+					if(aInput[i].checked){
+						checked = true;		
+						count++;
+						aInput[i].parentNode.parentNode.style.background = '#f0f0f0';
+					}else{
+						aInput[i].parentNode.parentNode.style.background = '';
+					}
+				}
+
+				if(checked){
+					aBtn[0].disabled = false;
+					aBtn[1].disabled = false;
+				}else{
+					aBtn[0].disabled = true;
+					aBtn[1].disabled = true;
+				}
+
+				if(count == aInput.length-1){
+					aInput[aInput.length-1].checked = true;
+				}else{
+					aInput[aInput.length-1].checked = false;
+				}
+			}
+
+		};
+	</script>
+</head>
+<body>
+
+	<div id="musicList" class="musicList">
+		<ul>
+			<li class="item">
+				<div class="song"><input type="checkbox">孰能生巧</div>
+				<div class="singer">林俊杰</div>
+				<div class="album">《曹操》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">勇敢爱</div>
+				<div class="singer">Mi2</div>
+				<div class="album">《勇敢爱》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">好久不见</div>
+				<div class="singer">陈奕迅</div>
+				<div class="album">《认了吧》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">爱情Yogurt</div>
+				<div class="singer">林俊杰</div>
+				<div class="album">《曹操》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">孰能生巧</div>
+				<div class="singer">林俊杰</div>
+				<div class="album">《曹操》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">那女孩对我说</div>
+				<div class="singer">黄义达</div>
+				<div class="album">《专属密码》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">一念之间</div>
+				<div class="singer">陶喆</div>
+				<div class="album">《再见你好吗》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">咖啡</div>
+				<div class="singer">张学友</div>
+				<div class="album">《他在那里》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">花田错</div>
+				<div class="singer">王力宏</div>
+				<div class="album">《盖世英雄》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">青春纪念册</div>
+				<div class="singer">可米小子</div>
+				<div class="album">《青春纪念册》</div>
+			</li>
+
+			<li class="item">
+				<div class="song"><input type="checkbox">明天过后</div>
+				<div class="singer">张杰</div>
+				<div class="album">《明天过后》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">我怀念的</div>
+				<div class="singer">萧敬腾</div>
+				<div class="album">《爱的时刻自选辑 (Love Moments)》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">终于等到你</div>
+				<div class="singer">张靓颖</div>
+				<div class="album">《第七感》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">两个人的烟火</div>
+				<div class="singer">黎明</div>
+				<div class="album">《Leon Dawn (国语专辑)》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">学不会</div>
+				<div class="singer">林俊杰</div>
+				<div class="album">《学不会 Lost N Found》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">天天</div>
+				<div class="singer">陶喆</div>
+				<div class="album">《I'm OK》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">小丑</div>
+				<div class="singer">牛奶咖啡</div>
+				<div class="album">《越长大越孤单》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">原来</div>
+				<div class="singer">林俊杰</div>
+				<div class="album">《曹操》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">只对你说</div>
+				<div class="singer">林俊杰</div>
+				<div class="album">《曹操》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">微笑以后</div>
+				<div class="singer">张靓颖</div>
+				<div class="album">《微笑以后》</div>
+			</li>
+
+			<li class="item">
+				<div class="song"><input type="checkbox">东风破</div>
+				<div class="singer">周杰伦</div>
+				<div class="album">《叶惠美》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">不想睡</div>
+				<div class="singer">陈晓东</div>
+				<div class="album">《比我幸福》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">声声慢</div>
+				<div class="singer">邓福如</div>
+				<div class="album">《原来如此》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">克罗地亚狂想曲</div>
+				<div class="singer">Maksim</div>
+				<div class="album">《The Piano Player》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">借口</div>
+				<div class="singer">周杰伦</div>
+				<div class="album">《七里香》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">孤单心事</div>
+				<div class="singer">蓝又时</div>
+				<div class="album">《终极一班电视原声带》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">他说</div>
+				<div class="singer">林俊杰</div>
+				<div class="album">《她说 概念自选辑》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">我怀念的</div>
+				<div class="singer">孙燕姿</div>
+				<div class="album">《逆光》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">类似爱情</div>
+				<div class="singer">萧亚轩</div>
+				<div class="album">《三面夏娃》</div>
+			</li>
+			<li class="item">
+				<div class="song"><input type="checkbox">亲爱的，那不是爱情</div>
+				<div class="singer">张韶涵</div>
+				<div class="album">《Ang 5.0》</div>
+			</li>
+		</ul>
+		<div class="ft">
+			<label><input type="checkbox">全选</label><button disabled>添加</button><button disabled>删除</button>
+		</div>
+	</div>
+
+</body>
+</html>

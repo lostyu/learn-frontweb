@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>星级评分</title>
+    <style>
+		.star{
+			display: inline-block;
+		}
+		.star ul{
+			float: left;
+			margin: 0;
+			padding: 0;
+			overflow: hidden;			
+		}
+		.star li{
+			list-style: none;
+			float: left;
+			width: 24px;
+			height: 24px;
+			background: url(img/star.png) no-repeat;
+		}
+		.star li.active{
+			background-position: -24px 0;
+		}
+		.star span{
+			padding-left: 10px;
+			line-height: 24px;
+		}
+
+    </style>
+    <script>
+    window.onload = function() {
+    	var oStar = document.getElementById('star');
+    	var aLi = oStar.getElementsByTagName('li');
+    	var oSpan = oStar.getElementsByTagName('span')[0];
+    	var iScore = iStar = 0;
+
+    	for(var i=0;i<aLi.length;i++){
+    		aLi[i].index = i;
+			aLi[i].onmouseover = function() {
+				fnPoint(this.index+1);
+			};
+
+			aLi[i].onmouseout = function() {
+				fnPoint();
+			};
+
+			aLi[i].onclick = function() {
+				iStar = this.index+1;
+			};
+    	}
+
+    	function fnPoint(iArg) {
+    		iScore = iArg || iStar;
+    		for(var i=0;i<aLi.length;i++){
+    			if(i<iScore){
+    				aLi[i].className = 'active';
+    			}else{
+    				aLi[i].className = '';
+    			}
+    		}
+    	}
+    };
+    </script>
+</head>
+<body>
+
+<div id="star" class="star">
+	<ul>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+	</ul>
+	<span>一般</span>
+</div>
+
+
+</body>
+</html>
