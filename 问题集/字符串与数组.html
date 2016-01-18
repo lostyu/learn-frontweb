@@ -150,38 +150,59 @@
     // 把数组的第一个元素从其中删除，并返回第一个元素的值。
     var arr4 = ['George', 'John', 'Thomas', 'James', 'Adrew', 'Martin'];
     console.log('======shift======');
-    console.log(arr4.shift());	// George
+    console.log(arr4.shift()); // George
     console.log('');
 
     // unshift()
     // 方法可向数组的开头添加一个或更多元素，并返回新的长度。
     var arr5 = ['George', 'John', 'Thomas', 'James', 'Adrew', 'Martin'];
     console.log('======unshift======');
-    console.log(arr5.unshift('888'));	// 7
+    console.log(arr5.unshift('888')); // 7
     console.log('');
 
     // pop()
     // 方法用于删除并返回数组的最后一个元素。
     var arr6 = ['George', 'John', 'Thomas', 'James', 'Adrew', 'Martin'];
     console.log('======pop======');
-    console.log(arr4.pop(''));	// Martin
+    console.log(arr4.pop('')); // Martin
     console.log('');
 
     // push()
     // 方法可向数组的末尾添加一个或多个元素，并返回新的长度。
     var arr7 = ['George', 'John', 'Thomas', 'James', 'Adrew', 'Martin'];
     console.log('======push======');
-    console.log(arr7.push('222'));	// 7
+    console.log(arr7.push('222')); // 7
     console.log('');
 
     // reverse()
     // 方法用于颠倒数组中元素的顺序。
     var arr8 = ['George', 'John', 'Thomas', 'James', 'Adrew', 'Martin'];
     console.log('======reverse======');
-    console.log(arr8.reverse());	// ["Martin", "Adrew", "James", "Thomas", "John", "George"]
-    console.log('');    
+    console.log(arr8.reverse()); // ["Martin", "Adrew", "James", "Thomas", "John", "George"]
+    console.log('');
 
+    // sort(sortby)
+    // 方法用于对数组的元素进行排序。参数为函数
+    // 返回值：对数组的引用
+    // 比较函数参数说明：
+    //若 a 小于 b，在排序后的数组中 a 应该出现在 b 之前，则返回一个小于 0 的值。
+    //若 a 等于 b，则返回 0。
+    //若 a 大于 b，则返回一个大于 0 的值。
+    var arr9 = [1, 22, 68, 33, 79, 57, 61, 37, 64, 99, 6];
+    console.log('======sort======');
+    // 从小到大排序
+    arr9.sort(function(n1, n2) {
+        return n1 - n2;
+    });
+    console.log(arr9);
+    console.log('');
     
+    // concat(arrayX,arrayX,......,arrayX)
+    // 方法用于连接两个或多个数组。
+    var arr10 = [1,2,3];
+    console.log('======concat======');
+    console.log(arr10.concat(4,5));
+    console.log(arr10.concat(['a','b','c']));
     </script>
 </head>
 
