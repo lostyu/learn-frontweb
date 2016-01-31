@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>页面滚动</title>
+    <style>
+		body{ height: 5000px;}
+		#btn1{ position: fixed; bottom: 20px; right: 20px;}
+    </style>
+    <script>
+    window.onload = function() {
+    	var oBtn = document.getElementById('btn1');
+    	
+
+    	// function myscroll() {
+    	// 	top = document.documentElement.scrollTop || document.body.scrollTop;
+    	// }
+
+    	// window.onscroll = myscroll;
+
+    	oBtn.onclick = function() {
+    		var top = document.documentElement.scrollTop || document.body.scrollTop;
+    		var iSpeed = (top - iSpeed) * 0.5;
+    		if(top > 0){
+    			document.documentElement.scrollTop = document.body.scrollTop =  iSpeed;
+    		}
+
+    	};
+    };
+    </script>
+</head>
+<body>
+
+<button id="btn1">返回顶部</button>
+
+</body>
+</html>

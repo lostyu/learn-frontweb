@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>购物车扩展</title>
+    <script>
+    window.onload = function() {
+        var oUl = document.getElementById('list');
+        var aLi = oUl.getElementsByTagName('li');
+        var aCount = document.getElementById('total').getElementsByTagName('span');
+        var oImg = document.getElementById('img');
+        var arr = [];
+
+        for (var i = 0; i < aLi.length; i++) {
+            arr.push(0);
+            calc(aLi[i]);
+        }
+
+        function calcCount() {
+        	var count1 = 0;
+        	var count2 = 0;
+        	var count3 = 0;
+
+            for (var i = 0; i < aLi.length; i++) {
+            	var _n = Number(aLi[i].getElementsByTagName('strong')[0].innerHTML);
+            	var _n2 = parseFloat(aLi[i].getElementsByTagName('span')[0].innerHTML);
+            	var _n3 = parseFloat(aLi[i].getElementsByTagName('em')[0].innerHTML);
+                
+            	
+            	if(_n > 0){
+            		arr[i] = _n3;                    
+            	}else{
+                    arr[i] = 0;
+                }
+
+            	count1 += _n;
+            	count2 += _n2;
+            }
+
+            var iMax = 0;
+            for(var i=0;i<aLi.length;i++){
+                if(iMax < arr[i]){
+                    iMax = arr[i];
+                    var _oImg = aLi[i].getElementsByTagName('img')[0];
+                    oImg.style.display = 'inline-block';
+                    oImg.src = _oImg.src;
+                }
+            }
+            if(iMax == 0){
+                oImg.style.display = 'none';
+            }
+
+            aCount[0].innerHTML = count1;
+            aCount[1].innerHTML = count2;
+            aCount[2].innerHTML = iMax;
+        }
+
+        function calc(oLi) {
+            var aBtn = oLi.getElementsByTagName('input');
+            var oStrong = oLi.getElementsByTagName('strong')[0];
+            var oEm = oLi.getElementsByTagName('em')[0];
+            var oSpan = oLi.getElementsByTagName('span')[0];
+            var n1 = Number(oStrong.innerHTML);
+            var n2 = parseFloat(oEm.innerHTML);
+
+            aBtn[0].onclick = function() {
+                if (n1 > 0) {
+                    n1--;
+                    oStrong.innerHTML = n1;
+                    oSpan.innerHTML = (n1 * n2).toFixed(1) + '元';
+
+                    calcCount();
+                }
+            };
+
+            aBtn[1].onclick = function() {
+                n1++;
+                oStrong.innerHTML = n1;
+                oSpan.innerHTML = (n1 * n2).toFixed(1) + '元';
+
+                calcCount();
+            };
+        }
+    };
+    </script>
+</head>
+
+<body>
+    <ul id="list">
+        <li>
+            <img width="40" height="40" src="img/1.jpg" alt="">
+            <input type="button" value="-">
+            <strong>0</strong>
+            <input type="button" value="+"> 单价：
+            <em>12.5元</em> 小计：
+            <span>0元</span>
+        </li>
+        <li>
+            <img width="40" height="40" src="img/2.jpg" alt="">
+            <input type="button" value="-">
+            <strong>0</strong>
+            <input type="button" value="+"> 单价：
+            <em>10元</em> 小计：
+            <span>0元</span>
+        </li>
+        <li>
+            <img width="40" height="40" src="img/3.jpg" alt="">
+            <input type="button" value="-">
+            <strong>0</strong>
+            <input type="button" value="+"> 单价：
+            <em>22元</em> 小计：
+            <span>0元</span>
+        </li>
+        <li>
+            <img width="40" height="40" src="img/4.jpg" alt="">
+            <input type="button" value="-">
+            <strong>0</strong>
+            <input type="button" value="+"> 单价：
+            <em>99元</em> 小计：
+            <span>0元</span>
+        </li>
+        <li>
+            <img width="40" height="40" src="img/5.png" alt="">
+            <input type="button" value="-">
+            <strong>0</strong>
+            <input type="button" value="+"> 单价：
+            <em>8.8元</em> 小计：
+            <span>0元</span>
+        </li>
+    </ul>
+    <div id="total">
+        <p>总计：<span>0</span>件，<span>0</span>元</p>
+        <p>其中最贵的是：<span>0</span>元</p>
+        <p><img id="img" src="" alt=""></p>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片背景定位</title>
+    <style>
+		#div1{ position: relative;}
+		#div1 > div{
+		 	position: absolute; 
+		 	width: 40px;
+		 	height: 40px;
+		 	opacity: 0.2;
+		 	transition: 0.3s;
+		 	background: url(img/img1.jpg) no-repeat;
+		}
+    </style>
+    <script>
+    window.onload = function() {
+    	var oBtn = document.getElementById('btn1');
+    	var oDiv = document.getElementById('div1');
+    	var aDiv = oDiv.getElementsByTagName('div');
+
+    	oBtn.onclick = function() {
+    		var str = '';
+    		var len = 1000;
+
+    		for(var i=0;i<len;i++){
+    			str += '<div style="left:'+ (i%50*41) +'px; top:'+ (Math.floor(i/50)*41) +'px; background-position: '+ (-i%50*41) +'px '+ (-Math.floor(i/50)*41) +'px;"></div>';
+    		}
+
+    		oDiv.innerHTML = str;
+
+    		for(var i=0;i<len;i++){
+    			aDiv[i].onmouseover = function() {
+    				this.style.opacity = 1;
+    			};
+    		}
+    	};
+    };
+    </script>
+</head>
+<body>
+
+<button id="btn1">生成div</button>
+<div id="div1"></div>
+
+</body>
+</html>

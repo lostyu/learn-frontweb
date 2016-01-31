@@ -19,6 +19,19 @@
 			margin: 0 auto;
 			background: url(img/ip6.png) no-repeat;
 		}
+		.msgBox .count{
+			position: absolute;
+			right: -50px;
+			top: 0;
+		}
+		.msgBox .mask{
+			display: none;
+			position: absolute;
+			z-index: 1;
+			width: 100%;
+			height: 100%;
+			background: rgba(0,0,0,.5);
+		}
 		.msgBox .inner{
 			position: absolute;
 			top: 95px;
@@ -124,31 +137,10 @@
 <body>
 
 	<div class="msgBox">
+		<div id="count" class="count"></div>
 		<div class="inner">
-			<div class="innerMsg j-innerMsg" id="div1">
-				<!-- <div class="msgItem">
-					<div class="pic">
-						<img src="img/tx1.jpg" alt="">
-					</div>
-					<div class="text">
-						<div class="cnt">
-							<p>hello</p>
-						</div>
-					</div>
-				</div>
-				<div class="msgItem msgItem-r">
-					<div class="pic">
-						<img src="img/tx2.jpg" alt="">
-					</div>
-					<div class="text">
-						<div class="cnt">
-							<p>hello</p>
-						</div>
-					</div>
-				</div> -->
-				
-
-			</div>
+			<div id="mask" class="mask"></div>
+			<div class="innerMsg j-innerMsg" id="div1"></div>
 			<div class="msgCtrl">
 				<img class="tx j-tx" src="img/tx1.jpg" alt="">
 				<input class="ipt j-ipt" type="text">
@@ -181,6 +173,9 @@
 			var oImg = getByClass('j-tx')[0];
 			var oIpt = getByClass('j-ipt')[0];
 			var oBtn = getByClass('j-btn')[0];
+			var oCount = document.getElementById('count');
+			var oMask = document.getElementById('mask');
+			var count = 0;
 			var mode = 1;
 			var tx = ['img/tx1.jpg', 'img/tx2.jpg'];
 			var template = '<div class="{msgItem}">'+
@@ -206,9 +201,11 @@
 						tmp = template.replace('{msgItem}', 'msgItem msgItem-r').replace('{imgSrc}', _src).replace('{content}', _content);				
 					}
 
+					count++;
 					oBox.innerHTML += tmp;
 					oIpt.value = '';
 					oBox.scrollTop = oBox.offsetHeight;
+					oCount.innerHTML = count;
 				}				
 			};
 
@@ -221,6 +218,16 @@
 					mode = 1;
 					this.src = tx[0];
 				}
+			};
+
+			oBox.onclick = function() {
+				oMask.style.display = 'block';
+				if(confirm('是否清空聊天记录？')){
+					oBox.innerHTML = '';
+					count = 0;
+					oCount.innerHTML = 0;
+				}
+				oMask.style.display = 'none';
 			};
 		}
 	</script>
