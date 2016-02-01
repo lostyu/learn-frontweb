@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>100div</title>
+    <style>
+		div{ position: absolute; width: 50px; height:50px; line-height: 50px; background: red; text-align: center; color: #fff;}
+    </style>
+    <script>
+    window.onload = function() {
+    	// 方法1
+    	// var str = '';
+    	// for(var i=0;i<100;i++){
+    	// 	str += '<div style="left:'+ (i%10)*51 +'px; top:'+ Math.floor(i/10)*51 +'px;">'+ i +'</div>';
+    	// }
+    	// document.body.innerHTML = str;
+
+
+    	// 方法2
+    	var rows = 6;
+    	var cols = 10;
+    	var str2 = '';
+    	var count = 0;
+
+    	for(var i=0;i<rows;i++){
+    		for(var j=0;j<cols;j++){
+    			str2 += '<div style="left:'+ j*51 +'px;top:'+ i*51 +'px;">'+ count +'</div>';
+    			count++;
+    		}
+    	}
+    	document.body.innerHTML = str2;
+    };
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>奇偶数判断</title>
+    <style>
+    div {
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        background: #f0f0f0;
+        text-align: center;
+        color: #fff;
+    }
+    
+    div img {
+        margin-top: 10px;
+        border-radius: 50%;
+        transition: 1s;
+    }
+    
+    div img:hover {
+        transform: scale(1.5);
+    }
+    
+    div.active {
+        background: #333;
+    }
+    
+    div.active img {
+        border-radius: 0;
+    }
+    
+    .container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        margin-top: 50px;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+        var aBtn = document.getElementsByTagName('button');
+        var oDiv = document.getElementById('div1');
+        var aDiv = document.getElementsByTagName('div');
+        var str = '';
+        var len = 30;
+        var arrImgs = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg'];
+
+        for (var i = 0; i < len; i++) {
+            str += '<div style="left:' + (i % 7) * 81 + 'px; top:' + Math.floor(i / 7) * 81 + 'px;"><img width="60" height="60" src="' + arrImgs[i % arrImgs.length] + '"/></div>';
+        }
+        oDiv.innerHTML = str;
+
+
+        aBtn[0].onclick = function() {
+            var str2 = '';
+            len++;
+            for (var i = 0; i < len; i++) {
+                str2 += '<div style="left:' + (i % 7) * 81 + 'px; top:' + Math.floor(i / 7) * 81 + 'px;"><img width="60" height="60" src="' + arrImgs[i % arrImgs.length] + '"/></div>';
+            }
+            oDiv.innerHTML = str2;
+        };
+
+        // 奇数
+        aBtn[1].onclick = function() {
+            for (var i = 0; i < aDiv.length; i++) {
+                aDiv[i].className = '';
+                if (i % 2 != 0) {
+                    aDiv[i].className = 'active';
+                }
+            }
+        };
+
+        // 偶数
+        aBtn[2].onclick = function() {
+            for (var i = 0; i < aDiv.length; i++) {
+                aDiv[i].className = '';
+                if (i % 2 == 0) {
+                    aDiv[i].className = 'active';
+                }
+            }
+        };
+
+        // 奇数横排
+        aBtn[3].onclick = function() {
+            for (var i = 0; i < aDiv.length; i++) {
+                aDiv[i].className = '';
+
+                var n1 = Math.floor(i / 7);
+                if (n1 % 2 != 0) {
+                    aDiv[i].className = 'active';
+                }
+            }
+        };
+
+        // 偶数横排
+        aBtn[4].onclick = function() {
+            for (var i = 0; i < aDiv.length; i++) {
+                aDiv[i].className = '';
+
+                var n1 = Math.floor(i / 7);
+                if (n1 % 2 == 0) {
+                    aDiv[i].className = 'active';
+                }
+            }
+        };
+
+        // 奇数竖排
+        aBtn[5].onclick = function() {
+            for (var i = 0; i < aDiv.length; i++) {
+                aDiv[i].className = '';
+
+                var n1 = i % 7;
+                if (n1 % 2 != 0) {
+                    aDiv[i].className = 'active';
+                }
+            }
+        };
+
+        // 偶数竖排
+        aBtn[6].onclick = function() {
+            for (var i = 0; i < aDiv.length; i++) {
+                aDiv[i].className = '';
+
+                var n1 = i % 7;
+                if (n1 % 2 == 0) {
+                    aDiv[i].className = 'active';
+                }
+            }
+        };
+    };
+    </script>
+</head>
+
+<body>
+    <button>生成1张图片</button>
+    <button>奇数</button>
+    <button>偶数</button>
+    <button>奇数横排</button>
+    <button>偶数横排</button>
+    <button>奇数竖排</button>
+    <button>偶数竖排</button>
+    <section id="div1" class="container"></section>
+</body>
+
+</html>

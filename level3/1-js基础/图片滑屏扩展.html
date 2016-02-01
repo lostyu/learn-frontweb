@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片滑屏切换</title>
+    <style>
+    ul,li{ padding: 0; margin: 0; list-style: none;}
+    .imgBox {
+        position: relative;
+        margin: 0 auto;
+        width: 400px;
+        height: 400px;
+        border: 1px solid #ddd;
+        background-color: #f0f0f0;
+        overflow: hidden;
+    }
+
+    .imgBox ul li{
+        width: 400px;
+        height: 400px;
+        position: absolute;
+        left: 0;
+        display: none;
+        transition: 1s;
+    }
+    
+    .imgBox-num {
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        width: 100%;
+        line-height: 30px;
+        opacity: .5;
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+    }
+    
+    .imgBox-img {
+        position: relative;
+        width: 400px;
+        height: 400px;
+    }
+    
+    .imgBox-img img {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 400px;
+        height: 400px;
+        opacity: 1;
+        transition: 1s;
+    }
+
+    
+    .imgBox-tit {
+        position: absolute;
+        z-index: 1;
+        bottom: 0;
+        width: 100%;
+        line-height: 30px;
+        opacity: .5;
+        background-color: #000;
+        color: #fff;
+        text-align: center;
+    }
+    
+    .imgBox .prev,
+    .imgBox .next {
+        position: absolute;
+        z-index: 10;
+        left: 0;
+        top: 185px;
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        background-color: #000;
+        color: #fff;
+        opacity: .5;
+        text-decoration: none;
+        text-align: center;
+    }
+    
+    .imgBox .next {
+        left: auto;
+        right: 0;
+    }
+    
+    .imgBox a:hover {
+        background-color: blue;
+    }
+    </style>
+    <script>
+    function getByClass(oParent, sClass) {
+        var aEle = oParent.getElementsByTagName('*');
+        var aResult = [];
+        var re = new RegExp('\\b' + sClass + '\\b', 'i');
+        var i = 0;
+
+        for (i = 0; i < aEle.length; i++) {
+            //if(aEle[i].className==sClass)
+            //if(aEle[i].className.search(sClass)!=-1)
+            if (re.test(aEle[i].className)) {
+                aResult.push(aEle[i]);
+            }
+        }
+
+        return aResult;
+    }
+    //  	function getByClass (oParent, sClass) {
+    // var elems = oParent.getElementsByTagName('*');
+    //  		var result = [];
+    // var reg = new RegExp('$\\s'+ sClass +'\\s^');
+    // var i = 0;
+
+    // for(i=0;i<elems.length;i++){
+    // 	if(reg.test(elems[i]).className){
+    // 		result.push(elems[i]);
+    // 	}
+    // }
+
+    // return result;
+    //  	}
+    window.onload = function() {
+        var oNum = getByClass(document, 'imgBox-num')[0];
+        var aImgList = getByClass(document, 'imgBox-img')[0].getElementsByTagName('img');
+        
+        var oTit = getByClass(document, 'imgBox-tit')[0];
+        var oPrev = getByClass(document, 'prev')[0];
+        var oNext = getByClass(document, 'next')[0];
+        var arrImg = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg'];
+        var arrText = ['第一张', '第2张', '第3张', '第4张'];
+        var num = 0;
+        var len = arrImg.length;
+        var onOff = false;	// 默认正序
+
+       for(var i=0;i<aImgList.length;i++){
+            aImgList[i].style.zIndex = aImgList.length - i;
+       }
+
+        function tab() {
+            oNum.innerHTML = num + 1 + ' / ' + len;
+            oTit.innerHTML = arrText[num];
+        }
+        tab();
+
+        function qiehuan(des) {
+
+            des = des || 'left';
+            
+            if(des == 'left'){
+                aImgList[num].style.left = '-100%';
+            }else{
+                aImgList[num].style.left = '100%';
+            }     
+            aImgList[num].style.opacity = 0;       
+        }
+
+		oPrev.onclick = function() {
+            
+            if(num < 3){
+                qiehuan();
+                num++;  
+                tab();       
+            }else{
+                if(confirm('重新来过？')){
+                    for(var i=0;i<aImgList.length;i++){
+                        aImgList[i].style.left = 0;
+                        aImgList[i].style.opacity = 1;
+                        num = 0;
+                    }
+                }
+            }
+            
+        }
+
+        oNext.onclick = function() {            
+
+            if(num < 3){
+                qiehuan('right');
+                num++;
+                tab();       
+            }else{
+                if(confirm('重新来过？')){
+                    for(var i=0;i<aImgList.length;i++){
+                        aImgList[i].style.left = 0;
+                        aImgList[i].style.opacity = 1;
+                        num = 0;
+                    }
+                }
+            }
+        }
+
+    };
+    </script>
+</head>
+
+<body>
+
+    <div class="imgBox">
+        <div class="imgBox-num">1 / 4</div>
+        <div class="imgBox-img">
+            <img src="img/1.jpg" alt="">
+            <img src="img/2.jpg" alt="">
+            <img src="img/3.jpg" alt="">
+            <img src="img/4.jpg" alt="">
+        </div>
+        <div class="imgBox-tit">我是标题</div>
+        <a class="prev" href="javascript:;">&lt;</a>
+        <a class="next" href="javascript:;">&gt;</a>
+    </div>
+</body>
+
+</html>
