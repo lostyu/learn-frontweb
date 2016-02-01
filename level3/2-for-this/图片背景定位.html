@@ -37,7 +37,11 @@
     		for(var i=0;i<len;i++){
     			aDiv[i].onmouseover = function() {
     				this.style.opacity = 1;
+                    this.style.transform = 'scale(2)';
     			};
+                aDiv[i].onmouseout = function() {
+                    this.style.transform = 'scale(1)';
+                };
     		}
     	};
     };
