@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>返回页面顶部</title>
+    <style>
+		body{ height: 5000px;}
+		#btn1{ position: fixed; right: 20px; bottom: 20px;}
+    </style>
+    <script>
+    window.onload = function() {
+    	var oBtn = document.getElementById('btn1');
+
+    	oBtn.onclick = function() {
+    		document.body.scrollTop = 0;    		
+    	};
+
+    	window.onscroll = function() {
+    		var _top = this.scrollY;
+    		console.log(_top);
+    	};
+    };
+    </script>
+</head>
+<body>
+<button id="btn1">返回顶部</button>
+</body>
+</html>

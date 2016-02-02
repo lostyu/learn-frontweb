@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>交叉练习</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    .box {
+        width: 400px;
+        height: 400px;
+        margin: 50px auto 0;
+    }
+    
+    ul {
+        float: left;
+        width: 80px;
+    }
+    
+    img {
+        float: left;
+        width: 240px;
+        height: 120px;
+    }
+    
+    li {
+        width: 80px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        float: left;
+        background: #f0f0f0;
+        border-bottom: 1px solid #ccc;
+    }
+    
+    li.active {
+        background: blue;
+        color: #fff;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+        var aBtn = document.getElementsByTagName('button');
+        var aLi = document.getElementsByTagName('li');
+        var oImg = document.getElementsByTagName('img')[0];
+        var num = 0;
+        var arrImg = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg'];
+
+		aLi[num].className = 'active';
+        oImg.src = arrImg[num];
+
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].index = i;
+            aLi[i].onclick = function() {
+            	num = this.index;
+                for (var i = 0; i < aLi.length; i++) {
+                    aLi[i].className = '';
+                }
+                aLi[this.index].className = 'active';
+                oImg.src = arrImg[num];                
+            };
+        }
+        
+
+
+    };
+    </script>
+</head>
+
+<body>
+    <div style="text-align: center; margin-top: 30px;">
+        <button>下一张</button>
+        <button>交叉</button>
+        <button>同步</button>
+    </div>
+    <div class="box">
+        <ul>
+            <li>0</li>
+            <li>1</li>
+            <li>2</li>
+        </ul>
+        <img src="img/1.jpg" alt="">
+        <ul>
+            <li>3</li>
+            <li>4</li>
+            <li>5</li>
+        </ul>
+    </div>
+</body>
+
+</html>
