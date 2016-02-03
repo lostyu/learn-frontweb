@@ -45,6 +45,7 @@
         background: blue;
         color: #fff;
     }
+    .active{ background-color: red;}
     </style>
     <script>
     window.onload = function() {
@@ -53,22 +54,87 @@
         var oImg = document.getElementsByTagName('img')[0];
         var num = 0;
         var arrImg = ['img/1.jpg', 'img/2.jpg', 'img/3.jpg'];
+        var bjx = true;
+        var btb = false;
 
 		aLi[num].className = 'active';
+        aLi[aLi.length-1-num].className = 'active';
         oImg.src = arrImg[num];
 
         for (var i = 0; i < aLi.length; i++) {
             aLi[i].index = i;
             aLi[i].onclick = function() {
             	num = this.index;
-                for (var i = 0; i < aLi.length; i++) {
-                    aLi[i].className = '';
-                }
-                aLi[this.index].className = 'active';
-                oImg.src = arrImg[num];                
+                
+                if(bjx){
+                    jiaocha();
+                }    
+
+                if(btb){
+                    tongbu();
+                }            
+                               
             };
         }
+
+        aBtn[0].onclick = function() {
+            num++;  
+            num %= 3;
+              
+            if(bjx){                
+                jiaocha();
+                console.log(num);
+            }
+            if(btb){
+                tongbu();
+            }
+        };
+
+        aBtn[1].onclick = function() {            
+            bjx = true;
+            btb = false;
+            this.className = 'active';
+            aBtn[2].className = '';
+
+            jiaocha();
+        };
         
+        aBtn[2].onclick = function() {
+            bjx = false;
+            btb = true;
+            this.className = 'active';
+            aBtn[1].className = '';
+
+            tongbu();
+        };
+
+
+        function tongbu() {
+            for(var i=0;i<aLi.length;i++){
+                aLi[i].className = '';
+            }
+            aLi[num].className = 'active';
+            if(num < 3){
+                aLi[num+3].className = 'active';
+                oImg.src = arrImg[num];
+            }else{
+                aLi[num-3].className = 'active';
+                oImg.src = arrImg[num-3];
+            }
+        }
+
+        function jiaocha() {
+            for(var i=0;i<aLi.length;i++){
+                aLi[i].className = '';
+            }
+            if(num < 3){                    
+                oImg.src = arrImg[num];
+            }else{                    
+                oImg.src = arrImg[aLi.length-1-num];
+            }
+            aLi[num].className = 'active';
+            aLi[aLi.length-1-num].className = 'active';
+        }
 
 
     };
@@ -78,7 +144,7 @@
 <body>
     <div style="text-align: center; margin-top: 30px;">
         <button>下一张</button>
-        <button>交叉</button>
+        <button class="active">交叉</button>
         <button>同步</button>
     </div>
     <div class="box">
