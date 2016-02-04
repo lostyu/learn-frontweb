@@ -78,12 +78,14 @@
         }
 
         aBtn[0].onclick = function() {
-            num++;  
-            num %= 3;
-              
+            if (num > 2 && bjx) {
+                num = aLi.length-1-num;
+            }
+
+            num++;
+            num%=3;
             if(bjx){                
                 jiaocha();
-                console.log(num);
             }
             if(btb){
                 tongbu();
@@ -115,12 +117,12 @@
             }
             aLi[num].className = 'active';
             if(num < 3){
-                aLi[num+3].className = 'active';
-                oImg.src = arrImg[num];
+                aLi[num+3].className = 'active';                
             }else{
                 aLi[num-3].className = 'active';
-                oImg.src = arrImg[num-3];
             }
+
+            oImg.src = arrImg[num%3];
         }
 
         function jiaocha() {
