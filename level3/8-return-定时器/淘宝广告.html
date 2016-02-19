@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>淘宝广告</title>
+    <style>
+    	*{
+    		margin: 0;
+    		padding: 0;
+    		list-style: none;
+    	}
+		.box{
+			width: 400px;
+			height: 300px;
+			margin: 50px auto;
+			border: 1px solid #000;
+		}
+		.box li{
+			width: 78px;
+			height: 28px;
+			line-height: 30px;
+			border: 1px solid #ddd;
+			text-align: center;
+		}
+		.box .active{ background: #000; color: #fff; }
+		.box .ul1{ float: left; }
+		.box .ul2{ float: right; }
+		.box .img{ width: 240px; height: 100%; }
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oBox = document.getElementById('box1'),
+    			oImg = oBox.getElementsByTagName('img')[0],
+    			aLi = oBox.getElementsByTagName('li'),
+    			timer = null,
+    			curNum = 0,
+    			descrition = true,
+    			arrImgs = ['1.jpg', '2.jpg', '3.jpg', '4.jpg', '1.jpg', '2.jpg', '3.jpg', '4.jpg', '1.jpg', '2.jpg', '1.jpg', '2.jpg', '3.jpg', '4.jpg', '1.jpg', '2.jpg', '3.jpg', '4.jpg', '1.jpg', '2.jpg'];
+
+
+    		function tab(){
+    			for(var i=0;i<aLi.length;i++){
+    				aLi[i].className = '';
+    			}
+    			aLi[curNum].className = 'active';
+    			oImg.src = arrImgs[curNum];
+    		}
+    		tab();
+
+    		function autoPlay() {
+    			timer = setInterval(function() {
+    				if(descrition){
+    					curNum++;
+	    				if(curNum >= aLi.length - 1){
+	    					curNum = aLi.length - 1;
+	    					descrition = false;
+	    				}
+    				}else{
+    					curNum--;
+    					if(curNum <= 0){
+    						curNum = 0;
+    						descrition = true;
+    					}
+    				}
+    				
+    				tab();
+    			}, 500);
+    		}
+    		autoPlay();
+
+
+    		for(var i=0;i<aLi.length;i++){
+    			aLi[i].index = i;
+    			aLi[i].onmouseover = function() {
+    				clearInterval(timer);
+    				curNum = this.index;
+    				tab();
+    			};
+
+    			aLi[i].onmouseout = function() {
+    				autoPlay();
+    			};
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+<div id="box1" class="box">
+	<ul class="ul1">
+		<li class="active">测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+	</ul>
+	<img class="img" src="img/1.jpg" alt="">
+	<ul class="ul1 ul2">
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+		<li>测试</li>
+	</ul>
+</div>
+
+</body>
+</html>
