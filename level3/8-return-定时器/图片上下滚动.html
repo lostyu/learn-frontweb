@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片上下滚动</title>
+    <style>
+    	*{
+    		margin: 0;
+    		padding: 0;
+    		list-style: none;
+    	}
+		.box{
+			width: 200px;
+			margin: 50px auto;
+			border: 1px solid black;			
+		}
+		.box ul{
+			position: absolute;
+			top: 0;
+		}
+		.box .inner{
+			position: relative;
+			height: 300px;
+			overflow: hidden;
+		}
+		.box .up, .box .down{
+			height: 30px;
+			line-height: 30px;
+			background: #f3f3f3;
+			text-align: center;
+			cursor: pointer;
+		}
+		.box .down{}
+		.box img{
+			display: block;
+			width: 200px;
+			height: 100px;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oUl = document.getElementById('ul1'),
+    			oUp = document.getElementById('up'),
+    			oDown = document.getElementById('down'),
+    			oInner = document.getElementById('inner'),
+    			timer = null;
+
+    		oDown.onmousedown = function() {
+    			timer = setInterval(function(){
+    				if(oUl.offsetTop < 0){
+    					oUl.style.top = oUl.offsetTop+5 + 'px';
+    				}
+    			}, 50);    			
+    		};
+    		oDown.onmouseup = oDown.onmouseout = function() {
+    			clearInterval(timer);
+    		};
+
+    		oUp.onmousedown = function() {
+    			timer = setInterval(function(){
+    				if( (oUl.offsetHeight + oUl.offsetTop) > oInner.offsetHeight ){
+						oUl.style.top = oUl.offsetTop-5 + 'px';	
+    				}
+    			}, 50);    			
+    		};
+    		oUp.onmouseup = oUp.onmouseout = function() {
+    			clearInterval(timer);
+    		};
+    	};	
+    </script>
+</head>
+<body>
+
+<div class="box">
+	<div id="up" class="up">up</div>
+	<div id="inner" class="inner">
+		<ul id="ul1">
+			<li><img src="img/1.jpg" alt=""></li>
+			<li><img src="img/2.jpg" alt=""></li>
+			<li><img src="img/3.jpg" alt=""></li>
+			<li><img src="img/4.jpg" alt=""></li>
+			<li><img src="img/1.jpg" alt=""></li>
+			<li><img src="img/2.jpg" alt=""></li>
+			<li><img src="img/3.jpg" alt=""></li>
+			<li><img src="img/4.jpg" alt=""></li>
+		</ul>
+	</div>
+	<div id="down" class="down">down</div>
+</div>
+
+</body>
+</html>

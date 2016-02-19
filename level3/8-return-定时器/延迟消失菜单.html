@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>延迟消失菜单</title>
+    <style>
+    	*{
+    		margin: 0;
+    		padding: 0;
+    		list-style: none;
+    	}
+		.menu{
+			position: relative;
+			width: 500px;
+			margin: 50px auto;
+		}
+		.mainMenu{
+			overflow: hidden;
+		}
+		.mainMenu li{ 
+			float: left;			
+		}
+		.mainMenu a{
+			display: block;
+			height: 35px;
+			line-height: 35px;
+			padding: 0 20px;
+			background-color: #f60;
+			color: #fff;
+			text-decoration: none;
+		}
+		.mainMenu .active a, .mainMenu a:hover{
+			background-color: #000;
+			color: #f60;
+		}
+		
+		.subMenu{
+			display: none;
+			position: absolute;
+			top: 50px;
+		}
+		.subMenu:after{
+			position: absolute;
+			top: -10px;
+			left: 26px;
+			content: '';
+			width: 0;
+			height: 0;			
+			border-left: 10px solid transparent;
+			border-right: 10px solid transparent;
+			border-bottom: 10px solid #f60;
+		}
+		.subMenu ul{
+			overflow: hidden;
+		}
+		.subMenu li{
+			float: left;
+		}
+		.subMenu a{
+			display: block;
+			height: 35px;
+			line-height: 35px;
+			padding: 0 20px;
+			color: #fff;
+			text-decoration: none;
+			background-color: #f60;			
+		}
+		.subMenu2{
+			left: 72px;
+		}
+		.subMenu3{
+			left: 72px;
+		}
+		.subMenu3:after{
+			left: 98px;
+		}
+		.subMenu4{
+			left: 72px;
+		}
+		.subMenu4:after{
+			left: 170px;
+		}
+		.subMenu5{
+			left: 72px;
+		}
+		.subMenu5:after{
+			left: 252px;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oMainMenu = document.getElementById('mainMenu'),
+    			aMainLi = oMainMenu.getElementsByTagName('li'),
+    			aSubMenu = document.getElementById('subMenuBox').getElementsByTagName('div'),
+    			timer = null,
+    			iCur = 0;
+
+    		for(var i=0;i<aMainLi.length;i++){
+    			aMainLi[i].index = i;
+    			aMainLi[i].onmouseover = function() {
+					show();
+					aMainLi[iCur].className = '';
+					aSubMenu[iCur].style.display = 'none';
+    				iCur = this.index;
+
+    				aMainLi[iCur].className = 'active';
+    				aSubMenu[iCur].style.display = 'block';
+    			};
+
+    			aMainLi[i].onmouseout = function() {
+    				hide();
+    			};
+
+    			aSubMenu[i].onmouseover = function() {
+    				show();
+    			};
+    			aSubMenu[i].onmouseout = function() {
+    				hide();
+    			};
+    		}
+
+    		function hide() {
+    			timer = setTimeout(function() {
+					aSubMenu[iCur].style.display = 'none';
+    			}, 200);				
+    		}
+
+    		function show() {
+    			clearInterval(timer);
+    		}
+    	};	
+    </script>
+</head>
+<body>
+
+<div class="menu">
+	<ul id="mainMenu" class="mainMenu">
+		<li class="active"><a href="javascript:;">首页</a></li>
+		<li><a href="javascript:;">新闻</a></li>
+		<li><a href="javascript:;">音乐</a></li>
+		<li><a href="javascript:;">体育</a></li>
+		<li><a href="javascript:;">热门看点</a></li>
+	</ul>
+
+	<div id="subMenuBox">
+		<div class="subMenu">
+			<ul>
+				<li><a href="javascript:;">电影</a></li>
+				<li><a href="javascript:;">电影</a></li>
+				<li><a href="javascript:;">电影</a></li>
+				<li><a href="javascript:;">电影</a></li>
+			</ul>
+		</div>
+
+		<div class="subMenu subMenu2">
+			<ul>
+				<li><a href="javascript:;">电影2</a></li>
+				<li><a href="javascript:;">电影2</a></li>
+				<li><a href="javascript:;">电影2</a></li>
+				<li><a href="javascript:;">电影2</a></li>
+			</ul>
+		</div>
+
+		<div class="subMenu subMenu3">
+			<ul>
+				<li><a href="javascript:;">电影3</a></li>
+				<li><a href="javascript:;">电影3</a></li>
+				<li><a href="javascript:;">电影3</a></li>
+				<li><a href="javascript:;">电影23</a></li>
+			</ul>
+		</div>
+
+		<div class="subMenu subMenu4">
+			<ul>
+				<li><a href="javascript:;">电影4</a></li>
+				<li><a href="javascript:;">电影4</a></li>
+				<li><a href="javascript:;">电影4</a></li>
+				<li><a href="javascript:;">电影44</a></li>
+			</ul>
+		</div>
+
+		<div class="subMenu subMenu5">
+			<ul>
+				<li><a href="javascript:;">电影5</a></li>
+				<li><a href="javascript:;">电影5</a></li>
+				<li><a href="javascript:;">电影5</a></li>
+				<li><a href="javascript:;">电影5</a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
