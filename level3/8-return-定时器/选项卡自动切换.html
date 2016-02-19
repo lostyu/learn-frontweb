@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>选项卡自动切换</title>
+    <style>
+    	*{margin: 0; padding: 0; list-style: none;}
+		.box{
+			width: 500px;			
+			margin: 50px auto;
+			background-color: #d0d0d0;
+		}
+		.navs{
+			background: #f0f0f0;
+		}
+		.navs ul{
+			overflow: hidden;
+		}
+		.navs li{
+			float: left;
+			height: 35px;
+			line-height: 35px;
+			padding: 0 20px;
+		}
+		.navs .active{
+			background-color: #d0d0d0;
+			color: #fff;
+		}
+
+		.panels{ 
+			height: 145px;
+			padding: 10px; 
+		}
+		.panels .pic{
+			float: left;
+			width: 190px;
+			height: 145px;
+		}
+		.panels .pic img{
+			width: 190px;
+			height: 145px;
+		}
+		.panels .ul{
+			float: right;
+			width: 280px;
+		}
+		.panels .ul a{
+			display: block;
+			line-height: 30px;
+			font-size: 14px;
+			color: #000;
+		}
+		.panels .active a{
+			background-color: #000;
+			color: #fff;			
+		}
+    </style>
+    <script>
+    	/*
+    	*	data: 2016-02-01
+    	*/
+    	function calcDay(data) {
+			return Math.floor((+new Date() - Date.parse(data))/1000/60/60/24);
+    	}
+
+    	// console.log( calcDay('2016-02-12') );
+
+		window.onload = function() {
+			var oBox = document.getElementById('box'),
+				aNavs = document.getElementById('navs').children,
+				oImg = document.getElementById('pic'),
+				oSubNav = document.getElementById('subNav'),
+				aSubNav = document.getElementById('subNav').children,
+				timer = null,
+				num = 0,
+				curTab = 0,
+				datas0 = [
+					{
+						url: 'http://baidu.com',
+						src: '1.jpg',
+						title: '习近平通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '2.jpg',
+						title: '2通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '3.jpg',
+						title: '3通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '4.jpg',
+						title: '4通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '1.jpg',
+						title: '1过媒体向全国人民致以元宵节问候'
+					},
+				],
+				datas1 = [
+					{
+						url: 'http://baidu.com',
+						src: '1.jpg',
+						title: '习近平通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '2.jpg',
+						title: '2通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '3.jpg',
+						title: '3通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '4.jpg',
+						title: '4通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '1.jpg',
+						title: '1过媒体向全国人民致以元宵节问候'
+					},
+				],
+				datas2 = [
+					{
+						url: 'http://baidu.com',
+						src: '1.jpg',
+						title: '习近平通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '2.jpg',
+						title: '2通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '3.jpg',
+						title: '3通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '4.jpg',
+						title: '4通过媒体向全国人民致以元宵节问候'
+					},
+					{
+						url: 'http://baidu.com',
+						src: '1.jpg',
+						title: '1过媒体向全国人民致以元宵节问候'
+					},
+				],
+				data = eval('datas'+curTab);
+
+
+
+			function init(){
+				for(var i=0;i<aNavs.length;i++){
+					aNavs[i].className = '';
+				}
+				aNavs[curTab].className = 'active';
+				
+				
+				oImg.src = data[num].src;
+				var subNavLi = '';
+				for(var i=0;i<data.length;i++){
+					subNavLi += '<li><a href="'+ data[i]['url'] +'">'+ data[i]['title'] +'</a></li>';
+				}
+				oSubNav.innerHTML = subNavLi;
+				aSubNav[num].className = 'active';
+			}
+			init();
+
+			oBox.onmouseover = function() {
+				clearInterval(timer);
+			};
+			oBox.onmouseout = function() {
+				autoPlay();
+			};
+
+			// for(var i=0;i<aSubNav.length;i++){
+			// 	aSubNav[i].index = i;
+			// 	aSubNav[i].onmouseover = function() {
+			// 		for(var i=0;i<aSubNav.length;i++){
+			// 			aSubNav[i].className = '';
+			// 		}
+			// 		this.className = 'active';
+			// 		num = this.index;
+					
+
+			// 		console.log(num);
+			// 	};
+			// }
+
+			function autoPlay() {
+				timer = setInterval(function() {
+					calcNum();
+					init();
+				}, 1000);
+			}
+
+			function calcNum() {
+				num++;
+				if(num > data.length - 1){
+					num = 0;
+					curTab++;
+					if(curTab > aNavs.length - 1){
+						curTab = 0;
+					}
+				}
+			}
+
+			autoPlay();
+
+		};
+    </script>
+</head>
+<body>
+
+<div id="box" class="box">
+	<div class="navs">
+		<ul id="navs">
+			<li class="active">新闻</li>
+			<li>音乐</li>
+			<li>体育</li>
+		</ul>
+	</div>
+	<div class="panels">
+		<div class="pic">
+			<img id="pic" src="" alt="">
+		</div>
+		<div class="ul">
+			<ul id="subNav"></ul>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
