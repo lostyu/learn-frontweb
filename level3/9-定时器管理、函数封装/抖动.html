@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>抖动</title>
+    <style>
+    img {
+        position: absolute;
+        top: 400px;
+        left: 10px;
+    }
+    </style>
+    <script>
+    function getStyle(obj, attr) {
+        return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+    }
+
+    function doMove(obj, attr, dir, target, endFn) {
+
+        dir = parseInt(getStyle(obj, attr)) < target ? dir : -dir;
+
+        clearInterval(obj.timer);
+
+        obj.timer = setInterval(function() {
+            var speed = parseInt(getStyle(obj, attr)) + dir;
+
+            if (speed > target && dir > 0 || speed < target && dir < 0) {
+                speed = target;
+            }
+
+            obj.style[attr] = speed + 'px';
+
+            if (speed == target) {
+                clearInterval(obj.timer);
+
+                if (typeof endFn == 'function') {
+                    endFn();
+                }
+            }
+        }, 30);
+    }
+
+    window.onload = function() {
+        var aImg = document.getElementsByTagName('img');
+
+        for(var i=0;i<aImg.length;i++){
+          aImg[i].style.left = i * 110 + 200 + 'px';
+
+          aImg[i].onmouseover = function() {
+            shake(this, 'top');
+          };
+        }
+
+        function shake(obj, attr, endFn) {            
+            var pos = parseInt(getStyle(obj, attr));            
+            var arrNum = [];
+            var num = 0;
+
+            // 判断是否有值
+            // 没有值则赋值
+            // 有值则跳过            
+            
+            for (var i = 20; i > 0; i -= 2) {
+                arrNum.push(i, -i);
+            }
+            arrNum.push(0);
+
+            clearInterval(obj.shake);
+            obj.shake = setInterval(function() {
+                obj.style[attr] = pos + arrNum[num] + 'px';
+                num++;
+                if (num > arrNum.length) {
+                    clearInterval(obj.shake);
+                    if(typeof endFn == 'function'){
+                      endFn();
+                    }
+                }
+            }, 30);
+        }
+    };
+    </script>
+</head>
+
+<body>
+    <img width="100" src="img/1.jpg" alt="">
+    <img width="100" src="img/2.jpg" alt="">
+    <img width="100" src="img/3.jpg" alt="">
+    <img width="100" src="img/4.jpg" alt="">
+    <img width="100" src="img/5.jpg" alt="">
+    <img width="100" src="img/6.jpg" alt="">
+    <img width="100" src="img/7.jpg" alt="">
+    <img width="100" src="img/8.jpg" alt="">
+</body>
+
+</html>

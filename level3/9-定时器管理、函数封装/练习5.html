@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>练习5</title>
+    <script src="tool.js"></script>
+    <script>
+
+    	window.onload = function() {
+    		var oBtn1 = document.getElementById('btn1'),
+                oBtn2 = document.getElementById('btn2'),
+    			oDiv = document.getElementById('div1');
+
+            oBtn1.onclick = function() {
+                doMove(oDiv, 'left', 12, 10);              
+            };  
+
+    		oBtn2.onclick = function() {
+				doMove(oDiv, 'left', 12, 800);
+    		};
+    	};
+    </script>
+</head>
+<body>
+<button id="btn1">向左</button>
+<button id="btn2">向右</button>
+<div id="div1" style="width: 100px; height: 100px; background-color: red; position: absolute; top: 50px; left: 10px;"></div>
+
+</body>
+</html>

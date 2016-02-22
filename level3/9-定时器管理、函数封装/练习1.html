@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>练习1</title>
+    <script>
+    	function getStyle(obj, attr) {
+    		return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj,false)[attr];
+    	}
+
+    	function doMove(obj, attr, target) {
+    		clearInterval(obj.timer);
+
+			obj.timer = setInterval(function() {
+				var speed = parseInt( getStyle(obj, attr) ) + 10;
+
+				if(speed >= target){
+					speed = target;
+				}			
+
+				obj.style[attr] = speed + 'px';
+
+				if(speed == target){
+					clearInterval(obj.timer);
+				}
+			}, 20);
+    	}
+
+    	window.onload = function() {
+    		var oBtn = document.getElementById('btn1'),
+    			oDiv = document.getElementById('div1');
+
+    		oBtn.onclick = function() {
+
+				doMove(oDiv, 'left', 800);
+    			
+    		};
+    	};
+    </script>
+</head>
+<body>
+<button id="btn1">移动</button>
+<div id="div1" style="width: 100px; height: 100px; background-color: red; position: absolute; top: 50px; left: 10px;"></div>
+
+</body>
+</html>
