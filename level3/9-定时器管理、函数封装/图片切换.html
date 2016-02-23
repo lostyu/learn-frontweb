@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片切换</title>
+    <style>
+        .slideBox{
+            overflow: hidden;
+            position: relative;
+            width: 490px;
+            height: 280px;
+            margin: 50px auto;
+            background-color: #ddd;
+        }
+        .slideBox .prev, .slideBox .next{
+            position: absolute;
+            z-index: 2;
+            top: 50%;
+            width: 40px;
+            height: 40px;
+            line-height: 40px;
+            margin-top: -20px;
+            text-align: center;
+            text-decoration: none;
+            font-size: 20px;
+            background-color: rgba(0,0,0,.5);
+            color: #fff;
+        }
+        .slideBox .prev{ left: 10px; }
+        .slideBox .next{ right: 10px; }
+        .slideBox .prev:hover, .slideBox .next:hover{
+            background-color: rgba(0,0,0,.7);
+        }
+        .slideBox .pic{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        .slideBox .pic img{
+            float: left;
+            width: 100%;
+            height: 100%;
+        }
+        .slideBox .nav{
+            position: absolute;            
+            bottom: 10px;
+            z-index: 2;
+            width: 100%;                   
+            text-align: center;
+        }
+        .slideBox .nav table{
+            border-collapse: collapse;
+            border-spacing: 0;
+            border: none;
+            padding: 0;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .slideBox .nav ul{
+            margin: 0;
+            padding: 0;     
+        }
+        .slideBox .nav li{            
+            float: left;
+            padding: 0;
+            width: 10px;
+            height: 10px;
+            margin-right: 5px;
+            border-radius: 50%;
+            background-color: #d0d0d0;
+            list-style: none;
+            cursor: pointer;
+        }
+        .slideBox .nav .active{
+            background-color: orange;            
+        }
+    </style>
+    <script>
+    function getStyle(obj, attr) {
+        return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+    }
+
+    function doMove(obj, attr, dir, target, endFn) {
+
+        dir = parseInt(getStyle(obj, attr)) < target ? dir : -dir;
+
+        clearInterval(obj.timer);
+
+        obj.timer = setInterval(function() {
+            var speed = parseInt(getStyle(obj, attr)) + dir;
+
+            if (speed > target && dir > 0 || speed < target && dir < 0) {
+                speed = target;
+            }
+
+            obj.style[attr] = speed + 'px';
+
+            if (speed == target) {
+                clearInterval(obj.timer);
+
+                if (typeof endFn == 'function') {
+                    endFn();
+                }
+            }
+        }, 30);
+    }
+
+    Object.extend = function(target, source) {
+        for(var p in source){
+            if(source.hasOwnPrototype(p)){
+                target[p] = source[p];
+            }
+        }
+
+        return target;
+    };
+
+
+    window.onload = function() {
+        var oSlide = document.getElementById('slide1'),            
+            oUl = oSlide.getElementsByTagName('ul')[0],
+            oPic = oSlide.getElementsByTagName('div')[0],
+            aA = oSlide.getElementsByTagName('a'),
+            aImg = oSlide.getElementsByTagName('img'),
+            aLi = oSlide.getElementsByTagName('li'),
+            arrImgs = [
+                'https://aecpm.alicdn.com/simba/img/TB10jIPLpXXXXb9aXXXSutbFXXX.jpg', 
+                'https://img.alicdn.com/tps/TB1a3raLFXXXXcNXFXXXXXXXXXX-520-280.jpg', 
+                'https://img.alicdn.com/tps/TB1RVG9LFXXXXb4XpXXXXXXXXXX-520-280.jpg',
+                'https://aecpm.alicdn.com/simba/img/TB1Bo63LFXXXXXnXXXXSutbFXXX.jpg',
+                'https://aecpm.alicdn.com/simba/img/TB127XgLFXXXXalXpXXSutbFXXX.jpg'
+            ],
+            len = arrImgs.length,
+            iNow = num = 0,
+            onOff = true,
+            timer = null;
+
+        function init(){
+            for(var i=0;i<len;i++){
+                oUl.innerHTML += '<li></li>';
+            }
+            aLi[iNow].className = 'active';
+
+            aImg[0].src = arrImgs[iNow];
+            aImg[1].src = arrImgs[iNow+1];
+
+            aImg[0].style.width = oSlide.offsetWidth + 'px';
+            aImg[1].style.width = oSlide.offsetWidth + 'px';
+            oPic.style.width = oSlide.offsetWidth * 2 + 'px';
+        }
+        init();
+
+        aA[0].onclick = function() {
+            if(!onOff){return;}
+            onOff = false;
+
+            iNow--;
+            if(iNow == -1){
+                iNow = len-1;
+            }
+
+            slide(-1);
+
+            num = iNow;
+        };
+
+        aA[1].onclick = function() {
+            if(!onOff){return;}
+            onOff = false;
+
+            iNow++;
+            if(iNow == len){
+                iNow = 0;
+            }
+
+            slide(1);            
+
+            num = iNow;
+        };
+
+        oSlide.onmouseover = function() {
+            clearInterval(timer);
+        };
+        oSlide.onmouseout = function() {
+            autoPlay();
+        };
+
+        for(var i=0;i<len;i++){
+            aLi[i].index = i;
+            aLi[i].onclick = function() {
+                if(!onOff || this.index == num){return;}
+                onOff = false;
+
+                if(this.index > num){
+                    iNow = this.index;
+                    slide(1);
+                    num = iNow;
+                }
+                if(this.index < num){
+                    iNow = this.index;
+                    slide(-1);
+                    num = iNow;
+                }
+
+            };
+        }
+
+        function slide(n) {
+            if(n > 0){
+                for(var i=0;i<len;i++){
+                    aLi[i].className = '';
+                }
+                aLi[iNow].className = 'active';
+
+                aImg[0].src = arrImgs[num];
+                aImg[1].src = arrImgs[iNow];
+                oPic.style.left = '0';
+                doMove(oPic, 'left', 30, -490, function() {onOff = true});
+            }
+            if(n < 0){
+                for(var i=0;i<len;i++){
+                    aLi[i].className = '';
+                }
+                aLi[iNow].className = 'active';
+
+                aImg[0].src = arrImgs[iNow];
+                aImg[1].src = arrImgs[num];
+                oPic.style.left = '-490px';
+                doMove(oPic, 'left', 30, 0, function() {onOff = true});
+            }
+            
+        }
+
+        function autoPlay() {
+            timer = setInterval(function() {
+                if(!onOff){return;}
+                onOff = false;
+
+                iNow++;
+                if(iNow == len){
+                    iNow = 0;
+                }
+
+                slide(1);            
+
+                num = iNow;
+            }, 2000);
+        }
+        autoPlay();
+    };
+
+    // function Slide(elementId, cfg) {
+    //     this.dft = {
+
+    //     };
+    //     this.cfg = Object.extend(this.dft, cfg);
+    //     this.element = document.getElementById(elementId);
+    //     this.init();
+
+    //     this.prototype.init = function() {
+
+    //     };
+
+
+    // }
+    </script>
+</head>
+
+<body>
+<div id="slide1" class="slideBox">
+    <a class="prev" href="javascript:;">&lt;</a>
+    <a class="next" href="javascript:;">&gt;</a>
+    <div class="pic">
+        <img src="">
+        <img src="">        
+    </div>    
+    <div class="nav">
+        <table>
+            <tr>
+                <td>
+                    <ul></ul>
+                </td>
+            </tr>
+        </table>        
+    </div>
+</div>
+</body>
+
+</html>
