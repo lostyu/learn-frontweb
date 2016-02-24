@@ -18,32 +18,16 @@
                 oDiv1 = document.getElementById('div1');
 
             oBtn1.onclick = function() {                
-                fade(oDiv1, 9, 100);
+                // fade(oDiv1, 9, 100);
+
+                alert(getStyle(oDiv1, 'opacity'));
             };
 
 
             function fade(obj, dir, target, endFn) {
-
-                dir = (parseInt( getStyle(obj, 'opacity') )*100) < target ? dir : -dir;               
-                
                 clearInterval(obj.timer);
-
                 obj.timer = setInterval(function() {
-                    var speed = parseInt( getStyle(obj, 'opacity') )*100 + dir;
-
-                    if(speed > target && dir > 0 || speed < target && dir < 0){
-                        speed = target;
-                    }
-
-                    obj.style['opacity'] = speed / 100;
-
-                    if(speed == target){
-                        clearInterval(obj.timer);
-
-                        if(typeof endFn == 'function'){
-                            endFn();
-                        }
-                    }
+                    var speed = getStyle(obj, 'opacity');
                 }, 30);
             }
     	};
@@ -52,7 +36,7 @@
 <body>
 <button id="btn1">淡入</button>
 <button id="btn2">淡出</button>
-<div id="div1" style="width: 400px; height: 400px; background-color: red; opacity: 0;"></div>
+<div id="div1" style="width: 400px; height: 400px; background-color: red; opacity: .2; filter:alpha(opacity=20);"></div>
 
 </body>
 </html>

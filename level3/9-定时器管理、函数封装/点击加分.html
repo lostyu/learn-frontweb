@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>点击加分</title>
+    <style>
+		.box{
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			margin-left: -250px;
+			margin-top: -25px;
+			width: 500px;
+			height: 50px;
+			border: 1px solid #000;
+		}
+		.box .bg{
+			position: absolute;
+			width: 0;
+			height: 50px;
+			background-color: red;
+		}
+		.box ul{
+			padding: 0;
+			margin: 0;
+		}
+		.box li{
+			position: absolute;
+			z-index: 1;
+			left: 0;
+			top: 0;
+			width: 50px;
+			height: 50px;
+			line-height: 50px;
+			list-style: none;
+			text-align: center;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oBox = document.getElementById('box'),
+    			oBg = oBox.getElementsByTagName('div')[0],
+    			aLi = oBox.getElementsByTagName('li');
+
+    		for(var i=0;i<aLi.length;i++){
+    			aLi[i].style.left = i * 50 + 'px';
+    		}
+
+    		oBox.onclick = function() {
+    			
+    		};
+    	};
+    </script>
+</head>
+<body>
+
+<div id="box" class="box">
+	<div class="bg"></div>
+	<ul>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+		<li>+1</li>
+	</ul>
+</div>
+
+</body>
+</html>

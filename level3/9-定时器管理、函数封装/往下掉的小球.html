@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>往下掉的小球</title>
+    <style>
+		img{
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			width: 80px; 
+			height: 80px;
+			border-radius: 50%;
+		}
+    </style>
+    <script>
+    	function getStyle(obj, attr) {
+    		return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+    	}
+
+    	function doMove(obj, attr, dir, target, endFn) {
+    		dir = parseInt( getStyle(obj, attr) ) < target ? dir : -dir;
+
+    		clearInterval(obj.timer);
+
+    		obj.timer = setInterval(function() {
+    			var speed = parseInt( getStyle(obj, attr) ) + dir;
+
+    			if(speed > target && dir > 0 || speed < target && dir < 0){
+    				speed = target;
+    			}
+
+    			obj.style[attr] = speed + 'px';
+
+    			if(speed == target){
+                    clearInterval(obj.timer);
+    				if(typeof endFn == 'function'){
+    					endFn();
+    				}
+    			}
+
+    		}, 30);
+    	}
+
+    	function shake(obj, attr, endFn) {
+    		if( obj.onOff )return;
+    		obj.onOff = true;
+
+    		var arr = [];
+    		var num = 0;
+    		var speed = parseInt( getStyle(obj, attr) );
+
+    		for(var i=20;i>0;i-=2){
+    			arr.push(i,-1);
+    		}
+    		arr.push(0);
+
+    		clearInterval(obj.timer);
+    		obj.timer = setInterval(function() {
+    			obj.style[attr] = speed + arr[num] + 'px';
+    			num++;
+    			if(num == arr.length){
+                    clearInterval(obj.timer);
+    				if(typeof endFn == 'function'){
+    					endFn();
+    				}
+    				obj.onOff = false;
+    			}
+    		}, 30);
+    	}
+
+    	window.onload = function() {
+    		var str = '';
+    		var n = 0;
+    		var aImg = document.getElementsByTagName('img');
+    		
+    		for(var i=0;i<4;i++){
+    			for(var j=0;j<8;j++){
+    				str += '<img style="left:'+ (j*90+20) +'px; top:'+ (i*90+20) +'px;" src="img/'+ (n%7+1) +'.jpg" />';
+    				n++;
+    			}
+    		}
+
+    		document.body.innerHTML = str;
+
+    		for(var i=0;i<aImg.length;i++){
+    			aImg[i].index = i;
+    			aImg[i].onclick = function() {
+    				var arr = getArr(this.index);
+    				var num = num2 = 0;
+    				var timer = null;
+
+    				timer = setInterval(function() {
+    					shake(aImg[arr[num]], 'left', function() {
+    						var target = aImg[arr[num2]].offsetTop + 400;
+
+	    					doMove(aImg[arr[num2]], 'top', 15, target);
+	    					num2++;
+    					});
+
+    					num++;
+    					if(num == aImg.length){
+    						clearInterval(timer);
+    					}
+    				}, 50);
+    			};
+    		}
+
+    		function getArr(index) {
+    			var arr = [index];
+    			var n1 = n2 = index;
+    			var len = Math.max(index, aImg.length - 1 - index);
+
+    			for(var i=0;i<len;i++){
+    				if(n1 > 0){
+    					arr.push(--n1);
+    				}
+    				if(n2 < aImg.length - 1 ){
+    					arr.push(++n2);
+    				}
+    			}
+
+    			return arr;
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>
