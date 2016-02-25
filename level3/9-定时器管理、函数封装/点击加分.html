@@ -23,6 +23,8 @@
 			width: 0;
 			height: 50px;
 			background-color: red;
+			opacity: 0;
+			filter: alpha(opacity = 0);
 		}
 		.box ul{
 			padding: 0;
@@ -41,17 +43,116 @@
 		}
     </style>
     <script>
+	    function getStyle(obj, attr){
+	    	return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+	    }
+
+    	function doMove(obj, attr, dir, target, endFn) {     
+
+            if(attr == 'opacity'){
+                dir = Math.round( getStyle(obj, attr) * 100 ) < target ? dir : -dir;
+            }else{
+                dir = parseInt( getStyle(obj, attr) ) < target ? dir : -dir;
+            }        
+
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function() {
+                var speed = 0;
+                if(attr == 'opacity'){
+                    speed = Math.round( getStyle(obj, attr) * 100 ) + dir;
+                }else{
+                    speed = parseInt( getStyle(obj, attr) ) + dir;
+                }
+
+                if(speed > target && dir > 0 || speed < target && dir < 0){
+                    speed = target;
+                }
+
+                if(attr == 'opacity'){
+                    obj.style.opacity = speed / 100;
+                    obj.style.filter = 'alpha(opacity = '+ speed +' )';
+                }else{
+                    obj.style[attr] = speed + 'px';
+                }
+
+                if(speed == target){
+                    clearInterval(obj.timer);
+                    if(typeof endFn == 'function'){
+                        endFn();
+                    }
+                }
+                
+            }, 30);
+            
+        }
+
+        function doMove2(obj, attr, dir, target, endFn) {    
+        	if(attr == 'opacity'){
+                dir = Math.round( getStyle(obj, attr) * 100 ) < target ? dir : -dir;
+            }else{
+                dir = parseInt( getStyle(obj, attr) ) < target ? dir : -dir;
+            }        
+
+            clearInterval(obj.timer);
+            obj.timer = setInterval(function() {
+                var speed = 0;
+                if(attr == 'opacity'){
+                    speed = Math.round( getStyle(obj, attr) * 100 ) + dir;
+                }else{
+                    speed = parseInt( getStyle(obj, attr) ) + dir;
+                }
+
+                if(speed > target && dir > 0 || speed < target && dir < 0){
+                    speed = target;
+                }
+
+                if(attr == 'opacity'){
+                    obj.style.opacity = speed / 100;
+                    obj.style.filter = 'alpha(opacity = '+ speed +' )';
+                }else{
+                    obj.style[attr] = speed + 'px';
+                }
+
+                if(speed == target){
+                    clearInterval(obj.timer);
+                    if(typeof endFn == 'function'){
+                        endFn();
+                    }
+                }
+                
+            }, 30);
+        }
+
     	window.onload = function() {
     		var oBox = document.getElementById('box'),
     			oBg = oBox.getElementsByTagName('div')[0],
-    			aLi = oBox.getElementsByTagName('li');
+    			aLi = oBox.getElementsByTagName('li'),
+    			timer = null,
+    			num = 0,
+    			onOff = true;
 
     		for(var i=0;i<aLi.length;i++){
     			aLi[i].style.left = i * 50 + 'px';
     		}
 
     		oBox.onclick = function() {
-    			
+    			if(onOff){
+    				onOff = false;
+
+    				doMove(oBg, 'width', 15, 200);
+	    			doMove2(oBg, 'opacity', 10, 100);
+	    			
+	    		// 	timer = setInterval(function() {
+	    		// 		doMove(aLi[num], 'top', 10, -100);
+	    		// 		num++;
+	    		// 		if(num == aLi.length){
+							// num = 0;
+							// clearInterval(timer);
+							// onOff = true;
+	    		// 		}	
+	    		// 	}, 100);	
+    			}
+    				
     		};
     	};
     </script>
