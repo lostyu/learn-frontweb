@@ -123,12 +123,55 @@
             }, 30);
         }
 
+
+        function doMove3(obj, json, endFn) {
+        	clearInterval(obj.timer);
+
+        	obj.timer = setInterval(function() {
+        		var bStop = true;
+
+        		for(var attr in json){
+        			var cur = 0;
+
+        			if(attr == 'opacity'){
+        				cur = Math.round( parseFloat(getStyle(obj, attr)) * 100 );
+        			}else{
+        				cur = parseInt( getStyle(obj, attr) );
+        			}
+
+        			var speed = (json[attr] - cur)/6;
+        			speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);        			
+
+        			if(cur != json[attr]){
+        				bStop = false;
+        			}
+
+        			if(attr == 'opacity'){
+        				obj.style.filter = 'alpha(opacity='+ (cur + speed) +')';
+        				obj.style.opacity = (cur + speed) / 100;
+        			}else{
+        				obj.style[attr] = cur + speed + 'px';
+        			}        			
+        		}
+
+        		if(bStop){
+    				clearInterval(obj.timer);
+    				if(typeof endFn == 'function'){
+    					endFn();
+    				}
+    			}
+        		
+        	}, 30);
+
+        }       
+
+
     	window.onload = function() {
     		var oBox = document.getElementById('box'),
     			oBg = oBox.getElementsByTagName('div')[0],
     			aLi = oBox.getElementsByTagName('li'),
     			timer = null,
-    			num = 0,
+    			num = n = 0,
     			onOff = true;
 
     		for(var i=0;i<aLi.length;i++){
@@ -139,18 +182,29 @@
     			if(onOff){
     				onOff = false;
 
-    				doMove(oBg, 'width', 15, 200);
-	    			doMove2(oBg, 'opacity', 10, 100);
+	    			doMove3(oBg, {'opacity': 100, 'width': 500}, function() {
+	    				doMove3(oBg, {'opacity': 0});
+	    			});
 	    			
-	    		// 	timer = setInterval(function() {
-	    		// 		doMove(aLi[num], 'top', 10, -100);
-	    		// 		num++;
-	    		// 		if(num == aLi.length){
-							// num = 0;
-							// clearInterval(timer);
-							// onOff = true;
-	    		// 		}	
-	    		// 	}, 100);	
+	    			timer = setInterval(function() {
+	    				doMove3(aLi[num], {'top': -120, 'opacity': 0}, function() {	    	    					
+	    					n++;	    					
+	    					if(n == aLi.length){
+	    						n = 0;
+	    						for(var i=0;i<aLi.length;i++){
+	    							aLi[i].style.top = 0;
+	    							doMove3(aLi[i], {'opacity': 100});
+	    						}
+                                oBg.style.width = 0;
+	    						onOff = true;
+	    					}				
+	    				});
+	    				num++;
+	    				if(num == aLi.length){
+							num = 0;
+							clearInterval(timer);							
+	    				}	
+	    			}, 60);	
     			}
     				
     		};

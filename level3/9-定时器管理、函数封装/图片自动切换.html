@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片自动切换</title>
+    <style>
+		.box{
+			overflow: hidden;
+			position: relative;
+			width: 500px;
+			height: 300px;
+			border: 1px solid #000;
+		}
+		.box .pic{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 1000px;
+		}
+		.box .pic img{
+			float: left;
+			width: 500px;
+			height: 300px;
+		}
+		.box .text{
+			position: absolute;
+			left: 0; 
+			right: 0;
+			bottom: 0;
+			background-color: rgba(0,0,0,.5);
+			color: #fff;
+		}
+		.box .text h2{
+			margin: 0;
+			padding: 0 10px;
+			line-height: 35px;
+			font-size: 16px;
+		}
+		.box .text p{
+			margin: 0;
+			padding: 0 10px 10px;
+			line-height: 1.5;
+			font-size: 14px;		
+		}
+    </style>
+    <script src="tool.js"></script>
+    <script>
+    	window.onload = function() {
+    		var oBox = document.getElementById('box'),
+    			oPic = oBox.getElementsByTagName('div')[0],
+    			oText = oBox.getElementsByTagName('div')[1],
+    			aImg = oBox.getElementsByTagName('img'),
+				arr = [
+	    			{
+	    				src: 'http://img5.cache.netease.com/tech/2015/12/7/20151207084542ac89d.png',
+	    				title: '争议央行征信中心市场化：是否垄断公共资源？',
+	    				des: '2015年1月5日，中国人民银行官网发布消息称，人民银行已印发《关于做好个人征信业务准备工作的通知》，要求芝麻信用管理有限公司等八家机构做好个人征信业务的准备工作，准备时间为六个月。'
+	    			},
+	    			{
+	    				src: 'http://img3.cache.netease.com/photo/0009/2016-02-26/BGNA4F530AI20009.jpg',
+	    				title: '盘点Twitter十年大事记',
+	    				des: '2006年，Twitter的雏形源自播客公司Odeo的一次头脑风暴会议。毕业于纽约大学的杰克-多尔西提出了“twttr”这一产品理念：一种让人们通过群组交流的短信服务。杰克-多尔西、埃文·威廉姆斯、比兹-斯通和诺亚-格拉斯。最初的原型产品由Odeo的内部员工使用。2006年3月21日，多尔西发布了首条推文：“刚刚创建我的twttr。”后来twttr改名为Twitter。'
+	    			},
+	    			{
+	    				src: 'http://img6.cache.netease.com/photo/0009/2016-02-26/BGNA4FH30AI20009.jpg',
+	    				title: '盘点Twitter十年大事记',
+	    				des: '2007年，获得西南偏南网络奖后，Twitter开始快速发展。图中的用户克里斯?梅西纳（现在是Uber的开发人员）发出了Twitter首条带主题标签(#)的推文：“How do you feel about using # (pound) for groups. As in #barcamp [msg]?”'
+	    			},
+	    			{
+	    				src: 'http://img4.cache.netease.com/photo/0009/2016-02-26/BGNA4FDU0AI20009.jpg',
+	    				title: '盘点Twitter十年大事记',
+	    				des: '2008年，Twitter出现服务器不稳定以及崩溃的问题，这导致部分用户流失。不过公司成功地解决了这些问题，向用户说明原因并道歉，帮助用户回归。'
+	    			}
+    			],
+    			iNow = num = 0,
+    			timer = null;
+
+    		function init(){
+    			aImg[0].src = arr[0].src;
+    			aImg[1].src = arr[1].src;
+    			oText.innerHTML = '<h2>'+ arr[0].title +'</h2><p>'+ arr[0].des +'</p>';
+    		}
+    		init();
+
+    		function autoPlay() {
+    			timer = setInterval(function() {    				
+    				iNow++;
+    				if(iNow == arr.length){
+    					iNow = 0;
+    				}
+
+    				aImg[0].src = arr[num].src;
+					aImg[1].src = arr[iNow].src;
+					oPic.style.left = 0;
+
+					starMove(oText, {'height': 0}, function() {
+
+						oText.style.visibility = 'hidden';
+						oText.style.height = 'auto';
+						oText.innerHTML = '<h2>'+ arr[iNow].title +'</h2><p>'+ arr[iNow].des +'</p>';
+						var iH = oText.offsetHeight;
+						oText.style.height = 0;
+
+						starMove(oPic, {'left': -500}, function() {
+							oText.style.visibility = 'visible';							
+							starMove(oText, {'height': iH});
+						});
+					});
+					num = iNow;
+
+    			}, 5000);
+    		}
+    		autoPlay();
+    	};
+    </script>
+</head>
+<body>
+
+<div id="box" class="box">
+
+	<div class="pic">
+		<img src="" alt="">
+		<img src="" alt="">
+	</div>
+	
+	<div class="text">
+		
+	</div>
+</div>
+
+</body>
+</html>
