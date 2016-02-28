@@ -60,13 +60,17 @@
 		.box .nav2 table td{
 			vertical-align: middle;
 		}
-		.box .nav2 li{
+		.box .nav2 span, .box .nav2 a{
 			display: inline-block;
 			width: 10px;
 			height: 10px;
-			background-color: orange;
+			margin-right: 5px;
+			background-color: #d0d0d0;
 			border-radius: 50%;
 			cursor: pointer;
+		}
+		.box .nav2 span.active{
+			background-color: orange;
 		}
 		.box .nav2 .prev, 
 		.box .nav2 .next{
@@ -76,8 +80,10 @@
 			background-color: #f0f0f0;
 			text-align: center;		
 			color: #333;	
+			font-style: normal;
 		}
 		.box .pic{
+			overflow: hidden;
 			position: relative;
 			height: 160px;
 		}
@@ -89,14 +95,114 @@
 		}
 		.box .ul2 li{
 			float: left;
-			width: 160px;
+			width: 150px;
 			height: 160px;
+			margin-right: 10px;
+		}
+		.box .ul2 li img{
+			width: 150px;
+			height: 100px;
 		}
     </style>
+    <script src="tool.js"></script>
     <script>
+    	function getByClass(sClass, oParent) {
+    		oParent = oParent || document;
+    		var arrResult = [],
+    			elements = oParent.getElementsByTagName('*');
+
+    		for(var i=0;i<elements.length;i++){
+    			if(elements[i].className == sClass){
+    				arrResult.push(elements[i]);
+    			}
+    		}
+
+    		return arrResult;
+    	}
+
     	window.onload = function() {
     		var oBox = document.getElementById('box'),
-    			
+    			aNav = document.getElementById('nav').children,
+    			aPanel = getByClass('panel', oBox);
+			
+			init();
+
+			function bindUl(oParent) {
+				var oUl = oParent.getElementsByTagName('ul')[0],
+					aLi = oUl.children,
+					oTd = oParent.getElementsByTagName('td')[0],
+					aA = oTd.getElementsByTagName('a'),
+					aSpan = oTd.getElementsByTagName('span'),
+					str = '<a class="prev" href="javascript:;">&lt;</a>',
+					w = 160,
+					iNow = 0;
+
+				for(var i=0;i<aLi.length-2;i++){
+					str += '<span></span>';
+				}
+				str += '<a class="next" href="javascript:;">&gt;</a>';
+				oTd.innerHTML = str;
+
+				aSpan[0].className = 'active';
+				oUl.style.width = w * aLi.length + 'px';
+
+				aA[0].onclick = function() {
+					iNow--;
+					if(iNow == -1){
+						iNow = aSpan.length - 1;
+					}
+
+					slide();
+				};
+
+				aA[1].onclick = function() {
+					iNow++;
+					if(iNow == aSpan.length){
+						iNow = 0;
+					}
+
+					slide();
+				};
+
+				for(var i=0;i<aSpan.length;i++){
+					aSpan[i].index = i;
+					aSpan[i].onclick = function() {
+						iNow = this.index;
+						slide();
+					};
+				}
+
+
+				function slide() {
+					for(var i=0;i<aSpan.length;i++){
+						aSpan[i].className = '';
+					}
+					aSpan[iNow].className = 'active';
+					starMove(oUl, {'left': -iNow*160});
+				}
+			}
+
+			
+
+			function init() {
+				for(var i=0;i<aNav.length;i++){
+					aNav[i].index = i;
+					aNav[i].onclick = function() {
+						for(var i=0;i<aNav.length;i++){
+							aNav[i].className = '';
+							aPanel[i].style.display = 'none';
+						}
+						aNav[this.index].className = 'active';
+						aPanel[this.index].style.display = 'block';
+					};
+				}
+
+				for(var i=0;i<aPanel.length;i++){
+					bindUl(aPanel[i]);
+				}
+			}
+
+			
     	};
     </script>
 </head>
@@ -104,32 +210,87 @@
 
 <div id="box" class="box">
 	
-	<ul class="nav">
+	<ul id="nav" class="nav">
 		<li class="active">数码</li>
 		<li>体育</li>
 	</ul>
 
-	<div class="panel">
+	<div class="panel" style="display: block;">
 		<div class="pic">
 			<ul class="ul2">
-				<li>fdsf</li>
-				<li>fdsf</li>
-				<li>fdsf</li>
+				<li>
+					<img src="img/1.jpg" alt="">
+					<p>商品价格</p>
+				</li>
+				<li>
+					<img src="img/2.jpg" alt="">
+					<p>商品价格222</p>
+				</li>
+				<li>
+					<img src="img/3.jpg" alt="">
+					<p>商品价格333</p>
+				</li>
+				<li>
+					<img src="img/3.jpg" alt="">
+					<p>商品价格333</p>
+				</li>
+				<li>
+					<img src="img/3.jpg" alt="">
+					<p>商品价格333</p>
+				</li>
+				<li>
+					<img src="img/3.jpg" alt="">
+					<p>商品价格333</p>
+				</li>
+				<li>
+					<img src="img/3.jpg" alt="">
+					<p>商品价格333</p>
+				</li>
 			</ul>
 		</div>
 		<div class="nav2">
 			<table>
 				<tr>
-					<td>
-						<ul>
-							<li class="prev">&lt;</li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li></li>
-							<li class="next">&gt;</li>
-						</ul>
-					</td>
+					<td></td>
+				</tr>
+			</table>
+			
+		</div>
+	</div>
+
+	<div class="panel" style="display: none;">
+		<div class="pic">
+			<ul class="ul2">
+				<li>
+					<img src="img/1.jpg" alt="">
+					<p>商品价格</p>
+				</li>
+				<li>
+					<img src="img/2.jpg" alt="">
+					<p>商品价格222</p>
+				</li>
+				<li>
+					<img src="img/3.jpg" alt="">
+					<p>商品价格333</p>
+				</li>
+				<li>
+					<img src="img/1.jpg" alt="">
+					<p>商品价格</p>
+				</li>
+				<li>
+					<img src="img/2.jpg" alt="">
+					<p>商品价格222</p>
+				</li>
+				<li>
+					<img src="img/3.jpg" alt="">
+					<p>商品价格333</p>
+				</li>
+			</ul>
+		</div>
+		<div class="nav2">
+			<table>
+				<tr>
+					<td></td>
 				</tr>
 			</table>
 			

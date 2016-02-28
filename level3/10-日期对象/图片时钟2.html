@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片时钟</title>
+    <style>
+    ul {
+        overflow: hidden;
+        text-align: center;
+        margin: 100px auto;
+    }
+    
+    ul li {
+        position: relative;
+        float: left;
+        width: 80px;
+        height: 113px;
+        list-style: none;
+    }
+    
+    ul img {
+        display: block;
+        width: 100%;
+    }
+    
+    ul li .pic {
+        position: absolute;
+        top: 0;
+    }
+    </style>
+    <script src="../../global/global.js"></script>
+    <script>
+    window.onload = function() {
+        var aDiv = document.getElementsByTagName('div'),
+            arrPic = ['img/0.jpg', 'img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg', 'img/5.jpg', 'img/6.jpg', 'img/7.jpg', 'img/8.jpg', 'img/9.jpg'];
+
+        setInterval(clock, 1000);
+
+        function init() {
+          var date = common.getDate(),
+              str = date.hour + date.minute + date.second;
+
+          for (var i = 0; i < aDiv.length; i++) {
+              var aImg = aDiv[i].getElementsByTagName('img');
+              aDiv[i].index = i;
+              aDiv[i].num = parseInt(str.charAt(i));
+              aImg[0].src = arrPic[str.charAt(i)];
+          }
+        }
+
+        function clock() {
+            var date = common.getDate(),
+                str = date.hour + date.minute + date.second;
+
+            function move(obj) {
+                var aImg = obj.getElementsByTagName('img');
+                obj.num1 = parseInt(str.charAt(obj.index));
+                aImg[1].src = arrPic[str.charAt(obj.index)];
+
+                if (obj.num != obj.num1) {
+                    // common.starMove(obj, {'top': -80}, function() {
+                    common.doMove(obj, 'top', 10, -80, function(){
+                        obj.style.top = 0;
+                        obj.num = obj.num1;
+                        aImg[0].src = arrPic[str.charAt(obj.index)];
+                    });
+                }
+            }
+
+            for (var i = 0; i < aDiv.length; i++) {
+                move(aDiv[i]);
+            }
+        }
+
+        init();
+    };
+    </script>
+</head>
+
+<body>
+    <ul id="div1">
+        <li>
+            <div class="pic">
+                <img src="img/1.jpg" alt="">
+                <img src="img/9.jpg" alt="">
+            </div>
+        </li>
+        <li>
+            <div class="pic">
+                <img src="img/1.jpg" alt="">
+                <img src="img/9.jpg" alt="">
+            </div>
+        </li>
+        <li>
+            <img src="img/colon.jpg" alt="">
+        </li>
+        <li>
+            <div class="pic">
+                <img src="img/1.jpg" alt="">
+                <img src="img/9.jpg" alt="">
+            </div>
+        </li>
+        <li>
+            <div class="pic">
+                <img src="img/1.jpg" alt="">
+                <img src="img/9.jpg" alt="">
+            </div>
+        </li>
+        <li>
+            <img src="img/colon.jpg" alt="">
+        </li>
+        <li>
+            <div class="pic">
+                <img src="img/1.jpg" alt="">
+                <img src="img/9.jpg" alt="">
+            </div>
+        </li>
+        <li>
+            <div class="pic">
+                <img src="img/1.jpg" alt="">
+                <img src="img/9.jpg" alt="">
+            </div>
+        </li>
+        </li>
+</body>
+
+</html>

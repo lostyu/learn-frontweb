@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>数字时钟</title>
+    <script src="../../global/global.js"></script>    
+    <script>
+    	window.onload = function() {
+   //  		var oDate = new Date(),
+   //  			iYear = oDate.getFullYear(),
+   //  			iMonth = oDate.getMonth(),
+   //  			iDay = oDate.getDate(),
+   //  			iWeek = oDate.getDay(),
+   //  			iHour = oDate.getHours(),
+   //  			iSecond = oDate.getSeconds(),
+   //  			iMinute = oDate.getMinutes(),
+   //  			oP = document.getElementById('p1'),
+   //  			str = '';
+
+			// str = iYear + '年' + iMonth + '月' + iDay + '日' + iWeek + iHour + iSecond + iMinute;
+			var oP = document.getElementById('p1');
+				
+			setInterval(function() {
+				showDate();
+			}, 1000);
+			showDate();
+			
+			function showDate() {
+				var date = common.getDate();
+				var str = date.year + '年' + date.month + '月' + date.day + '日 ' + date.week + ' ' + date.hour + ':' + date.minute + ':' + date.second;
+				oP.innerHTML = str;
+			}
+    	};
+    </script>
+</head>
+<body>
+
+<p id="p1"></p>
+
+</body>
+</html>

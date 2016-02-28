@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片时钟</title>
+    <style>
+      div{
+        text-align: center;
+        margin: 100px auto;
+      }
+      div img{
+        width: 80px;
+        float: left;
+      }
+    </style>
+    <script src="../../global/global.js"></script>    
+    <script>
+    	window.onload = function() {
+  			var oP = document.getElementById('p1'),
+            oDiv = document.getElementById('div1'),
+            aImg = document.getElementsByTagName('img');
+  				
+  			setInterval(function() {
+  				showDate();
+  			}, 1000);
+  			showDate();
+  			
+  			function showDate() {
+  				var date = common.getDate();
+  				var str = date.hour + ':' + date.minute + ':' + date.second;
+
+  				oP.innerHTML = str;
+          for(var i=0;i<str.length;i++){
+            if(i == 2 || i == 5){
+              continue;
+            }
+            aImg[i].src = 'img/'+ str.charAt(i) +'.jpg';
+          }
+  			}
+    	};
+    </script>
+</head>
+<body>
+
+<p id="p1"></p>
+<div id="div1">
+  <img src="img/1.jpg" alt="">
+  <img src="img/1.jpg" alt="">
+  <img src="img/colon.jpg" alt="">
+  <img src="img/1.jpg" alt="">
+  <img src="img/1.jpg" alt="">
+  <img src="img/colon.jpg" alt="">
+  <img src="img/1.jpg" alt="">
+  <img src="img/1.jpg" alt="">
+</div>
+</body>
+</html>

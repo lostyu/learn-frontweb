@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style type="text/css">
+    * {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+    
+    ul {
+        height: 122px;
+        position: relative;
+        overflow: hidden;
+        height: 172px;
+    }
+    
+    ul li {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 122px;
+        height: 344px;
+    }
+    </style>
+    <script type="text/javascript" src="miaov.js"></script>
+    <script type="text/javascript">
+    window.onload = function() {
+        var aLi = document.getElementsByTagName('li');
+        for (var i = 0; i < aLi.length; i++) {
+            aLi[i].style.left = i * 125 + 'px';
+        }
+        var arrmao = ['img/colon.JPG', 'img/colon1.JPG'];
+        var aMao = document.getElementsByClassName('mao');
+        var num = 0;
+        var Off = true;
+
+        function maohao() {
+            aMao[0].src = arrmao[num % arrmao.length];
+            aMao[1].src = arrmao[num % arrmao.length];
+            num++;
+        }
+        maohao();
+        setInterval(maohao, 500);
+        var arrImg = [
+            'img/0.jpg', 'img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg',
+            'img/5.jpg', 'img/6.jpg', 'img/7.jpg', 'img/8.jpg', 'img/9.jpg'
+        ];
+        var aShow = document.getElementsByClassName('show');
+
+        function showTime() {
+            var myTime = new Date();
+            var iHour = myTime.getHours();
+            var iMin = myTime.getMinutes();
+            var iSec = myTime.getSeconds();
+            // var str=''
+            str = toTwo(iHour) + toTwo(iMin) + toTwo(iSec);
+            if (Off) {
+                for (var i = 0; i < aShow.length; i++) {
+                    var aImg = aShow[i].getElementsByTagName('img');
+                    aImg[0].src = arrImg[str.charAt(i) % arrImg.length];
+                    aShow[i].num = parseInt(str.charAt(i));
+                    aShow[i].index = i;
+                }
+                Off = false;
+            }
+
+            function move(obj) {
+                var aImg = obj.getElementsByTagName('img');
+                obj.num1 = parseInt(str.charAt(obj.index));
+                aImg[1].src = arrImg[str.charAt(obj.index) % arrImg.length];
+                if (obj.num1 != obj.num) {
+                    doMove(obj, 'top', 10, -172, function() {
+                        obj.style.top = '';
+                        obj.num = obj.num1;
+                        aImg[0].src = arrImg[str.charAt(obj.index) % arrImg.length];
+                    });
+                }
+            }
+            for (var i = 0; i < aShow.length; i++) {
+                move(aShow[i]);
+            }
+
+        }
+        showTime();
+        setInterval(showTime, 1000);
+
+    }
+
+
+
+
+
+    function toTwo(n) {
+        return n < 10 ? '0' + n : '' + n;
+    }
+    </script>
+</head>
+
+<body>
+    <ul>
+        <li class="show"><img src="img/0.jpg"><img src="img/0.jpg"></li>
+        <li class="show"><img src="img/0.jpg"><img src="img/0.jpg"></li>
+        <li><img src="img/colon.JPG" class="mao"></li>
+        <li class="show"><img src="img/0.jpg"><img src="img/0.jpg"></li>
+        <li class="show"><img src="img/0.jpg"><img src="img/0.jpg"></li>
+        <li><img src="img/colon.JPG" class="mao"></li>
+        <li class="show"><img src="img/0.jpg"><img src="img/0.jpg"></li>
+        <li class="show"><img src="img/0.jpg"><img src="img/0.jpg"></li>
+    </ul>
+</body>
+
+</html>
