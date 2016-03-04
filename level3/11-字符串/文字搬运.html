@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>文字搬运</title>
+    <style>
+    .box {
+        padding: 20px;
+        width: 800px;
+        height: 250px;
+        margin: 0 auto;
+        border: 1px solid #000;
+    }
+    
+    .box .col {
+        float: left;
+        padding: 10px;
+        height: 230px;
+    }
+    
+    .box .col1 {
+        width: 280px;
+        background-color: #eee;
+    }
+    
+    .box .col2 {
+        width: 180px;
+        background-color: #ccc;
+    }
+    
+    .box .col3 {
+        width: 280px;
+        background-color: #ddd;
+    }
+
+    .box .col2 ul{
+    	margin: 0;
+    	padding: 0;
+    }
+    .box .col2 li{
+    	float: left;
+		width: 16px;
+		height: 16px;
+		margin-right: 1px;
+    	list-style: none;
+    	background-color: #333;
+    }
+    .box .col2 li.active{
+    	background-color: orange;
+    }
+
+    .box .col1 textarea{
+    	width: 100%;
+    	height: 100%;
+    }
+    </style>
+    <script src="../../global/global.js"></script>
+    <script>
+    	window.onload = function() {
+    		var oTxt1 = document.getElementById('txt1');
+    		var oBtn1 = document.getElementById('btn1');
+    		var oP1 = document.getElementById('p1');
+    		var aLi = document.getElementById('loading').children;
+    		var oTxt2 = document.getElementById('div2');
+    		var timer = null;
+    		var onOff = true;
+
+
+
+
+    		oBtn1.onclick = function() {
+    			if(!onOff) return;
+
+    			var str = oTxt1.value;
+    			var len = str.length;
+    			var iNow = 0;
+
+    			if(str){
+    				onOff = false;
+    				
+	    			oTxt2.innerHTML = '';
+	    			oP1.innerHTML = '0/'+len;
+
+	    			clearInterval(timer);
+
+	    			timer = setInterval(function() {
+	    				oTxt1.value = str.substring(iNow+1);
+	    				oTxt2.innerHTML += str.charAt(iNow);
+	    				oP1.innerHTML = (iNow+1) + '/' + len;
+
+	    				for(var i=0;i<aLi.length;i++){
+	    					aLi[i].className = '';
+	    				}
+	    				aLi[iNow%aLi.length].className = 'active';
+
+	    				iNow++;
+	    				if(iNow > len-1){
+	    					clearInterval(timer);
+	    					onOff = true;
+	    					common.starMove(document.getElementById('loading'), {'opacity': 0});
+	    				}
+	    			}, 100);
+    			}
+    		};
+    	};
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="col col1">
+        	<textarea id="txt1">据资料显示，英国建筑平均寿命可达132年，居世界首位。在英国，“百年老屋”随处可见。法国建筑的平均寿命是102年，而欧洲大部分国家建筑的平均寿命为80年，即使设计更新较快的美国建筑寿命也达60年。欧洲房子的寿命为什么能达百年之久？当今欧洲，使用砖瓦建造的房子，与我们有什么不同？下面我们就来扒一扒这背后的原因。</textarea>
+        </div>
+        <div class="col col2">
+        	<a id="btn1" href="javascript:;">把文字右移动</a>
+        	<p id="p1">0/0</p>
+        	<ul id="loading">
+        		<li class="active"></li>
+        		<li></li>
+        		<li></li>
+        		<li></li>
+        		<li></li>
+        		<li></li>
+        		<li></li>
+        		<li></li>
+        	</ul>
+        </div>
+        <div id="div2" class="col col3"></div>
+    </div>
+</body>
+
+</html>

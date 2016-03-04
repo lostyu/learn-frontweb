@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>查找替换删除</title>
+    <style>
+    	body{
+    		background-color: #ddd;
+    	}
+		.box{
+			position: relative;
+			width: 500px;
+			line-height: 1.5;
+			padding: 10px;
+			margin: 0 auto;
+			border: 1px solid #000;
+			background-color: #fff;
+		}
+		#text span{
+			background-color: orange;
+		}
+		.box .control{
+			position: absolute;
+			right: -51px;
+			top: 0;
+			width: 50px;
+		}
+		.box .control a{
+			display: block;
+			margin-bottom: 5px;
+			text-decoration: none;
+			color: #fff;
+			background-color: orange;
+			text-align: center;
+		}
+		.box .control .inner{
+			display: none;
+		}
+
+		.popBox{
+			display: none;
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			width: 500px;
+			height: 250px;
+			margin-left: -250px;
+			margin-top: -125px;
+			background-color: #f5f5f5;
+		}
+		.popBox .nav{
+			height: 30px;
+			padding: 20px;
+		}
+		.popBox .nav a{
+			display: inline-block;
+			padding: 0 20px;
+			line-height: 30px;
+			text-decoration: none;
+		}
+		.popBox .nav .active{
+			background-color: orange;
+			color: #fff;
+		}
+		.popBox .panel{
+			padding: 20px;
+		}
+		.popBox .panel [type='text']{			
+			padding: 10px;
+		}
+		.popBox .panel [type='button']{
+			height: 40px;
+			line-height: 40px;
+		}
+		.popBox .panel div{
+			display: none;
+		}
+    </style>
+    <script src="../../global/global.js"></script>
+    <script>
+    	window.onload = function() {
+			var aNav = common.getByClass('nav')[0].getElementsByTagName('a');
+			var aPanel = common.getByClass('panel')[0].getElementsByTagName('div');
+
+			for(var i=0;i<aNav.length;i++){
+				aNav[i].index = i;
+				aNav[i].onclick = function() {
+					for(var i=0;i<aNav.length;i++){
+						aNav[i].className = '';
+						aPanel[i].style.display = 'none';
+					}
+
+					aNav[this.index].className = 'active';
+					aPanel[this.index].style.display = 'block';
+				};
+			}
+
+
+			var oControl = common.getByClass('control')[0].getElementsByTagName('a')[0];
+			var oCz = common.getByClass('control')[0].getElementsByTagName('a')[1];
+			var oTh = common.getByClass('control')[0].getElementsByTagName('a')[2];
+			var oInner = common.getByClass('control')[0].getElementsByTagName('div')[0];
+			var onOff = true;
+			var oPopBox = common.getByClass('popBox')[0];
+			var oClose = document.getElementById('close');
+
+			oControl.onclick = function() {
+				if(onOff){
+					oInner.style.display = 'block';
+					oControl.innerHTML = '收缩';
+				}else{
+					oInner.style.display = 'none';
+					oControl.innerHTML = '展开';
+				}
+				onOff = !onOff;
+			};
+
+			oCz.onclick = function() {
+				showPop(0);
+			};
+
+			oTh.onclick = function() {
+				showPop(1);
+			};
+
+			oClose.onclick = function() {
+				oPopBox.style.display = 'none';
+			};
+
+			function showPop(b) {
+				tab();
+				oPopBox.style.display = 'block';
+				if(b){					
+					aNav[1].className = 'active';
+					aPanel[1].style.display = 'block';
+				}else{
+					aNav[0].className = 'active';
+					aPanel[0].style.display = 'block';
+				}
+
+			}
+
+			function tab() {
+				for(var i=0;i<aNav.length;i++){
+					aNav[i].className = '';
+					aPanel[i].style.display = 'none';
+				}
+			}
+
+
+			var aIpt = common.getByClass('popBox')[0].getElementsByTagName('input');
+			var text1 = aIpt[0];
+			var text2 = aIpt[2];
+			var text3 = aIpt[3];
+			var btn1 = aIpt[1];
+			var btn2 = aIpt[4];
+			var oText = document.getElementById('text');
+			var oldVal = oText.innerHTML;
+
+			//查找
+			btn1.onclick = function() {
+				if(!text1.value) return;
+
+				oText.innerHTML = oldVal;
+				var str = oText.innerHTML;
+				var arr = str.split(text1.value);
+				
+				if(arr.length == 1){
+					alert('没有找到');
+				}else{
+					oText.innerHTML = arr.join('<span>'+text1.value+'</span>');
+				}
+			};
+
+			// 替换
+			btn2.onclick = function() {
+				if(!text2.value) return;
+
+				var str = oText.innerHTML;
+				var arr = str.split(text2.value);
+				
+				if(arr.length == 1){
+					alert('没有找到');
+				}else{
+					if(text3.value.length == 0){
+						if(confirm('替换删除？')){
+							oText.innerHTML = arr.join('');
+						}
+					}else{
+						oText.innerHTML = arr.join('<span>'+text3.value+'</span>');
+					}
+				}
+			};
+    	};
+    </script>
+</head>
+<body>
+
+<div class="box">
+	<div id="text" class="inner">
+		据资料显示，英国建筑平均寿命可达132年，居世界首位。在英国，“百年老屋”随处可见。法国建筑的平均寿命是102年，而欧洲大部分国家建筑的平均寿命为80年，即使设计更新较快的美国建筑寿命也达60年。欧洲房子的寿命为什么能达百年之久？当今欧洲，使用砖瓦建造的房子，与我们有什么不同？下面我们就来扒一扒这背后的原因。
+	</div>
+	<div class="control">
+		<a href="javascript:;">展开</a>
+		<div class="inner">
+			<a href="javascript:;">查找</a>
+			<a href="javascript:;">替换</a>
+		</div>		
+	</div>
+</div>
+
+
+<div class="popBox">
+	<a style="float: right;" id="close" href="javascript:;">关闭</a>
+	<div class="nav">
+		<a class="active" href="javascript:;">查找</a><a href="javascript:;">替换</a>
+	</div>
+	<div class="panel">
+		<div style="display: block;">
+			<input type="text"><input type="button" value="查找">
+		</div>
+		<div>
+			<input type="text"><input type="text"><input type="button" value="替换">
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
