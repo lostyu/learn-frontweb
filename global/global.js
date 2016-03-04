@@ -63,8 +63,8 @@ var common = {
             day: iDay,
             week: iWeek,
             hour: iHour,
-            second: iSecond,
-            minute: iMinute
+            minute: iMinute,
+            second: iSecond
         }
     },
 
@@ -134,6 +134,36 @@ var common = {
                 if (typeof endFn == 'function') {
                     endFn();
                 }
+            }
+        }, 30);
+    },
+
+    shake: function(obj, attr, endFn) {   
+        var _this = this;
+        if(obj.onOff){
+            return;
+        }
+        obj.onOff = true;
+
+        var pos = parseInt(_this.getStyle(obj, attr));            
+        var arrNum = [];
+        var num = 0;        
+        
+        for (var i = 20; i > 0; i -= 2) {
+            arrNum.push(i, -i);
+        }
+        arrNum.push(0);
+
+        clearInterval(obj.shake);
+        obj.shake = setInterval(function() {
+            obj.style[attr] = pos + arrNum[num] + 'px';
+            num++;
+            if (num > arrNum.length) {
+                clearInterval(obj.shake);
+                if(typeof endFn == 'function'){
+                  endFn();
+                }
+                obj.onOff = false;
             }
         }, 30);
     }

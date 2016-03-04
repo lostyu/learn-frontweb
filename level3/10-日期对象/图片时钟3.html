@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>图片时钟</title>
+    <style>
+        .clock{
+            position: relative;
+            overflow: hidden;
+            margin: 100px auto;
+            padding: 0;
+            width: 640px;
+        }
+        .clock li{
+            position: relative;
+            float: left;
+            width: 80px;
+            height: 113px;
+            list-style: none;
+        }
+        .clock li img{            
+            display: block;
+            width: 80px;
+            height: 113px;
+        }
+    </style>
+    <script src="../../global/global.js"></script>
+    <script>
+    window.onload = function() {
+        // 1.初始化时间添加自定义属性用来比较每次变化值
+        var arrLi = [],
+            aLi = document.getElementsByTagName('li'),
+            arrPic = [
+                'img/0.jpg', 'img/1.jpg', 'img/2.jpg', 'img/3.jpg', 'img/4.jpg', 'img/5.jpg', 'img/6.jpg', 'img/7.jpg', 'img/8.jpg', 'img/9.jpg'
+            ];
+
+        for(var i=0;i<aLi.length;i++){
+            if(aLi[i].className != 'dot'){
+                arrLi.push(aLi[i]);
+            }
+        }
+
+        init();
+        setInterval(clock, 1000);
+
+        function init(){
+            var date = common.getDate(),
+                str = date.hour + date.minute + date.second;
+
+            for(var i=0;i<arrLi.length;i++){
+                var aImg = arrLi[i].getElementsByTagName('img');
+                aImg[0].src = arrPic[str.charAt(i)];
+                arrLi[i].num = str.charAt(i);
+                arrLi[i].index = i;
+            }
+        }
+
+        function clock() {
+            var date = common.getDate(),
+                str = date.hour + date.minute + date.second;
+
+            for(var i=0;i<arrLi.length;i++){                
+                move(arrLi[i]);
+            }
+
+            function move(obj) {
+                var aImg = obj.getElementsByTagName('img');
+                aImg[1].src = arrPic[str.charAt(obj.index)];
+                obj.num1 = str.charAt(obj.index);
+
+                if(obj.num != obj.num1){
+                    obj.style.top = 0;
+                    aImg[0].src = arrPic[obj.num];
+                    obj.num = obj.num1;
+                    common.starMove(obj, {'top': -113});
+                }
+            }
+        }
+
+        
+    };
+    </script>
+</head>
+
+<body>
+    <ul class="clock">
+        <li>
+            <img src="img/1.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+        </li>
+        <li>
+            <img src="img/1.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+        </li>
+        <li class="dot">
+            <img src="img/colon.jpg" alt="">
+        </li>
+        <li>
+            <img src="img/1.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+        </li>
+        <li>
+            <img src="img/1.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+        </li>
+        <li class="dot">
+            <img src="img/colon.jpg" alt="">
+        </li>
+        <li>
+            <img src="img/1.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+        </li>
+        <li>
+            <img src="img/1.jpg" alt="">
+            <img src="img/1.jpg" alt="">
+        </li>
+    </ul>
+</body>
+
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>倒计时</title>
+    <script>
+    	window.onload = function() {
+    		var aIpt = document.getElementsByTagName('input'),    		oBtn = document.getElementById('btn1'),
+    			oP = document.getElementById('p1'),
+    			iNow = null,
+    			iNew = null,
+    			timer = null;
+
+    		// var aaa = new Date(2016,02,03,12,10,55);
+    		// var aaa = new Date('2016,02,03,12:10:55');
+    		// var aaa = new Date('2016-02-03,12:10:55');
+
+    		// 星期一：Monday 
+    		// 星期二: Tuesday 
+    		// 星期三：Wednesday
+    		// 星期四：Thursday
+    		// 星期五：Friday
+    		// 星期六：Saturday
+    		// 星期日：Sunday
+
+    		// January、February、March、April、May、June、
+			// July、August、September、October、November、December
+
+    		oBtn.onclick = function() {
+    			iNew = new Date(aIpt[0].value);
+
+    			clearInterval(timer);
+    			timer = setInterval(function() {
+    				iNow = new Date();
+    				var t = Math.floor( (iNew - iNow)/1000 );
+    				var s = t%60 + '秒';
+    				var m = Math.floor(t%86400%3600/60) + '分';
+    				var h = Math.floor(t%86400/60/60) + '时';
+    				var d = Math.floor(t/24/60/60) + '天';
+					var str = d + h + m + s;
+
+					if( t >= 0 ){
+						aIpt[1].value = str;
+					}else{
+						clearInterval(timer);
+					}
+					
+    			}, 1000);    			
+    		};
+    	};
+    </script>
+</head>
+<body>
+
+
+距离<input type="text" value="2016,03,03,15:00:55">
+还剩<input type="text">
+<button id="btn1">倒计时</button>
+<p id="p1"></p>
+
+</body>
+</html>

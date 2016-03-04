@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>购物倒计时</title>
+    <style>
+    /* Clearfix */
+    
+    .cf:before,
+    .cf:after {
+        content: "";
+        display: table;
+    }
+    
+    .cf:after {
+        clear: both;
+    }
+    
+    .cf {
+        zoom: 1;
+    }
+    
+    body {
+        margin: 0;
+        padding: 0;
+    }
+    
+    .goodsItems {
+        width: 800px;
+        margin: 0 auto;
+    }
+    
+    .goodsItems .hd {
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .goodsItems .hd h2 {
+        margin: 0;
+        padding: 10px 0;
+    }
+    
+    .goodsItems .bd {}
+    
+    .goodsItems .bd ul {
+        position: relative;
+        float: left;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .goodsItems .bd li {
+        position: relative;
+        float: left;
+        width: 200px;
+        height: 313px;
+        list-style: none;
+    }
+    
+    .goodsItems .bd li p {
+        margin: 0;
+        line-height: 1.5;
+        font-size: 14px;
+    }
+    
+    .goodsItems .bd li .inner {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: #fff;
+    }
+    
+    .goodsItems .bd li .bg {
+        opacity: 0;
+        background-color: #f0f0f0;
+    }
+    
+    .goodsItems .bd li .pd {
+        padding: 10px;
+    }
+    
+    .goodsItems .bd .time {
+        height: 21px;
+    }
+    
+    .goodsItems .bd .pic {
+        display: block;
+        width: 100%;
+        height: 180px;
+    }
+    
+    .goodsItems .bd .tit {
+        overflow: hidden;
+        height: 63px;
+        margin-bottom: 5px;
+    }
+    
+    .goodsItems .bd .price {
+        height: 24px;
+    }
+    
+    .goodsItems .total {}
+    
+    .goodsItems .total table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .goodsItems .total table th {
+        padding: 10px;
+        background-color: #ddd;
+    }
+    
+    .goodsItems .total table td {
+        padding: 10px;
+        background-color: #ddd;
+    }
+    
+    .goodsItems .total table tr {
+        border-bottom: 2px solid #fff;
+    }
+    
+    .goodsItems .total .col1 {
+        width: 300px;
+    }
+    
+    .goodsItems .total .col2 {
+        width: 150px;
+    }
+    
+    .goodsItems .total .tac {
+        text-align: center;
+    }
+    
+    .goodsItems .total .tar {
+        text-align: right;
+    }
+    
+    .goodsItems .red {
+        color: red;
+    }
+    
+    .goodsItems .fz16 {
+        font-size: 16px;
+    }
+    </style>
+    <script src="../../global/global.js"></script>
+    <script>
+    window.onload = function() {
+        var oGoodsItems = document.getElementById('goodsItems'),
+            aLi = oGoodsItems.getElementsByTagName('li'),
+            oTbody = document.getElementById('tbody'),
+            oPrice = document.getElementById('sumPrice'),
+            aTime = common.getByClass('time', oGoodsItems),
+            arrTime = [
+                '2016,03,03,17:29:17',
+                '2016,03,03,17:29:20',
+                '2016,03,03,17:29:23',
+                '2016,03,03,17:29:26'
+            ],
+            iTotal = 0;
+
+        for (var i = 0; i < aLi.length; i++) {
+            aTime[i].time = +new Date() + 5000 * (i + 1);
+            count(aLi[i]);
+        }
+
+        function count(oLi) {
+            var oInner0 = common.getByClass('inner', oLi)[0],
+                oInner1 = common.getByClass('inner', oLi)[1],
+                oTime = common.getByClass('time', oLi)[0],
+                oTit = common.getByClass('tit', oLi)[0],
+                oPic = common.getByClass('pic', oLi)[0],
+                iPrice = common.getByClass('price', oLi)[0].getElementsByTagName('span')[0].innerHTML,
+                iNew = new Date(oTime.time);
+
+            oTime.timer = setInterval(function() {
+                var iNow = new Date(),
+                    t = Math.floor((iNew - iNow) / 1000),
+                    d = Math.floor(t / 86400),
+                    h = Math.floor(t % 86400 / 60 / 60),
+                    m = Math.floor(t % 86400 % 3600 / 60),
+                    s = t % 60,
+                    str = '剩余' + toDouble(d) + '天' + toDouble(h) + '时' + toDouble(m) + '分' + toDouble(s) + '秒';
+
+                if (t >= 0) {
+                    oTime.innerHTML = str;
+                } else {
+                    clearInterval(oTime.timer);
+                    common.shake(oInner1, 'left', function() {
+                        common.starMove(oInner1, {
+                            'top': 313,
+                            'opacity': 0
+                        }, function() {
+                            oInner1.style.display = 'none';
+                            iTotal += parseFloat(iPrice.substr(1));
+                            oPrice.innerHTML = '总价：<span class="fz16 red">¥' + iTotal + '</span>';
+
+                            var oTr = '<tr>' +
+                            		'<td>'+oTit.innerHTML+'</td>' +
+                            		'<td class="tac">'+parseFloat(iPrice.substr(1))+'</td>' +
+                            		'<td><img width="100" height="100" src="'+oPic.src+'"/></td>' +
+                                '</tr>';
+                            oTbody.innerHTML += oTr;
+                        });
+                        common.starMove(oInner0, {
+                            'opacity': 100
+                        });
+                    });
+
+                }
+            }, 1000);
+        }
+
+        function toDouble(n) {
+            return n < 10 ? '0' + n : n;
+        }
+    };
+    </script>
+</head>
+
+<body>
+    <div id="goodsItems" class="goodsItems">
+        <div class="hd">
+            <h2>限时抢购</h2>
+        </div>
+        <div class="bd cf">
+            <ul>
+                <li>
+                    <div class="inner bg">商品已下架</div>
+                    <div class="inner">
+                        <div class="pd">
+                            <p class="time">剩余00天00时00分00秒</p>
+                            <img class="pic" src="https://img.alicdn.com/imgextra/i1/701751992/TB2_hWajVXXXXc9XpXXXXXXXXXX_!!701751992.jpg_430x430q90.jpg" alt="">
+                            <p class="tit">马丁靴男靴子男士短靴真皮靴高帮鞋男英伦复古工装春季沙漠靴男鞋</p>
+                            <p class="price">抢购价：<span class="red fz16">¥188</span></p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="inner bg">商品已下架</div>
+                    <div class="inner">
+                        <div class="pd">
+                            <p class="time">剩余00天00时00分00秒</p>
+                            <img class="pic" src="https://img.alicdn.com/imgextra/i1/701751992/TB2_hWajVXXXXc9XpXXXXXXXXXX_!!701751992.jpg_430x430q90.jpg" alt="">
+                            <p class="tit">马丁靴男靴子男士短靴真皮靴高帮鞋男英伦复古工装春季沙漠靴男鞋</p>
+                            <p class="price">抢购价：<span class="red fz16">¥188</span></p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="inner bg">商品已下架</div>
+                    <div class="inner">
+                        <div class="pd">
+                            <p class="time">剩余00天00时00分00秒</p>
+                            <img class="pic" src="https://img.alicdn.com/imgextra/i1/701751992/TB2_hWajVXXXXc9XpXXXXXXXXXX_!!701751992.jpg_430x430q90.jpg" alt="">
+                            <p class="tit">马丁靴男靴子男士短靴真皮靴高帮鞋男英伦复古工装春季沙漠靴男鞋</p>
+                            <p class="price">抢购价：<span class="red fz16">¥188</span></p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="inner bg">商品已下架</div>
+                    <div class="inner">
+                        <div class="pd">
+                            <p class="time">剩余00天00时00分00秒</p>
+                            <img class="pic" src="https://img.alicdn.com/imgextra/i1/701751992/TB2_hWajVXXXXc9XpXXXXXXXXXX_!!701751992.jpg_430x430q90.jpg" alt="">
+                            <p class="tit">马丁靴男靴子男士短靴真皮靴高帮鞋男英伦复古工装春季沙漠靴男鞋</p>
+                            <p class="price">抢购价：<span class="red fz16">¥188</span></p>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="ft">
+            <div class="total">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col1">商品名称</th>
+                            <th class="col2">价格</th>
+                            <th class="tar"></th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody">
+                    </tbody>
+                </table>
+                <p id="sumPrice">总价：<span class="fz16 red">¥00.00</span></p>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
