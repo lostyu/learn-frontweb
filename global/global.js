@@ -20,6 +20,10 @@ var common = {
         return result;
     },
 
+    getStyle: function(obj, attr) {
+        return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+    },
+
     getDate: function() {
         var oDate = new Date(),
             iYear = oDate.getFullYear(),
@@ -68,8 +72,8 @@ var common = {
         }
     },
 
-    getStyle: function(obj, attr) {
-        return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+    getRandom: function(x, y) {
+        return Math.round( Math.random() * (y-x) + x );
     },
 
     starMove: function(obj, json, endFn) {

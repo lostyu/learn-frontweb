@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>getByClass</title>
+    <style>
+		.box, .box1{
+			/*background-color: red;*/
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+
+
+	    	/*
+				getElementsByClassName增强
+				getElementsByClassName(obj, tagname, 'box,box1')
+	    	*/
+
+	    	// 要求getElementsByClassName函数可以选取含有多个class其中任意一个的元素，多个class用逗号、空格分开
+	    	function getElementsByClassName(obj, tagName, className) {
+	    		var elements = obj.getElementsByTagName(tagName),
+	    			arrClass = className.split(','),	    			
+	    			result = [];
+
+	    		for(var i=0;i<elements.length;i++){
+	    			for(var j=0;j<arrClass.length;j++){
+	    				var reg = new RegExp('\\b' + arrClass[j] + '\\b', 'i');
+
+	    				if(reg.test(elements[i].className)){
+	    					result.push(elements[i]);
+	    				}
+	    			}
+	    		}
+
+	    		return result;
+	    	}
+
+	    	var arr = getElementsByClassName(document, '*', 'box,box1');
+
+	    	for(var i=0;i<arr.length;i++){
+	    		arr[i].style.background = 'red';
+	    	}
+    	};
+    </script>
+</head>
+<body>
+
+<ul>
+	<li>111</li>
+	<li class="box   box2">222</li>
+	<li>333</li>
+	<li class="box1">444</li>
+	<li>555</li>
+</ul>
+<div class="box">div</div>
+
+</body>
+</html>

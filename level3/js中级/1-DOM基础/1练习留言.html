@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>留言</title>
+    <script>
+    	window.onload = function() {
+    		var oIpt1 = document.getElementsByTagName('input')[0],
+	    		oIpt2 = document.getElementsByTagName('input')[1],
+	    		oUl = document.getElementById('ul1');
+
+	    	oIpt2.onclick = function() {
+	    		var oLi = document.createElement('li');
+	    		var oChild = oUl.children[0];
+	    		var len = oUl.children.length;
+
+	    		oLi.innerHTML = oIpt1.value;
+
+	    		if(len < 5){
+	    			if(oChild){
+	    				oUl.insertBefore(oLi, oChild);
+	    			}else{
+	    				oUl.appendChild(oLi);
+	    			}
+	    		}else{
+	    			oUl.removeChild(oUl.children[len-1]);
+	    			oUl.insertBefore(oLi, oChild);
+	    		}
+
+	    			    		
+	    		
+	    	};	
+    	};
+    </script>
+</head>
+<body>
+
+<input type="text"><input type="button" value="留言">
+<ul id="ul1"></ul>
+
+</body>
+</html>

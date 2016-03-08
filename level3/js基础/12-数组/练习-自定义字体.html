@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>自定义字体</title>
+    <link rel="stylesheet" href="../../global/reset.css">
+    <style>
+		.box{
+			width: 400px;
+			margin: 100px auto;
+		}
+		.box .bd{
+			padding: 10px;
+			height: 130px;
+			border: 1px solid #ddd;
+		}
+		.box .text span{
+			display: inline-block;
+			padding: 10px;
+			background-position: center;
+			background-repeat: no-repeat;
+			color: #000;
+			font-size: 16px;
+			font-weight: bold;
+		}
+		.box .select{
+			padding: 10px 0;
+		}
+		.box textarea{
+			width: 380px;
+		}
+    </style>
+    <script src="../../global/global.js"></script>
+    <script>
+    	window.onload = function() {
+			var oText1 = document.getElementById('txt1'),
+				oText2 = document.getElementById('txt2'),
+				oSelect = document.getElementById('select1'),
+				oBtn = document.getElementById('btn1'),
+				arrIcon = [
+					'../../global/img/icon/1.png',
+					'../../global/img/icon/2.png',
+					'../../global/img/icon/3.png',
+					'../../global/img/icon/4.png',
+					'../../global/img/icon/5.png',
+					'../../global/img/icon/6.png',
+					'../../global/img/icon/7.png',
+					'../../global/img/icon/8.png',
+					'../../global/img/icon/9.png',
+					'../../global/img/icon/10.png',
+					'../../global/img/icon/11.png'
+				];
+
+			oBtn.onclick = function() {
+				var str2 = oText2.value;
+				var mode = oSelect.value;
+
+				var arr = str2.split('');
+
+				for(var i=0;i<arr.length;i++){
+					arr[i] = '<span style="background-image:url('+ arrIcon[i%arrIcon.length] +');">' + arr[i] + '</span>';
+				}
+				oText1.innerHTML = arr.join('');
+			};
+    	};
+    </script>
+</head>
+<body>
+
+<div class="box">
+	<div id="txt1" class="text bd"></div>
+	<div class="select">
+		<select name="" id="select1">
+			<option value="0">qq表情字体</option>
+		</select>
+	</div>
+	<textarea id="txt2" class="bd" name="" id="" cols="30" rows="10"></textarea>
+	<button id="btn1">提交</button>
+</div>
+
+</body>
+</html>

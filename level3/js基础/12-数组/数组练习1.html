@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>练习1</title>
+    <script src="../../global/global.js"></script>
+    <script>
+    // 随机产生 100个 0~1000 不重复的整数
+
+    var arr = [];
+    var len = 100;
+
+    for (var i = 0; i < len; i++) {
+        var a = common.getRandom(0, 1000);
+        var b = true;
+
+        for (var j = 0; j < arr.length; j++) {
+            if (a == arr[j]) {
+                b = false;
+                break;
+            }
+        }
+
+        b ? arr.push(a) : len++ ;
+    }
+
+    console.log(arr);
+    console.log(arr.length);
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>

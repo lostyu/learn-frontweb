@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>排序</title>
+    <link rel="stylesheet" href="../../global/reset.css">
+    <style>
+    .box {
+        width: 820px;
+        margin: 100px auto;
+    }
+    
+    .box .tit {
+        padding: 20px 0;
+        text-align: center;
+    }
+    
+    .box .tit button {
+        margin-right: 20px;
+    }
+    
+    .box ul {
+        overflow: hidden;
+        padding: 10px;
+        background-color: #ddd;
+    }
+    
+    .box li {
+        float: left;
+        padding: 10px;
+        width: 180px;
+        text-align: center;
+        background-color: #fff;
+    }
+    
+    .box li p {
+        line-height: 30px;
+    }
+    
+    .box li img {
+        display: block;
+        width: 100%;
+        height: 112px;
+    }
+    </style>
+    <script>
+    window.onload = function() {
+        var oBtn = document.getElementsByTagName('button'),
+            oUl = document.getElementsByTagName('ul')[0],
+            arr = [{
+                'src': '../../global/img/1.jpg',
+                'tit': '1文字标题'
+            }, {
+                'src': '../../global/img/2.jpg',
+                'tit': '2文字标题'
+            }, {
+                'src': '../../global/img/3.jpg',
+                'tit': '3文字标题'
+            }, {
+                'src': '../../global/img/4.jpg',
+                'tit': '4文字标题'
+            }, {
+                'src': '../../global/img/1.jpg',
+                'tit': '5文字标题'
+            }, {
+                'src': '../../global/img/2.jpg',
+                'tit': '6文字标题'
+            }, {
+                'src': '../../global/img/3.jpg',
+                'tit': '7文字标题'
+            }, {
+                'src': '../../global/img/4.jpg',
+                'tit': '8文字标题'
+            }],
+            arrNum = [],
+            onOff = true;
+            
+        for(var i=0;i<arr.length;i++){
+        	arrNum.push(i);
+        }
+
+        oBtn[0].onclick = function() {
+    		if(onOff){
+    			arrNum.sort(function(n1, n2) {
+    				return n2 - n1;
+    			});
+				this.innerHTML = '从小到大';
+    		}else{
+    			arrNum.sort(function(n1, n2) {
+    				return n1 - n2;
+    			});
+    			this.innerHTML = '从大到小';
+    		}
+    		mySort();
+    		onOff = !onOff;
+    	};
+
+    	oBtn[1].onclick = function() {
+    		arrNum.sort(function(n1, n2) {
+    			return Math.random() - 0.5;
+    		});
+    		mySort();
+    	};
+
+        function mySort() {
+        	var str = '';
+	        for(var i=0;i<arr.length;i++){
+	        	str += '<li><img src="'+ arr[arrNum[i]].src +'"/><p>'+ arr[arrNum[i]].tit +'</p></li>';
+	        }
+	        oUl.innerHTML = str;
+    	}
+    	mySort();
+
+    	
+    };
+    </script>
+</head>
+
+<body>
+    <div class="box">
+        <div class="tit">
+            <button>从大到小</button>
+            <button>随机排</button>
+        </div>
+        <ul></ul>
+    </div>
+</body>
+
+</html>

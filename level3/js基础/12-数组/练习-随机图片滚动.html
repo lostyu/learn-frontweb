@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>随机图片滚动</title>
+    <link rel="stylesheet" href="../../global/reset.css">
+    <style>
+		.box{
+			width: 400px;
+			margin: 100px auto;
+		}
+		.box li{
+			overflow: hidden;
+			float: left;
+			position: relative;
+			width: 200px;
+			height: 112px;
+		}
+		.box li img{
+			display: block;
+			width: 200px;
+			height: 112px;
+		}
+		.box li .inner{
+			position: absolute;
+			top: 0;
+		}
+    </style>
+    <script src="../../global/global.js"></script>
+    <script>
+    	window.onload = function() {
+			var aLi = document.getElementsByTagName('li');
+
+			function autoRandom() {
+				setInterval(function() {
+					var r = common.getRandom(1, aLi.length);
+					var arr = [];
+					
+					for(var i=0;i<r;i++){
+						var b = true;
+						var r2 = common.getRandom(0, aLi.length-1);
+
+						for(var j=0;j<arr.length;j++){
+							if(r2 == arr[j]){
+								b = false;
+								break;
+							}
+						}
+
+						b ? arr.push(r2) : i--;
+					}
+
+					var n = 0;
+					var timer = setInterval(function() {
+						move(aLi[arr[n]]);
+						n++;
+						if(n == arr.length){
+							clearInterval(timer);
+						}					
+					}, 30);									
+				}, 3000);
+			}
+
+			autoRandom();
+
+			function move(obj) {
+				var oInner = obj.getElementsByTagName('div')[0],
+					aImg = obj.getElementsByTagName('img'),
+					len = aImg.length;
+				
+				if(obj.num == undefined){
+					obj.num = 1;
+				}else{
+					obj.num++;
+					if(obj.num == len){
+						obj.num = 0;
+					}
+				}				
+				common.starMove(oInner, {'top': (-112*obj.num)});
+			}
+    	};
+    </script>
+</head>
+<body>
+
+<div class="box">
+	<ul>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+		<li>
+			<div class="inner">
+				<img src="../../global/img/1.jpg" alt="">
+				<img src="../../global/img/2.jpg" alt="">
+				<img src="../../global/img/3.jpg" alt="">
+				<img src="../../global/img/4.jpg" alt="">
+			</div>
+		</li>
+	</ul>
+</div>
+
+</body>
+</html>

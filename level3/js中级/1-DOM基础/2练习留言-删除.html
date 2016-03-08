@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>留言-批量删除</title>
+    <style>
+		.active{
+			background-color: orange;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oIpt1 = document.getElementsByTagName('input')[0],
+	    		oIpt2 = document.getElementsByTagName('input')[1],
+	    		oIpt3 = document.getElementsByTagName('input')[2],
+	    		oUl = document.getElementById('ul1'),
+	    		aLi = oUl.children; 		
+
+	    	oIpt3.onclick = function() {
+	    		var arr = [];
+	    		for(var i=0;i<aLi.length;i++){
+	    			if(aLi[i].className == 'active'){
+	    				arr.push(aLi[i]);
+	    			}
+	    		}
+
+	    		for(var i=0;i<arr.length;i++){
+	    			oUl.removeChild(arr[i]);
+	    		}
+	    	};
+
+	    	oIpt2.onclick = function() {
+	    		var oLi = document.createElement('li');
+	    		var oChild = oUl.children[0];
+	    		var len = oUl.children.length;
+
+	    		oLi.innerHTML = oIpt1.value;
+	    		oLi.onclick = function() {
+    				if(this.className == 'active'){
+    					this.className = '';
+    				}else{
+    					this.className = 'active';
+    				}
+    			};
+
+	    		if(len < 5){
+	    			if(oChild){
+	    				oUl.insertBefore(oLi, oChild);
+	    			}else{
+	    				oUl.appendChild(oLi);
+	    			}
+	    		}else{
+	    			oUl.removeChild(oUl.children[len-1]);
+	    			oUl.insertBefore(oLi, oChild);
+	    		}	    			    			    	
+	    	};	
+    	};
+    </script>
+</head>
+<body>
+
+<input type="text"><input type="button" value="留言"><input type="button" value="批量删除">
+<ul id="ul1"></ul>
+
+</body>
+</html>

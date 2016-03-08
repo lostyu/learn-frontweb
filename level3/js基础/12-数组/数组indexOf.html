@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>数组indexOf</title>
+    <script src="../../global/global.js"></script>
+    <script>
+    Array.prototype.indexOf = function(val) {
+        for(var i in this){
+            if(val == this[i]){
+                return i;
+            }
+        }
+    };
+
+    var arr = [0,1,2,'a','b','c'];
+    
+    console.log( arr.indexOf('c') );
+
+    </script>
+</head>
+
+<body>
+</body>
+
+</html>
