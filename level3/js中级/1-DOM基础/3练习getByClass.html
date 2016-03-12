@@ -41,7 +41,7 @@
 	    	}
 
 	    	var arr = getElementsByClassName(document, '*', 'box,box1');
-
+	    	alert(arr.length);
 	    	for(var i=0;i<arr.length;i++){
 	    		arr[i].style.background = 'red';
 	    	}
@@ -52,12 +52,12 @@
 
 <ul>
 	<li>111</li>
-	<li class="box   box2">222</li>
+	<li class="box box  box2">222</li>
 	<li>333</li>
 	<li class="box1">444</li>
 	<li>555</li>
 </ul>
-<div class="box">div</div>
+<div class="box box">div</div>
 
 </body>
 </html>

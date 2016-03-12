@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>动态添加表格</title>
+    <style>
+		table{
+			width: 100%;
+		}
+		.select{
+			background-color: orange !important;
+		}
+		.hd{
+			padding: 20px 0;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var data = [
+    			{'id': 1, 'name': 'Tony', 'work': 'web'},
+    			{'id': 2, 'name': 'Jim', 'work': 'player'},
+    			{'id': 3, 'name': 'Hacks', 'work': 'singer'}
+    		];
+    		var oTable = document.getElementById('table1');
+    		var oTbody = oTable.tBodies[0];
+    		var oText1 = document.getElementById('txt1');
+    		var oText2 = document.getElementById('txt2');
+    		var oBtn1 = document.getElementById('btn1');
+    		var oBtn2 = document.getElementById('btn2');
+    		var oCheckAll = document.getElementById('checkAll');
+
+    		for(var i=0;i<data.length;i++){
+    			
+    			var oTr = document.createElement('tr');
+    			var oA = document.createElement('a');
+				var oTd = document.createElement('td');
+    			oTd.innerHTML = '<input type="checkbox"/>';
+    			oTd.children[0].onclick = function(ev) {
+    				ev = ev || window.event;
+
+    				ev.stopPropagation();
+    				    				
+    				this.parentNode.parentNode.className = this.checked ? 'select': '';
+    			}
+    			oTr.appendChild(oTd);
+
+				oTd = document.createElement('td');
+    			oTd.innerHTML = data[i].id;
+    			oTr.appendChild(oTd);
+
+    			oTd = document.createElement('td');
+    			oTd.innerHTML = data[i].name;
+    			oTr.appendChild(oTd);
+
+    			oTd = document.createElement('td');
+    			oTd.innerHTML = data[i].work;
+    			oTr.appendChild(oTd);
+
+    			oTd = document.createElement('td');    			
+    			oA.innerHTML = '删除';
+    			oA.href = 'javascript:;';
+    			oA.onclick = function(ev) {
+    				ev = ev || window.event;
+
+    				ev.stopPropagation();
+
+    				// w3c的方法是e.stopPropagation()，IE则是使用e.cancelBubble = true
+
+    				// w3c的方法是e.preventDefault()，IE则是使用e.returnValue = false;
+
+    				oTbody.removeChild(this.parentNode.parentNode);
+    				changeBgColor();
+    			};
+    			oTd.appendChild(oA);
+    			oTr.appendChild(oTd);
+
+    			oTr.onclick = function() {    				
+    				var _ipt = this.cells[0].children[0];
+    				_ipt.checked = !_ipt.checked;
+    				
+    				this.className = _ipt.checked ? 'select': '';
+    			}
+
+    			oTbody.appendChild(oTr);
+    		}
+    		changeBgColor();
+    		
+    		oBtn1.onclick = function() {
+    			var id = 0;
+
+    			if( oTbody.children.length ){
+    				id = parseInt( oTbody.children[oTbody.children.length-1].cells[1].innerHTML )
+    			}
+
+    			var oTr = document.createElement('tr');
+    			var oA = document.createElement('a');
+    			var oTd = document.createElement('td');
+    			oTd.innerHTML = '<input type="checkbox"/>';
+    			oTd.children[0].onclick = function(ev) {
+    				ev = ev || window.event;
+
+    				ev.stopPropagation();
+    				    				
+    				this.parentNode.parentNode.className = this.checked ? 'select': '';
+    			}
+    			oTr.appendChild(oTd);
+
+    			oTd = document.createElement('td');
+    			oTd.innerHTML = ++id;
+    			oTr.appendChild(oTd);
+
+    			oTd = document.createElement('td');
+    			oTd.innerHTML = oText1.value;
+    			oTr.appendChild(oTd);
+
+    			oTd = document.createElement('td');
+    			oTd.innerHTML = oText2.value;
+    			oTr.appendChild(oTd);
+
+    			oTd = document.createElement('td');    			
+    			oA.innerHTML = '删除';
+    			oA.href = 'javascript:;';
+    			oA.onclick = function(ev) {
+    				ev = ev || window.event;
+
+    				ev.stopPropagation();
+
+    				// w3c的方法是e.stopPropagation()，IE则是使用e.cancelBubble = true
+
+    				// w3c的方法是e.preventDefault()，IE则是使用e.returnValue = false;
+
+    				oTbody.removeChild(this.parentNode.parentNode);
+    				changeBgColor();
+    			};
+    			oTd.appendChild(oA);
+    			oTr.appendChild(oTd);
+
+
+    			oTr.onclick = function() {
+    				var _ipt = this.cells[0].children[0];
+    				_ipt.checked = !_ipt.checked;
+    				
+    				this.className = _ipt.checked ? 'select': '';
+    			}
+
+    			oTbody.appendChild(oTr);
+
+    			changeBgColor();
+    		};
+
+    		oCheckAll.onclick = function() {
+    			if(this.checked){
+    				for(var i=0;i<oTbody.children.length;i++){
+    					oTbody.children[i].cells[0].children[0].checked = true;
+    					oTbody.children[i].className = 'select';
+    				}
+    			}else{
+    				for(var i=0;i<oTbody.children.length;i++){
+    					oTbody.children[i].cells[0].children[0].checked = false;
+    					oTbody.children[i].className = '';
+    				}
+    			}
+    			
+    		};
+
+    		oBtn2.onclick = function() {
+    			var arrDel = [];
+    			for(var i=0;i<oTbody.children.length;i++){
+					if(oTbody.children[i].cells[0].children[0].checked){
+						arrDel.push(oTbody.children[i]);
+					}
+				}
+
+				for(var i=0;i<arrDel.length;i++){
+					oTbody.removeChild(arrDel[i]);
+				}
+
+				changeBgColor();
+    		};
+
+    		function changeBgColor() {
+    			for(var i=0;i<oTbody.children.length;i++){    				
+    				if(i%2 == 0){
+    					oTbody.children[i].style.backgroundColor = '#ddd';
+    				}else{
+    					oTbody.children[i].style.backgroundColor = 'gray';
+    				}
+    			}
+    		}
+    	}
+    </script>
+</head>
+<body>
+
+<div class="hd">
+	姓名：<input id="txt1" type="text">
+	工作：<input id="txt2" type="text">
+	<input id="btn1" type="button" value="添加">
+</div>
+
+<table id="table1" border="1">	
+	<thead>
+		<tr>
+			<th><input id="checkAll" type="checkbox">全选</th>
+			<th>id</th>
+			<th>姓名</th>
+			<th>工作</th>
+			<th>操作<input id="btn2" type="button" value="删除选中" /></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
+
+</body>
+</html>

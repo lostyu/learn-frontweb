@@ -1,0 +1,128 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Untitled Document</title>
+<link href="css.css" rel="stylesheet" type="text/css" />
+<script src="data.js"></script>
+<script>
+	window.onload = function() {
+		var oHeader = document.getElementById('header');
+		var oList = document.getElementById('listContent');
+		var aHdLi = oHeader.getElementsByTagName('li');
+		var aUl = oList.children;
+		var aA = oList.getElementsByTagName('a');
+		var oTips = document.getElementById('tips');
+		var oArrow = document.getElementById('arrow');
+		var oTipsCnt = document.getElementById('tipsContent');
+		var m = n = 0;
+
+		function init() {
+			for(var i=0;i<data.length;i++){			
+				// header	
+				var oLi = document.createElement('li');
+				if(i == 0){
+					oLi.className = 'focus';
+				}
+				oLi.innerHTML = data[i].name;
+				oHeader.appendChild(oLi);
+
+
+				// list
+				var oUl = document.createElement('ul');				
+				var arr = data[i].list;
+
+				for(var j=0;j<arr.length;j++){
+					var oLi = document.createElement('li');
+					var oA = document.createElement('a');
+
+					oA.index = j;
+					oA.innerHTML = arr[j].title;
+					oA.href = 'javascript:;';
+					oA.onmouseover = function() {
+						n = this.index;
+						oTips.style.display = 'block';
+						var w = this.offsetWidth + 30;
+						var h = oTips.offsetHeight;
+						var y = this.offsetTop;
+						var _h = this.offsetHeight;
+						var cH = document.documentElement.clientHeight;
+    					var sH = document.body.scrollTop;
+
+						oTipsCnt.innerHTML = '';
+						var str = '<ul>'+
+							'<li><h2>'+data[m].list[n].company+'</h2></li>'+
+							'<li class="col">职位：'+data[m].list[n].position+'</li>'+
+							'<li class="col">招聘人数：'+data[m].list[n].recruitingNumbers+'</li>'+
+							'<li class="col">工作地点：'+data[m].list[n].workingLocation+'</li>'+
+							'<li class="col">工作经历：'+data[m].list[n].workExperience+'</li>'+
+							'<li class="col">学历：'+data[m].list[n].education+'</li>'+
+							'<li class="col">薪资：'+data[m].list[n].wage+'</li>'+
+							'</ul>';
+
+						oTipsCnt.innerHTML = str;
+						
+						oTips.style.left = w +'px';
+						
+
+						if(y+h-sH < cH){
+							oTips.style.top = (y-h/2+_h/2) +'px';
+							oArrow.style.top = (h/2-10) + 'px';
+						}else{
+							oTips.style.top = (cH + sH - h) +'px';
+							oArrow.style.top = ( y-442 ) + 'px';
+
+							// 457 		15
+							// 492		50
+							// 527		85
+						}
+					};
+					oA.onmouseout = function() {
+						oTips.style.display = 'none';
+					};
+					oLi.appendChild(oA);
+
+					oUl.className = 'list';
+					oUl.appendChild(oLi);
+				}
+
+				if(i == 0){
+					oUl.style.display = 'block';
+				}
+				oList.appendChild(oUl);
+			}
+		}
+
+		init();
+
+		for(var i=0;i<aHdLi.length;i++){
+			aHdLi[i].index = i;
+			aHdLi[i].onclick = function() {
+				m = this.index;
+				for(var i=0;i<aHdLi.length;i++){
+					aHdLi[i].className = '';
+					aUl[i].style.display = 'none';
+				}
+				aHdLi[this.index].className = 'focus';
+				aUl[this.index].style.display = 'block';
+			};
+		}
+
+
+	};
+</script>
+</head>
+
+<body>
+	<div id="container">
+		<ul id="header"></ul>
+		
+		<div id="listContent"></div>
+	</div>
+	
+	<div id="tips">
+		<span id="arrow"></span>
+        <div id="tipsContent"></div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>1-返回radio-checkbox选中的值</title>
+    <script>
+    	window.onload = function() {
+    		var oBtn = document.getElementById('btn1');
+    		var oForm = document.forms[0];
+
+    		oBtn.onclick = function() {
+
+    			console.log( getVal(oForm.sex) );
+    		};
+
+    		function getVal(aIpt) {
+				var arr = [];
+
+				for(var i=0;i<aIpt.length;i++){
+					if(aIpt[i].checked){
+						arr.push(aIpt[i].value);
+					}
+				}
+
+				return arr;
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+<form id="form1" action="">
+	<label><input type="radio" name="sex" value="1" checked>男</label>
+	<label><input type="radio" name="sex" value="0">女</label>
+
+	<label><input type="checkbox" name="aihao" value="篮球" checked>篮球</label>
+	<label><input type="checkbox" name="aihao" value="足球">足球</label>
+	<label><input type="checkbox" name="aihao" value="排球">排球</label>
+	<label><input type="checkbox" name="aihao" value="乒乓球">乒乓球</label>
+
+	<input id="btn1" type="button" value="提交">
+</form>
+
+</body>
+</html>

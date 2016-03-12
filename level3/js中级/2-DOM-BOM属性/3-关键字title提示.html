@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>关键字title提示</title>
+    <style>
+		.box{
+			width: 500px;
+			height: 200px;
+			padding: 10px;
+			margin: 0 auto;
+			margin-top: 580px;
+			border: 1px solid #000;
+		}
+		.tips{
+			background-color: orange;
+		}
+    </style>
+    <script src="../../../global/global.js"></script>
+    <script>
+    	window.onload = function() {
+    		var aList = common.getByClass('tips');
+    		toTips(aList);
+
+    		function toTips(aList) {
+				var _box = null;
+
+    			for(var i=0;i<aList.length;i++){
+    				aList[i].onmouseover = function() {
+						_box = document.createElement('div');
+    					var text = this.getAttribute('data-title');
+    					var cH = document.documentElement.clientHeight;
+    					var sH = document.body.scrollTop;
+    					var x = this.offsetLeft;
+    					var y = this.offsetTop;
+    					var disY = 0;
+    					    					
+    					_box.innerHTML = text;
+    					_box.style.cssText = 'padding:5px; border: 1px solid #000; position: absolute; background-color: white;';
+
+    					document.body.appendChild(_box);
+
+    					// alert(_box.offsetHeight);
+    					if(y + _box.offsetHeight - sH < cH){
+    						disY = y+16;
+    					}else{
+    						disY = y-_box.offsetHeight;
+    					}
+
+    					_box.style.top = disY+'px';
+    					_box.style.left = x+'px';
+    				};
+
+    				aList[i].onmouseout = function() {
+    					document.body.removeChild(_box);
+    				};
+    			}
+    		}
+    	};	
+    </script>
+</head>
+<body>
+
+<div class="box">
+	<p> 我以前一本正经地问<span class="tips" data-title="fdsf">你</span>，“你学编程那么久咯，那你晓不晓得编程的祖师爷是哪个？”
+
+      你说是图灵，我说“不对！”。
+
+      你说是冯诺依曼，<span class="tips" data-title="哈哈哈">我</span>说“错咯！”
+
+      你皱着眉，低头想了一会儿，然后很惊喜地说：“是拜伦的女儿！”仿佛终于找到了正确答案。
+
+      我听了觉得好笑：“猜不到也不要瞎扯”，然后拍着你的脑壳说，“瓜娃儿，答案是沈从文！”
+
+      结果你愣了半晌，之后才慢慢反应过来，问我：“就是翠翠那个么？”
+
+      我正准备给你讲讲《边城》，结果你却拿出手机，百度证明拜伦的女儿确实是历史上第一个程序员给我看。
+      我正准备给你讲讲《边城》，结果你却拿出手机，百度证明拜伦的女儿确实是历史上第一个程序员给<span class="tips" data-title="哈哈哈">我</span>看。 </p>
+</div>
+
+</body>
+</html>
