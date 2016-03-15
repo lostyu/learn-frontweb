@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>改变div大小</title>
+    <style>
+		.box{
+			position: absolute;
+			left: 20%;
+			top: 200px;
+			width: 500px;
+			height: 200px;
+			border: 1px solid #000;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oDiv = document.getElementById('div1');
+
+    		oDiv.onmousedown = function(ev) {
+    			ev = ev || window.event;
+    			var disX = ev.clientX;
+    			var w = oDiv.offsetWidth;
+    			var ol = oDiv.offsetLeft;
+    			var b = '';
+
+    			if(disX > oDiv.offsetLeft + w - 20){
+    				b = 'right';
+    			}
+
+    			if(disX < oDiv.offsetLeft + 20){
+    				b = 'left';
+    			}
+
+    			document.onmousemove = function(ev) {
+    				ev = ev || window.event;
+    				var l = ev.clientX - disX;
+
+    				switch(b) {
+    					case 'left':
+    						oDiv.style.width = w - l + 'px';
+    						oDiv.style.left = ol + l + 'px';
+    						break;
+    					case 'right':
+    						oDiv.style.width = w + l + 'px';
+    						break;
+    				}
+    			};
+
+    			document.onmouseup = function() {
+    				document.onmousemove = document.onmouseup = null;
+    			};
+
+    			return false;
+    		};
+    	};
+    </script>
+</head>
+<body>
+
+<div id="div1" class="box"></div>
+
+</body>
+</html>

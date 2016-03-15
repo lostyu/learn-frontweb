@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>自定义滚动条</title>
+    <style>
+	.box{
+		position: relative;
+		width: 500px;
+		height: 400px;
+		margin: 0 auto;
+		border: 1px solid #000;
+	}
+	.box.noscroll .cnt{
+		right: 10px;
+	}
+	.box.noscroll .scroll{
+		display: none;
+	}
+	.box .cnt{
+		overflow: hidden;
+		position: absolute;
+		top: 10px;
+		bottom: 10px;
+		right: 15px;
+		left: 10px;
+		
+	}
+	.box .cnt .inner{
+		position: absolute;
+		top: 0;
+		left: 0;
+	}
+	.box .scroll{		
+		display: none;
+		position: absolute;
+		top: 0;
+		right: 0;
+		width: 15px;
+		height: 100%;
+		background: #ddd;
+	}
+	.box .scroll .scroller{
+		position: absolute;
+		width: 15px;
+		height: 60px;
+		background-color: red;
+	}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oBtn = document.getElementById('btn1');
+
+    		var oScroll = document.getElementById('scroll');
+    		var oScroller = oScroll.getElementsByTagName('div')[0];
+    		var oInner = document.getElementById('inner');
+    		var oCnt = document.getElementById('cnt');
+    		var oBox = document.getElementById('box');
+    		var bScroll = false;
+
+    		oBtn.onclick = function() {
+    			oInner.innerHTML += oInner.innerHTML + '去年起，给自己一个规定，每个月至少写三篇博客。主要是有两个原因，一个是逼自己提高对知识整理和对情感表达的能力；二个是逼自己多学。把知识能够系统的表达出来，非常有助于对知识的理解，而且对他人也是很有益的。很多时候，你能看懂的东西，未必能够很好的教授于他人。另外，要把肚子里的东西倒出来，首先肚子里得有东西，所以如果一个月没有内容可写，我就有些恐慌，感觉这个月没有学到东西，自己是不是倒退了。为了解决这个问题，我有一个办法就是增加自己的阅读量。产出不够，可以增加投入嘛。为什么是三篇，因为我感觉这个数目是适合我自己的节奏的，写一篇技术博客，有时候需要三四个小时，第二天还要推敲，审查一下。而我的博客内容，有的是编程经验、有的是学习的过程，有的是读后感，还';
+    			init();
+    		};
+
+    		function init(){
+    			var h1 = oInner.offsetHeight;
+    			var h2 = oCnt.offsetHeight;
+
+    			if(h1 - h2 > 0){
+    				bScroll = true;
+    			}
+
+				if(bScroll){
+					
+					oBox.className = 'box';
+					oScroll.style.display = 'block';
+
+					// y = k/x(k!=0,x!=0)
+					var iH = oCnt.offsetHeight / oInner.offsetHeight * 100;
+
+					if(iH < 10){
+						iH = 10;
+					}
+
+					oScroller.style.height = iH + 'px';
+
+					drag(oScroller);
+				}else{
+					oBox.className = 'box noscroll';
+				}
+    		}
+    		init();
+    		
+    		
+
+    		function drag(obj){
+    			obj.onmousedown = function(ev) {
+    				ev = ev || window.event;
+    				var disX = ev.clientX - obj.offsetLeft;
+    				var disY = ev.clientY - obj.offsetTop;
+
+    				if(obj.setCapture){
+    					obj.setCapture();
+    				}
+
+    				document.onmousemove = function(ev) {
+    					ev = ev || window.event;
+    					var l = ev.clientX - disX;
+    					var t = ev.clientY - disY;
+
+    					if(l < 0){
+    						l = 0;
+    					}else if(l >= oScroll.offsetWidth - obj.offsetWidth){
+    						l = oScroll.offsetWidth - obj.offsetWidth;
+    					}
+
+    					if(t < 0){
+    						t = 0;
+    					}else if(t >= oScroll.offsetHeight - obj.offsetHeight){
+    						t = oScroll.offsetHeight - obj.offsetHeight;
+    					}
+
+    					obj.style.left = l + 'px';
+    					obj.style.top = t + 'px';
+
+    					var iScale = t / (oScroll.offsetHeight - obj.offsetHeight);
+
+    					oInner.style.top = -iScale * (oInner.offsetHeight - oCnt.offsetHeight) + 'px';
+    				}
+
+    				document.onmouseup = function() {
+    					document.onmousemove = document.onmouseup = null;
+
+    					if(obj.releaseCapture){
+    						obj.releaseCapture();
+    					}
+    				};
+
+    				return false;
+    			};
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+<button id="btn1">添加内容</button>
+
+<div id="box" class="box">
+	<div id="cnt" class="cnt">
+		<div id="inner" class="inner">
+			因朋友推荐面试了一家互联网金融公司，上午2个小时就做完了笔试、一面和二面。过程很顺利，和技术主管聊得很愉快，做了一个多小时的笔试内容他直接没看，他说，我有看过你的博客，还不错，看得出你是一个学习能力很强的人，继续写下去，多出好博客。第二天HR就联系我了。我内心自然是欣喜的，没想到这么快就定下来了。
+
+缘起
+
+我从去年起，给自己一个规定，每个月至少写三篇博客。主要是有两个原因，一个是逼自己提高对知识整理和对情感表达的能力；二个是逼自己多学。把知识能够系统的表达出来，非常有助于对知识的理解，而且对他人也是很有益的。很多时候，你能看懂的东西，未必能够很好的教授于他人。另外，要把肚子里的东西倒出来，首先肚子里得有东西，所以如果一个月没有内容可写，我就有些恐慌，感觉这个月没有学到东西，自己是不是倒退了。为了解决这个问题，我有一个办法就是增加自己的阅读量。产出不够，可以增加投入嘛。为什么是三篇，因为我感觉这个数目是适合我自己的节奏的，写一篇技术博客，有时候需要三四个小时，第二天还要推敲，审查一下。而我的博客内容，有的是编程经验、有的是学习的过程，有的是读后感，还
+
+
+
+		</div>
+	</div>
+	<div id="scroll" class="scroll">
+		<div class="scroller"></div>
+	</div>
+</div>
+
+</body>
+</html>

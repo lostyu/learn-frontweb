@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>div移动</title>
+    <style>
+		#div1{
+			position: absolute;
+			left: 0;
+			top: 0;
+			width: 100px;
+			height: 100px;
+			background-color: red;
+		}
+    </style>
+    <script>
+    	window.onload = function() {
+    		var oDiv = document.getElementById('div1');
+    		var keys = {
+    			'l': false,
+    			'r': false,
+    			't': false,
+    			'b': false
+    		};
+    		var speed = 5;
+    		
+    		setInterval(function() {
+    			if(keys.l){
+    				oDiv.style.left = oDiv.offsetLeft-speed+'px';
+    			}
+    			if(keys.r){
+    				oDiv.style.left = oDiv.offsetLeft+speed+'px';
+    			}
+    			if(keys.t){
+    				oDiv.style.top = oDiv.offsetTop-speed+'px';
+    			}
+    			if(keys.b){
+    				oDiv.style.top = oDiv.offsetTop+speed+'px';
+    			}
+    		}, 30);
+
+    		document.onkeydown = function(ev) {
+    			ev = ev || window.event;
+    			// alert(ev.keyCode);
+    			// 37左 38上 39右 40下
+
+    			switch (ev.keyCode){
+    				case 37:
+    					keys.l = true;
+    					break;
+    				case 38:
+    					keys.t = true;
+    					break;
+    				case 39:
+    					keys.r = true;    					
+    					break;
+    				case 40:
+    					keys.b = true;
+    					break;
+    			}
+    		};
+
+    		document.onkeyup = function(ev) {
+    			ev = ev || window.event;
+    			// alert(ev.keyCode);
+    			// 37左 38上 39右 40下
+
+    			switch (ev.keyCode){
+    				case 37:
+    					keys.l = false;
+    					break;
+    				case 38:
+    					keys.t = false;
+    					break;
+    				case 39:
+    					keys.r = false;    					
+    					break;
+    				case 40:
+    					keys.b = false;
+    					break;
+    			}
+    		};
+    	};
+    </script>
+</head>
+<body>
+
+<div id="div1"></div>
+
+</body>
+</html>

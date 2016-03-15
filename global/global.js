@@ -24,6 +24,16 @@ var common = {
         return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
     },
 
+    addEvent: function(obj, eventName, fn) {
+        if(obj.addEventListener){
+            obj.addEventListener(eventName, fn, false);
+        }else{
+            obj.attachEvent('on'+eventName, function() {
+                fn.call(obj);
+            });
+        }
+    },
+
     getDate: function() {
         var oDate = new Date(),
             iYear = oDate.getFullYear(),

@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>模拟select多选</title>
+    <style>
+		.selectBox{
+			position: relative;
+			width: 200px;
+			height: 35px;
+			
+		}
+		.selectBox .text{
+			position: absolute;
+			box-sizing: border-box;
+			width: 100%;
+			height: 35px;
+			line-height: 35px;
+			padding: 0 10px;
+			border: 1px solid orange;
+			font-size: 12px;
+			cursor: pointer;
+		}
+		.selectBox .text:after{
+			position: absolute;
+			right: 10px;
+			top: 15px;
+			content: '';
+			width: 0;
+			height: 0;
+			border-top: 6px solid orange;
+			border-left: 6px solid transparent;
+			border-right: 6px solid transparent;
+		}
+		.selectBox ul{
+			display: none;
+			box-sizing: border-box;
+			position: absolute;
+			top: 34px;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+			border: 1px solid orange;
+			background-color: #fff;
+		}
+		.selectBox li{
+			line-height: 35px;
+			padding: 0 10px;
+			list-style: none;
+			font-size: 12px;
+			cursor: pointer;
+
+			-moz-user-select: none; /*火狐*/
+			-webkit-user-select: none; /*webkit浏览器*/
+			-ms-user-select: none; /*IE10*/
+			-khtml-user-select: none; /*早期浏览器*/
+			user-select: none;
+		}
+		.selectBox .active{
+			background-color: orange;
+			color: #fff;
+		}
+    </style>
+    <script src="../../../global/global.js"></script>
+    <script>
+    	window.onload = function() {
+
+    		var oDiv = document.getElementById('sel');
+
+    		select(oDiv);
+
+    		function select(obj) {
+    			var oText = obj.getElementsByTagName('div')[0];
+    			var oUl = obj.getElementsByTagName('ul')[0];
+    			var aLi = obj.getElementsByTagName('li');
+    			var onOff = false;
+    			var arrSel = [];    
+
+    			for(var i=0;i<aLi.length;i++){
+    				aLi[i].index = i;
+    				aLi[i].onmouseover = function() {
+    					for(var i=0;i<aLi.length;i++){
+
+    						if(arrSel.length > 0){
+    							var b = true;
+
+	    						for(var j=0;j<arrSel.length;j++){
+	    							if(aLi[i].index == arrSel[j]){
+	    								b = false;
+	    								break;
+	    							}
+	    						}
+
+	    						if(b){
+	    							aLi[i].className = '';
+	    						}
+    						}else{
+    							aLi[i].className = '';
+    						}    						
+    					}
+
+    					this.className = 'active';
+    				};
+
+    				aLi[i].onclick = function(ev) {
+    					ev = ev || window.event;
+    					var arrStr = [];
+    					
+    					// ctrlKey
+    					// shiftKey
+
+    					if(ev.ctrlKey || ev.shiftKey){
+    						ev.cancelBubble = true;
+
+    						if(arrSel.length > 0){
+    							var b = true;    							
+
+								for(var i=0;i<arrSel.length;i++){
+									if(arrSel[i] == this.index){
+										b = false;
+										arrSel.splice(i,1);
+										aLi[this.index].className = '';
+										break;
+									}
+								}
+
+								if(b){
+									arrSel.push(this.index);
+								}
+																						
+    						}else{
+    							arrSel.push(this.index);
+    						}
+
+    						arrSel.sort(function(n1, n2) {
+								return n1 - n2;
+							});
+			    			
+			    			for(var i=0;i<arrSel.length;i++){
+			    				aLi[arrSel[i]].className = 'active';
+			    			}	
+    					}else{
+    						arrSel.length = 0;
+    						arrSel.push(this.index);
+    					}
+
+    					for(var i=0;i<arrSel.length;i++){
+    						arrStr.push(aLi[arrSel[i]].innerHTML);
+    					}
+
+    					oText.innerHTML = arrStr.join(',');
+
+    				};
+    			}
+
+    			common.addEvent(document, 'click', function() {
+    				hideSel();
+    			});
+
+    			obj.onclick = function(ev) {
+    				ev = ev || window.event;
+    				ev.cancelBubble = true;
+
+    				if(!onOff){
+    					showSel();
+    				}else{
+    					hideSel();
+    				}
+    			};
+
+    			function showSel() {
+    				onOff = true;
+    				oUl.style.display = 'block';
+
+    				for(var i=0;i<arrSel.length;i++){
+    					aLi[arrSel[i]].className = 'active';
+    				}
+    			}
+
+    			function hideSel() {
+    				onOff = false;
+					oUl.style.display = 'none';
+
+					for(var i=0;i<aLi.length;i++){
+    					aLi[i].className = '';
+    				}
+    			}
+    		}
+    			
+    	};
+    </script>
+</head>
+<body>
+
+<div id="sel" class="selectBox">
+	<div class="text"></div>
+	<ul>
+		<li>乒乓球</li>
+		<li>排球</li>
+		<li>足球</li>
+		<li>羽毛球</li>
+		<li>棒球</li>
+		<li>篮球</li>
+	</ul>
+</div>
+
+
+</body>
+</html>
