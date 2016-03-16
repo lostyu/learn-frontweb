@@ -9,16 +9,83 @@
     <title>绘制div</title>
     <style>
 		.box{
+			position: relative;
 			width: 800px;
 			height: 600px;
+			margin: 0 auto;
 			border:1px solid #000;
+		}
+		.div{
+			position: absolute;
+			border: 1px solid red;
+			box-sizing: border-box;
 		}
     </style>
     <script>
     	window.onload = function() {
     		var oDiv = document.getElementById('div1');
 
-    		
+    		oDiv.onmousedown = function(ev) {
+    			ev = ev || window.event;
+    			var l1 = ev.clientX - oDiv.offsetLeft;
+    			var t1 = ev.clientY - oDiv.offsetTop;
+    			var _div = document.createElement('div');
+    			var bRemove = true;
+
+    			_div.className = 'div';
+    			_div.style.left = l1 + 'px';
+    			_div.style.top = t1 + 'px';
+    			oDiv.appendChild(_div);
+
+    			if(oDiv.setCapture){
+					oDiv.setCapture();
+    			}
+
+    			document.onmousemove = function(ev) {
+    				ev = ev || window.event;
+    				var l2 = ev.clientX - oDiv.offsetLeft;
+    				var t2 = ev.clientY - oDiv.offsetTop;
+
+    				if(l2 != l1 || t2 != t1){
+    					bRemove = false;
+    				}else{
+    					bRemove = true;
+    				}    	
+
+    				if(l2 < 0){
+    					l2 = 0;
+    				}else if(l2 > oDiv.clientWidth){
+    					l2 = oDiv.clientWidth;
+    				}
+
+    				if(t2 < 0){
+    					t2 = 0;
+    				}else if(t2 > oDiv.clientHeight){
+    					t2 = oDiv.clientHeight;
+    				}
+
+    				_div.style.width = Math.abs(l2 - l1) + 'px';
+    				_div.style.height = Math.abs(t2 - t1 ) + 'px';
+
+
+    				_div.style.left = l1 > l2 ? (l2+'px') : (l1+'px');
+    				_div.style.top = t1 > t2 ? (t2+'px') : (t1+'px');
+    			};
+
+    			document.onmouseup = function() {
+    				document.onmousemove = document.onmouseup = null;
+
+    				if(bRemove){
+						oDiv.removeChild(_div);
+    				}
+
+    				if(oDiv.releaseCapture){
+						oDiv.releaseCapture();
+    				}
+    			};
+
+    			return false;
+    		};
     	};
     </script>
 </head>
