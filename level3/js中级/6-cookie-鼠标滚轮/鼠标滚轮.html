@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>鼠标滚轮</title>
+    <style>
+        .box{
+            width:100px;
+            height:100px;
+            background: red;
+        }
+    </style>
+    <script>
+        window.onload = function() {
+            var oDiv = document.getElementById('div1');
+
+            oDiv.onmousewheel = myScroll;
+
+            if(oDiv.addEventListener){
+                oDiv.addEventListener('DOMMouseScroll', myScroll, false);
+            }
+
+
+            function myScroll(ev) {
+                ev = ev || event;
+                var b = true;
+
+                //IE,chrome： 上：120 下：-120
+                // alert(ev.wheelDelta);
+
+                // alert(ev.detail);
+                // FF 上：-3  下：3
+                if(ev.wheelDelta){
+                    b = ev.wheelDelta > 0 ? true : false;
+                }else{
+                    b = ev.detail < 0 ? true : false;
+                }
+
+                if(b){
+                    oDiv.style.height = oDiv.offsetHeight - 10 + 'px';
+                }else{
+                    oDiv.style.height = oDiv.offsetHeight + 10 + 'px';
+                }
+
+                if(ev.preventDefault){
+                    ev.preventDefault();
+                }
+                return false;
+            }
+        };
+    </script>
+</head>
+<body style="height: 2000px;;">
+    <div id="div1" class="box"></div>
+</body>
+</html>

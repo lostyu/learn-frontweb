@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>cookie</title>
+    <script>
+        window.onload = function() {
+            var aIpt = document.getElementsByTagName('input');
+
+            if(getCookie('name')){
+                aIpt[0].value = getCookie('name');
+            }
+
+            aIpt[1].onclick = function() {
+                alert('登陆成功');
+                setCookie('name', aIpt[0].value, 5);
+            };
+
+            aIpt[2].onclick = function() {
+                aIpt[0].value = '';
+                removeCookie('name');
+            };
+        };
+
+        function setCookie(key, value, t) {
+            var oDate = new Date();
+            oDate.setDate(oDate.getDate() + t);
+
+            document.cookie = key + '=' + value + ';expires=' + oDate.toUTCString();
+        }
+
+        function getCookie(key) {
+            var arr1 = document.cookie.split('; ');
+            for(var i=0;i<arr1.length;i++){
+                var arr2 = arr1[i].split('=');
+                if(arr2[0] == key){
+                    return decodeURI(arr2[1]);
+                }
+            }
+        }
+
+        function removeCookie(key) {
+            setCookie(key, '', -1);
+        }
+    </script>
+</head>
+<body>
+
+<input type="text"><input type="button" value="登陆"><input type="button" value="删除">
+
+</body>
+</html>
