@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>history</title>
+    <script>
+    	window.onload = function() {
+    		var oIpt = document.getElementById('ipt1');
+    		var oDiv = document.getElementById('div1');
+            var iPage = 1;
+
+            window.onpopstate = function(ev) {
+                ev = ev || event;
+                oDiv.innerHTML = ev.state || '';
+            }
+    	
+    		oIpt.onclick = function() {
+    			var number = getRandomNum(35, 7);
+
+    			oDiv.innerHTML = number;
+                window.history.pushState(number, '', iPage);
+    		};
+
+    		function getRandomNum(n1, count) {
+    			var arr1 = [];
+    			var arr2 = [];
+
+    			for(var i=1;i<=n1;i++){
+    				arr1.push(i);
+    			}
+
+    			for(var i=0;i<count;i++){
+    				arr2.push( arr1.splice(Math.floor(Math.random()*arr1.length), 1) );
+    			}
+
+    			return arr2;
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+<input id="ipt1" type="button" value="35选7">
+<div id="div1"></div>
+
+</body>
+</html>
