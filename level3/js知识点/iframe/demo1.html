@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>demo1</title>
+    <script>
+    	window.onload = function() {
+    		var aInput = document.getElementsByTagName('input');
+    		var oDiv = document.getElementById('div1');
+    		var oIframe = document.getElementById('iframe1');
+
+    		aInput[0].onclick = function() {
+    			
+    			oIframe.src = 'iframe1.html';
+    			changeHeight();
+    		};
+
+    		aInput[1].onclick = function() {
+    			
+    			oIframe.src = 'iframe2.html';
+    			changeHeight();
+    		};
+
+    		function changeHeight() {
+    			setTimeout(function() {
+    				oIframe.height = oIframe.contentWindow.document.body.offsetHeight;
+    			}, 100);
+    			
+    		}
+    	};
+    </script>
+</head>
+<body>
+
+<input type="button" value="窗口1">
+<input type="button" value="窗口2">
+<div id="div1">
+	<iframe id="iframe1" src="iframe1.html" frameborder="0"></iframe>
+</div>
+</body>
+</html>

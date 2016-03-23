@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>跨域</title>
+    <script>
+    	var localHandler = function(data) {
+    		alert('远程调用'+data.name);
+    	};
+
+    	var url = 'http://xxx.com?code=100&callback=localHandler';
+    	var script = document.createElement('script');
+
+    	script.src = url;
+    	document.getElementsByTagName('head')[0].appendChild(script);
+    </script>
+    <!-- <script src="jsonp.js"></script> -->
+</head>
+<body>
+
+
+
+</body>
+</html>

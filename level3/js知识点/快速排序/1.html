@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>快速排序</title>
+    <script>
+    	var arr = [4, 13, 55, 35, 9, 88, 17, 64, 102, 2];
+
+    	function quickSort(arr) {
+    		if(arr.length <=1){
+    			return arr;
+    		}
+
+    		var num = Math.floor( arr.length/2 );
+    		var numValue = arr.splice(num, 1);
+    		var left = [];
+    		var right = [];
+
+    		for(var i=0;i<arr.length;i++){
+    			if(arr[i] < numValue){
+    				left.push(arr[i]);
+    			}else{
+    				right.push(arr[i]);
+    			}
+    		}
+
+    		return quickSort(left).concat(numValue, quickSort(right));
+    	}
+
+    	alert( quickSort(arr) );
+    </script>
+</head>
+<body>
+
+
+
+</body>
+</html>

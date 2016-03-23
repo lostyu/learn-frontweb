@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>js分页</title>
+    <style>
+	.m-page{
+
+	}
+	.m-page table{
+		margin-left: auto;
+		margin-right: auto;
+		border-collapse: collapse;
+	}
+	.m-page a{
+		float: left;
+		display: inline-block; 
+		padding: 4px 8px;
+		margin-right: 1px;
+		text-decoration: none; 
+		background-color: #ddd;
+		color: #fff;
+		font-size: 14px;
+	}
+	.m-page a:hover, .m-page .active{
+		background-color: orange;		
+	}
+    </style>
+    <script>
+    	window.onload = function() {
+
+    		page({
+    			id: 'div1',
+    			curNum: 7,
+    			allNum: 10,
+    			callBack: function(curNum, allNum){
+    				alert('当前：'+curNum+', 总共：'+allNum);
+    			}
+    		});
+
+    	};
+
+    	function page(opt) {
+    		if(!opt.id){
+    			return;
+    		}
+
+    		var obj = document.getElementById(opt.id);
+    		var curNum = opt.curNum || 1;
+    		var allNum = opt.allNum || 10;
+    		var callBack = opt.callBack || function(){};
+    		
+    		var oTable = document.createElement('table');
+    		var oTr = document.createElement('tr');
+    		var oTd = document.createElement('td');
+
+    		oTable.appendChild(oTr);
+    		oTr.appendChild(oTd);
+    		obj.appendChild(oTable);
+
+    		if(curNum >=4 && allNum >= 6){
+    			var oA = document.createElement('a');
+    			oA.href = '#1';
+    			oA.innerHTML = '首页';
+    			oTd.appendChild(oA);
+    		}
+    		if(curNum >= 2){
+    			var oA = document.createElement('a');
+    			oA.href = '#' + (curNum-1);
+    			oA.innerHTML = '上一页';
+    			oTd.appendChild(oA);
+    		}
+
+    		if(allNum <= 5){
+    			for(var i=1;i<=allNum;i++){
+    				var oA = document.createElement('a');
+    				if(curNum == i){
+    					oA.className = 'active';
+    				}
+    				oA.href = '#'+i;
+    				oA.innerHTML = i;
+    				oTd.appendChild(oA);
+    			}
+    		}else{
+    			for(var i=1;i<=5;i++){
+    				var oA = document.createElement('a');
+
+    				if(curNum <= 2){
+    					if(curNum == i){
+	    					oA.className = 'active';
+	    				}
+    					oA.href = '#'+i;
+    					oA.innerHTML = i;
+    				}else if( allNum - curNum < 2){
+    					if(curNum == (allNum-5+i)){
+    						oA.className = 'active';
+    					}
+    					oA.href = '#'+ (allNum-5+i);
+    					oA.innerHTML = (allNum-5+i);
+    				}else{
+    					if(curNum == (curNum-3+i)){
+	    					oA.className = 'active';
+	    				}
+	    				oA.href = '#' + (curNum-3+i);
+	    				oA.innerHTML = (curNum-3+i);
+    				}
+    				
+    				oTd.appendChild(oA);
+    			}
+    		}
+
+    		if(allNum - curNum > 0){
+    			var oA = document.createElement('a');
+    			oA.href = '#' + (curNum+1);
+    			oA.innerHTML = '下一页';
+    			oTd.appendChild(oA);
+    		}
+
+    		if(curNum<=allNum-3 && allNum>=6){
+    			var oA = document.createElement('a');
+    			oA.href = '#'+allNum;
+    			oA.innerHTML = '尾页';
+    			oTd.appendChild(oA);
+    		}
+
+    		callBack(curNum, allNum);
+
+    		var aA = obj.getElementsByTagName('a');
+    		for(var i=0;i<aA.length;i++){
+    			aA[i].onclick = function() {
+    				obj.innerHTML = '';
+    				var curNum = parseInt(this.getAttribute('href').substr(1));
+    				page({
+    					id: opt.id,
+    					curNum: curNum,
+    					allNum: allNum,
+    					callBack: callBack
+    				});
+    			}
+    		}
+    	}
+    </script>
+</head>
+<body>
+
+<div id="div1" class="m-page"></div>
+
+<!-- <div id="div1" class="m-page">
+	<table>
+		<tr>
+			<td>
+				<a href="javascript:;">首页</a>
+				<a href="javascript:;">上一页</a>
+				<a href="javascript:;">1</a>
+				<a href="javascript:;">2</a>
+				<a class="active" href="javascript:;">3</a>
+				<a href="javascript:;">4</a>
+				<a href="javascript:;">5</a>
+				<a href="javascript:;">下一页</a>
+				<a href="javascript:;">尾页</a>
+			</td>
+		</tr>
+	</table>
+</div> -->
+
+</body>
+</html>
