@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>百叶窗</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        ul {
+            width: 300px;
+            margin: 50px auto;
+        }
+
+        li {
+            position: relative;
+            height: 30px;
+            line-height: 30px;
+            overflow: hidden;
+            border-bottom: 1px solid #ddd;
+        }
+
+        li div {
+            position: absolute;
+            left: 0;
+            top: -30px;
+            height: 60px;
+        }
+
+        li p {
+            height: 30px;
+            line-height: 30px;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+
+//            var oDiv = document.getElementById('div1');
+
+//            starMove(oDiv, {'height': 300, 'opacity': 0}, function () {
+//                starMove(oDiv, {'height': 100, 'opacity': 100});
+//            });
+
+
+
+            // 浏览器切换定时器出问题，速度会变快
+            // http://bbs.miaov.com/forum.php?mod=viewthread&tid=7198&extra=page%3D1
+
+            var oUl = document.getElementById('ul1');
+            var oUl2 = document.getElementById('ul2');
+
+
+            toShow(oUl);
+            setTimeout(function() {
+                toShow(oUl2);
+            }, 2000);
+
+            function toShow(obj) {
+                var aDiv = obj.getElementsByTagName('div');
+                var n = 0;
+                var timer = null;
+                var onOff = true;
+
+                setInterval(function () {
+
+                    timer = setInterval(function () {
+                        if(n == aDiv.length){
+                            clearInterval(timer);
+                            n = 0;
+                            onOff = !onOff;
+                        }else {
+                            starMove(aDiv[n], {'top': onOff ? 0 : -30});
+                            n++;
+                        }
+                    }, 100);
+
+                }, 4000);
+            }
+
+
+        };
+
+        function getStyle(obj, attr) {
+            return obj.currentStyle ? obj.currentStyle[attr] : getComputedStyle(obj, false)[attr];
+        }
+
+        function starMove(obj, json, fn) {
+            clearInterval(obj.timer);
+
+            obj.timer = setInterval(function () {
+                var bStop = true;
+
+                for (var attr in json) {
+                    var cur = 0;
+
+                    if (attr == 'opacity') {
+                        cur = Math.round(parseFloat(getStyle(obj, attr)) * 100);
+                    } else {
+                        cur = parseInt(getStyle(obj, attr));
+                    }
+
+                    var speed = (json[attr] - cur) / 6;
+                    speed = speed > 0 ? Math.ceil(speed) : Math.floor(speed);
+
+                    if (cur != json[attr]) {
+                        bStop = false;
+                    }
+
+                    if (attr == 'opacity') {
+                        obj.style.filter = 'alpha(opacity=' + (cur + speed) + ')';
+                        obj.style.opacity = (cur + speed) / 100;
+                    } else {
+                        obj.style[attr] = (cur + speed) + 'px';
+                    }
+                }
+
+                if (bStop) {
+                    clearInterval(obj.timer);
+
+                    if (typeof fn == 'function') {
+                        fn();
+                    }
+                }
+
+            }, 30);
+        }
+    </script>
+</head>
+<body>
+<div id="div1" style="width: 100px; height: 100px; background-color:red; opacity:.5;"></div>
+<ul id="ul1">
+    <li>
+        <div>
+            <p>111111111111111</p>
+            <p>222222222222222</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>fdsfsdfsdfsdfs</p>
+            <p>vcxvxcvxvcxv</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>3434324234234</p>
+            <p>6656456546546</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>hjtyjtjtrjyj</p>
+            <p>2342342bssfsdf</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>234jjytjj66j6j</p>
+            <p>nnncvdfgdfgdfg</p>
+        </div>
+    </li>
+</ul>
+<ul id="ul2">
+    <li>
+        <div>
+            <p>111111111111111</p>
+            <p>222222222222222</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>fdsfsdfsdfsdfs</p>
+            <p>vcxvxcvxvcxv</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>3434324234234</p>
+            <p>6656456546546</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>hjtyjtjtrjyj</p>
+            <p>2342342bssfsdf</p>
+        </div>
+    </li>
+    <li>
+        <div>
+            <p>234jjytjj66j6j</p>
+            <p>nnncvdfgdfgdfg</p>
+        </div>
+    </li>
+</ul>
+</body>
+</html>

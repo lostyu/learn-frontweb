@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js分页2</title>
+    <link rel="stylesheet" href="../../global/bootstrap-3.3.5/css/bootstrap.min.css">
+    <script>
+        window.onload = function () {
+
+            page({
+                id: 'pagination1',
+                curNum: 1,
+                allNum: 20,
+                callBack: function(curNum, allNum) {
+                    //console.log('当前：'+curNum+', 总共：'+allNum);
+                }
+            });
+
+        };
+        function page(opt) {
+            if (!opt.id) {
+                return false;
+            }
+
+            var obj = document.getElementById(opt.id);
+            var curNum = opt.curNum || 1;
+            var allNum = opt.allNum || 5;
+            var callBack = opt.callBack || function(){};
+            var oUl = document.createElement('ul');
+
+            oUl.className = 'pagination';
+            obj.appendChild(oUl);
+
+            if (curNum > 1) {
+                var oLi = document.createElement('li');
+                var oA = document.createElement('a');
+
+                oA.href = '#' + (curNum - 1);
+                oA.innerHTML = '上一页';
+                oLi.appendChild(oA);
+                oUl.appendChild(oLi);
+            }
+
+            if (curNum > 3 && allNum > 5) {
+                var oLi = document.createElement('li');
+                var oA = document.createElement('a');
+
+                oA.href = '#1';
+                oA.innerHTML = 1;
+                oLi.appendChild(oA);
+                oUl.appendChild(oLi);
+
+                var oLi = document.createElement('li');
+                var oSpan = document.createElement('span');
+
+                oSpan.innerHTML = '...';
+                oLi.appendChild(oSpan);
+                oUl.appendChild(oLi);
+            }
+
+            if (allNum <= 5) {
+                for (var i = 1; i <= allNum; i++) {
+                    var oLi = document.createElement('li');
+                    var oA = document.createElement('a');
+
+                    if (curNum == i) {
+                        oLi.className = 'active';
+                    }
+
+                    oA.href = '#' + i;
+                    oA.innerHTML = i;
+                    oLi.appendChild(oA);
+                    oUl.appendChild(oLi);
+                }
+            } else {
+                for (var i = 1; i <= 5; i++) {
+                    var oLi = document.createElement('li');
+                    var oA = document.createElement('a');
+
+                    if (curNum < 3) {
+                        if (curNum == i) {
+                            oLi.className = 'active';
+                        }
+
+                        oA.href = '#' + i;
+                        oA.innerHTML = i;
+                    } else if (allNum - curNum < 2) {
+                        if (curNum == (allNum - 5 + i)) {
+                            oLi.className = 'active';
+                        }
+
+                        oA.href = '#' + (allNum - 5 + i);
+                        oA.innerHTML = (allNum - 5 + i);
+                    } else {
+                        if (curNum == (curNum - 3 + i)) {
+                            oLi.className = 'active';
+                        }
+
+                        oA.href = '#' + (curNum - 3 + i);
+                        oA.innerHTML = (curNum - 3 + i);
+                    }
+
+                    oLi.appendChild(oA);
+                    oUl.appendChild(oLi);
+                }
+            }
+
+            if (allNum - curNum > 2 && allNum > 5) {
+                var oLi = document.createElement('li');
+                var oSpan = document.createElement('span');
+
+                oSpan.innerHTML = '...';
+                oLi.appendChild(oSpan);
+                oUl.appendChild(oLi);
+
+                var oLi = document.createElement('li');
+                var oA = document.createElement('a');
+
+                oA.href = '#' + allNum;
+                oA.innerHTML = allNum;
+                oLi.appendChild(oA);
+                oUl.appendChild(oLi);
+            }
+
+            if (allNum - curNum > 0) {
+                var oLi = document.createElement('li');
+                var oA = document.createElement('a');
+
+                oA.href = '#' + (curNum + 1);
+                oA.innerHTML = '下一页';
+                oLi.appendChild(oA);
+                oUl.appendChild(oLi);
+            }
+
+            callBack(curNum, allNum);
+
+            var aA = obj.getElementsByTagName('a');
+
+            for(var i=0;i<aA.length;i++){
+                aA[i].onclick = function() {
+                    obj.innerHTML = '';
+
+                    var curNum = parseInt( this.getAttribute('href').substr(1) );
+
+                    page({
+                        id: opt.id,
+                        curNum: curNum,
+                        allNum: allNum,
+                        callBack: callBack
+                    });
+
+                    return false;
+                };
+            }
+        }
+    </script>
+</head>
+<body>
+
+<nav id="pagination1" class="text-center">
+    <!--<ul class="pagination">-->
+    <!--<li><a href="#">上一页</a></li>-->
+    <!--<li><a href="#3">3</a></li>-->
+    <!--<li><a href="#4">4</a></li>-->
+    <!--<li class="active"><a href="#5">5</a></li>-->
+    <!--<li><a href="#6">6</a></li>-->
+    <!--<li><a href="#7">7</a></li>-->
+    <!--<li><a href="#">下一页</a></li>-->
+    <!--</ul>-->
+    <!--i=1     curNum=5   allNum=10      3-->
+</nav>
+
+</body>
+</html>
