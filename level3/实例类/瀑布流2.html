@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta content="telephone=no" name="format-detection">
+    <title>瀑布流2</title>
+    <style>
+    	*{
+    		margin: 0;
+    		padding: 0;
+    		list-style: none;
+    	}
+		.box{
+			width: 630px;
+			margin: 20px auto;
+		}
+		.box ul{
+		  position: relative;
+		}
+		.box li{
+            position: absolute;
+            width: 200px;
+            margin: 5px;
+        }
+		.box li img{
+			width: 200px;			
+		}
+    </style>
+	<script src="../../global/jquery.js"></script>
+    <script>
+    	window.onload = function() {
+    		var aLi = document.getElementsByTagName('li');
+            var aHei = {
+                L: [],
+                C: [],
+                R: []
+            };
+
+            for(var i=0;i<aLi.length;i++){
+                var iNow = i % 3;
+
+                switch(iNow) {
+                    case 0:
+                        aLi[i].style.left = 0;
+                        aHei.L.push(aLi[i].offsetHeight);
+
+                        var step = Math.floor(i/3);
+                        if(!step){
+                            aLi[i].style.top = 0;
+                        }else{
+                            var sum = 0;
+                            for(var j=0;j<step;j++){
+                                sum += aHei.L[j] + 5;
+                            }
+                            aLi[i].style.top = sum + 'px';
+                        }
+                        break;
+                    case 1:
+                        aLi[i].style.left = 210 + 'px';
+                        aHei.C.push(aLi[i].offsetHeight);
+
+                        var step = Math.floor(i/3);
+                        if(!step){
+                            aLi[i].style.top = 0;
+                        }else{
+                            var sum = 0;
+                            for(var j=0;j<step;j++){
+                                sum += aHei.C[j] + 5;
+                            }
+                            aLi[i].style.top = sum + 'px';
+                        }
+                        break;
+                    case 2:
+                        aLi[i].style.left = 420 + 'px';
+                        aHei.R.push(aLi[i].offsetHeight);
+
+                        var step = Math.floor(i/3);
+                        if(!step){
+                            aLi[i].style.top = 0;
+                        }else{
+                            var sum = 0;
+                            for(var j=0;j<step;j++){
+                                sum += aHei.R[j] + 5;
+                            }
+                            aLi[i].style.top = sum + 'px';
+                        }
+                        break;  
+                }
+            }
+
+            window.onscroll = function() {
+                
+            };
+            		  
+    	};
+    </script>
+</head>
+<body>
+
+<div class="box">
+	<ul>
+		<li><img src="img/p1.jpg" alt=""><p>123123444</p></li>
+		<li><img src="img/p4.png" alt=""><p>123123444</p></li>
+        <li><img src="img/p2.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p1.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p4.png" alt=""><p>123123444</p></li>
+        <li><img src="img/p2.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p1.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p4.png" alt=""><p>123123444</p></li>
+        <li><img src="img/p2.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p1.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p4.png" alt=""><p>123123444</p></li>
+        <li><img src="img/p2.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p1.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p4.png" alt=""><p>123123444</p></li>
+        <li><img src="img/p2.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p1.jpg" alt=""><p>123123444</p></li>
+        <li><img src="img/p4.png" alt=""><p>123123444</p></li>
+        <li><img src="img/p2.jpg" alt=""><p>123123444</p></li>
+	</ul>
+</div>
+
+</body>
+</html>

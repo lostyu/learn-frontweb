@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport"
+	content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+	<meta content="black" name="apple-mobile-web-app-status-bar-style">
+	<meta content="telephone=no" name="format-detection">
+	<title>数字时钟</title>
+	<style>
+		.box{
+			overflow: hidden;
+			margin: 20px auto;
+		}
+		.box img{
+			position: relative;
+			/*float: left;*/
+			width: 60px;
+			height: 88px;
+		}
+	</style>
+	<script>
+	 		// 浏览器切换定时器出问题，速度会变快
+            // http://bbs.miaov.com/forum.php?mod=viewthread&tid=7198&extra=page%3D1
+		window.onload = function(){
+			var oDiv = document.getElementById('div1');
+			var aImg = oDiv.getElementsByTagName('img');
+			var oDate = new Date();
+			var prevStr = '';
+			var nextStr = '';
+			var arrImg = [];
+			var arr = [];
+			var timer = null;
+
+			prevStr = toDouble(oDate.getHours()) + toDouble(oDate.getMinutes()) + toDouble(oDate.getSeconds());
+
+			for(var i=0;i<aImg.length;i++){
+				if(aImg[i].className != 'dot'){
+					arrImg.push(aImg[i]);
+				}
+			}
+
+			for(var i=0;i<arrImg.length;i++){
+				arrImg[i].src = 'img/clock/'+ prevStr.charAt(i) +'.jpg';
+			}
+
+			setInterval(function() {
+				changeTime();
+			}, 1000);
+
+			function changeTime() {
+				var oDate = new Date();				
+				nextStr = toDouble(oDate.getHours()) + toDouble(oDate.getMinutes()) + toDouble(oDate.getSeconds());
+				toCom(prevStr, nextStr);
+				prevStr = nextStr;
+			}
+
+			function toCom(str1, str2) {
+				arr = [];
+
+				for(var i=0;i<str1.length;i++){
+					if(str1.charAt(i) != str2.charAt(i)){
+						arr.push(i);
+					}
+				}
+
+				startMove();
+			}
+
+			function startMove() {
+				var iSpeed = -4;
+
+				timer = setInterval(function() {
+					for(var i=0;i<arr.length;i++){
+						if(arrImg[arr[i]].offsetHeight == 0){
+							iSpeed = 4;
+							arrImg[arr[i]].src = 'img/clock/'+ nextStr.charAt(arr[i]) +'.jpg';
+						}
+
+						arrImg[arr[i]].style.height = arrImg[arr[i]].offsetHeight + iSpeed + 'px';
+						arrImg[arr[i]].style.top = arrImg[arr[i]].offsetHeight/2 - 44 + 'px';
+
+						if(arrImg[arr[i]].offsetHeight == 88){
+							clearInterval(timer);
+						}
+					}
+				}, 10);
+			}
+
+			function toDouble(num) {
+				return num > 9 ? ''+num : '0'+num;
+			}
+		};
+	</script>
+</head>
+<body>
+
+	<div id="div1" class="box">
+		<img src="img/clock/1.jpg" alt="">
+		<img src="img/clock/1.jpg" alt="">
+		<img class="dot" src="img/clock/colon.jpg" alt="">
+		<img src="img/clock/1.jpg" alt="">
+		<img src="img/clock/1.jpg" alt="">
+		<img class="dot" src="img/clock/colon.jpg" alt="">
+		<img src="img/clock/1.jpg" alt="">
+		<img src="img/clock/1.jpg" alt="">
+	</div>
+
+</body>
+</html>
