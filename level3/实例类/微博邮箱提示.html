@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>微博邮箱提示</title>
+    <style>
+        .box {
+            width: 200px;
+            margin: 0 auto;
+        }
+
+        .emailBox {
+            position: relative;
+        }
+
+        .emailList {
+            display: none;
+            box-sizing: border-box;
+            position: absolute;
+            top: 38px;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            list-style: none;
+            border: 1px solid #909090;
+            background-color: #fff;
+        }
+
+        .emailList li {
+            line-height: 35px;
+            padding: 0 10px;
+            margin: 1px;
+            font-size:12px;
+        }
+
+        .emailList li.active {
+            background-color: #d8d8d8;
+            color: #ff984f;
+        }
+
+        .ipt-email {
+            box-sizing: border-box;
+            display: block;
+            padding: 10px;
+            width: 100%;
+        }
+    </style>
+    <script>
+        window.onload = function () {
+            var oDiv = document.getElementById('emailBox');
+            var myTips = new TipsEmail(oDiv);
+        };
+
+        function TipsEmail(obj) {
+            this.oInput = obj.getElementsByTagName('input')[0];
+            this.oUl = obj.getElementsByTagName('ul')[0];
+            this.aLi = this.oUl.children;
+
+            this.init();
+        }
+
+        TipsEmail.prototype = {
+            init: function () {
+                this.toChange();
+                this.toBlur();
+            },
+            toBlur:function() {
+                var _this = this;
+                _this.oInput.onblur = function() {
+                    _this.oUl.style.display = 'none';
+                };
+            },
+            toChange: function () {
+                var _this = this;
+
+                this.oInput.oninput = function() {
+                    _this.showUl();
+                    _this.tips();
+                    _this.sel(-1);
+                };
+            },
+            showUl:function() {
+                this.oUl.style.display = 'block';
+            },
+            tips:function() {
+                var _val = this.oInput.value;
+                var reg = new RegExp('@'+ _val.substr(_val.indexOf('@')+1));
+
+                for (var i = 1; i < this.aLi.length; i++) {
+                    this.aLi[i].style.display = 'block';
+                    this.aLi[i].bTrue = true;
+                }
+
+                if(reg.test(_val)){
+                    for(var i=1;i<this.aLi.length;i++){
+                        var email = this.aLi[i].getAttribute('email');
+
+                        if(reg.test(email)){
+                            this.aLi[i].style.display = 'block';
+                            this.aLi[i].bTrue = true;
+                        }else{
+                            this.aLi[i].style.display = 'none';
+                            this.aLi[i].bTrue = false;
+                        }
+                    }
+                }else{
+                    for(var i=1;i<this.aLi.length;i++){
+                        this.aLi[i].innerHTML = _val + this.aLi[i].getAttribute('email');
+                    }
+                }
+            },
+            sel: function(iNow){
+                var _this = this;
+                var arr = [];
+
+                for(var i=1;i<this.aLi.length;i++){
+                    this.aLi[i].className = 'item';
+                    if(this.aLi[i].bTrue){
+                        arr.push(this.aLi[i]);
+                    }
+                }
+
+                for(var i=0;i<arr.length;i++){
+                    arr[i].index = i;
+                    arr[i].onmouseover = function() {
+                        for(var i=0;i<arr.length;i++) {
+                            arr[i].className = '';
+                        }
+                        iNow = this.index;
+                        arr[iNow].className = 'active';
+                    };
+                    arr[i].onmousedown = function() {
+                        _this.oInput.value = this.innerHTML;
+                    };
+                }
+
+                document.onkeydown = function(ev) {
+                    var event = ev || window.event;
+
+                    if(event.keyCode == 40){
+                        if(iNow == arr.length-1){
+                            iNow = 0;
+                        }else {
+                            iNow++;
+                        }
+
+                        for(var i=0;i<arr.length;i++) {
+                            arr[i].className = '';
+                        }
+                        arr[iNow].className = 'active';
+                    }else if(event.keyCode == 38){
+                        if(iNow <= 0){
+                            iNow = arr.length - 1;
+                        }else {
+                            iNow--;
+                        }
+
+                        for(var i=0;i<arr.length;i++) {
+                            arr[i].className = '';
+                        }
+                        arr[iNow].className = 'active';
+                    }else if(event.keyCode == 13){
+                        _this.oInput.blur();
+                        _this.oInput.value = arr[iNow].innerHTML;
+                    }
+
+
+                }
+            }
+        };
+    </script>
+</head>
+<body>
+<div class="box">
+    <div id="emailBox" class="emailBox">
+        <input id="ipt1" class="ipt-email" type="text">
+        <ul id="emailList" class="emailList">
+            <li>请选择邮箱</li>
+            <li email="@sina.com" class="item">@sina.com</li>
+            <li email="@163.com" class="item">@163.com</li>
+            <li email="@qq.com" class="item">@qq.com</li>
+            <li email="@126.com" class="item">@126.com</li>
+            <li email="@vip.sina.com" class="item">@vip.sina.com</li>
+            <li email="@sina.cn" class="item">@sina.cn</li>
+            <li email="@hotmail.com" class="item">@hotmail.com</li>
+            <li email="@gmail.com" class="item">@gmail.com</li>
+            <li email="@sohu.com" class="item">@sohu.com</li>
+            <li email="@yahoo.cn" class="item">@yahoo.cn</li>
+            <li email="@139.com" class="item">@139.com</li>
+            <li email="@wo.com.cn" class="item">@wo.com.cn</li>
+            <li email="@189.cn" class="item">@189.cn</li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
